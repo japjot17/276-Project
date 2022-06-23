@@ -1,0 +1,19 @@
+{
+  "name": "cmpt276-persongify",
+  "version": "1.0.0",
+  "description": "“PERSONGIFY” is an online web application allowing the user to generate their own personalized playlists using the Spotify API. Some additional features will require the Google Maps API and the Facebook/Instagram API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://csil-git1.cs.surrey.sfu.ca/dva11/cmpt276-persongify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
