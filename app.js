@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const axios = require("axios");
 const qs = require("qs");
+
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -96,8 +97,6 @@ app.get("/callback", (req, res, next) => {
       });
   }
 });
-
-app.post("/spotify-api/getplaylist", (req, res) => {});
 
 // Start the server
 const PORT = process.env.PORT || 5000;
