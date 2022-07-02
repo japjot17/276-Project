@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include ("../partials/google-fonts.ejs") %>
+        <%- include ("../partials/bs5.ejs") %>
+    </head>
+    <body>
+        <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+            	<div class="carousel-item active">
+                    <img src="../../public/media/img1.png" class="d-block w-100" alt="Title">
+                </div>
+                <div class="carousel-item">
+                    <img src="../../public/media/img2.png" class="d-block w-100" alt="Why Persongify">
+                </div>
+                <div class="carousel-item">
+                    <img src="../../public/media/img3.png" class="d-block w-100" alt="Personalized Playlists">
+                </div>
+				<div class="carousel-item">
+                    <img src="../../public/media/img4.png" class="d-block w-100" alt="Commute">
+                </div>
+				<div class="carousel-item">
+                    <img src="../../public/media/img5.png" class="d-block w-100" alt="Year in Review">
+                </div>
+				<div class="carousel-item">
+                    <img src="../../public/media/img6.png" class="d-block w-100" alt="Getting Started">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+            	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </body>
+</html>
