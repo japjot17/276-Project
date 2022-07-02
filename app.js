@@ -17,10 +17,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-  res
-    .status(200)
-    .send('Hello server is running')
-    .end();
+//   res
+//     .status(200)
+//     .send('Hello server is running')
+//     .end();
+    res.render('pages/home');
 });
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
