@@ -51,7 +51,7 @@ app.get('/newUser', (req, res) => {
 app.get('/login', (req, res) => {
     
   var state = generateRandomString(16);
-  var scope = 'user-read-private user-read-email';    // placeholder
+  var scope = 'user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify';
 
   res.cookie('spotify_auth', state);
   
