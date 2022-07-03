@@ -21,7 +21,11 @@ app.get('/', (req, res) => {
 //     .status(200)
 //     .send('Hello server is running')
 //     .end();
+<<<<<<< HEAD
     res.render('pages/start-page');
+=======
+    res.render('pages/home');
+>>>>>>> proto/carousel
 });
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
