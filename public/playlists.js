@@ -3,7 +3,7 @@
 // var redirect_uri = "http://localhost:5000/playlists.html";
 
 var apiToken =
-  "BQDKnH82PW8wm341YLWaoYRIyXQ34g8G6KaphYWYTyDnNKPZCKUYILXXDnwAmvdv_kVUx0lfJMUzQ42J6QWEv5Mbxdpsygf1ATD_456JRuUBXv7HNrbN7qkP-8o88jaBYN_bEs3QszoiLFslmTSMOhirthCvjEncxl6jP0st2Mf1b9_LvdxT12mCxX3PVs3XzLzVhQ7wTVy-3ya6MUWMZRxl5HUS-g";
+  "BQCu1mt1yf94g83-9oAT21CpvHUN335H3biHV7Dl-aVDcXYOnd5y3WPYFkeAKYQQT_iJCpdeKHOBQTwnKSu_U9tXI7Assbg_9ApsQvXuAlTEfvz5-3qC6Xx29lFhQWghaAdP3XKWrB5kZG9EXr03AwyItEp2Boun7meBGwAM3hjw4cKXvCID9LQkf55W0dj6usrDWeNPkzP9TRYq2VaIcl3l-iISnQ";
 var playlist_id = "64RVqDV1d6MJUaecA0qLzh";
 var user_id = "22yveymmku7jub4aafyfdmlya";
 
@@ -22,19 +22,25 @@ const getUserPlaylists = async (user_id, limit) => {
   );
   const data = await result.json();
   console.log(data);
-
-  for (let i = 0; i < data.items.length; i++) {
-    const playlistDisplay = document.createElement("div");
-    playlistDisplay.setAttribute("class", "playlist");
-    if (data.items[i].images[1] != null) {
-      playlistDisplay.style.backgroundImage = `url(${data.items[i].images[1].url})`;
-    } else {
-      playlistDisplay.style.backgroundImage = `url(${data.items[i].images[0].url})`;
+    for (let i = 0; i < data.items.length; i++) {
+      if (data.items[i].name != "") {
+        const overlay = document.createElement("div");
+        overlay.setAttribute("class", "overlay");
+        const playlistDisplay = document.createElement("div");
+        playlistDisplay.setAttribute("class", "playlist");
+        if (data.items[i].images[1] != null) {
+          //get 300x300 img
+          playlistDisplay.style.backgroundImage = `url(${data.items[i].images[1].url})`;
+        } else {
+          //if none available, get default image
+          playlistDisplay.style.backgroundImage = `url(${data.items[i].images[0].url})`;
+        }
+        overlay.innerHTML = data.items[i].name;
+        playlistDisplay.appendChild(overlay);
+        document.getElementById("wrapper").appendChild(playlistDisplay);
+        console.log("Name: " + data.items[i].name);
+      }
     }
-    playlistDisplay.innerHTML = data.items[i].name;
-    document.getElementById("wrapper").appendChild(playlistDisplay);
-    console.log("Name: " + data.items[i].name);
-  }
 };
 
 const getPlaylistTracks = async (playlist_id) => {
