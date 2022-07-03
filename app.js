@@ -21,11 +21,7 @@ app.get('/', (req, res) => {
 //     .status(200)
 //     .send('Hello server is running')
 //     .end();
-<<<<<<< HEAD
     res.render('pages/start-page');
-=======
-    res.render('pages/home');
->>>>>>> proto/carousel
 });
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
@@ -47,6 +43,10 @@ var redirect_uri = process.env.REDIRECT_URI;
   }
   return text;
 };
+
+app.get('/newUser', (req, res) => {
+    res.redirect('addUser');
+})
 
 app.get('/login', (req, res) => {
     
