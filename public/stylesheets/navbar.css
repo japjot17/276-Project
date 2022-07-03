@@ -12,7 +12,7 @@ body {
     position: relative;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(38, 0, 36);
+    background-color: rgb(15, 0, 39);
     color: white;
     width: 100%;
 }
@@ -21,7 +21,7 @@ body {
     font-size: 5rem;
     font-weight: bold;
     margin: .5rem;
-    color: rgb(239, 0, 115);
+    color: rgb(239, 0, 126);
 }
 
 .navbar-links {
