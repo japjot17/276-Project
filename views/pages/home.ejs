@@ -3,27 +3,38 @@
     <head>
         <%- include ("../partials/google-fonts.ejs") %>
         <%- include ("../partials/bs5.ejs") %>
+
+        <style>
+            .carousel > .carousel-inner > .carousel-item {
+                width: 100%;
+                height: auto;
+            }
+            .carousel > .carousel-inner > .carousel-item > img {
+                width: 100%;
+                height: auto;
+            }
+        </style>
     </head>
     <body>
         <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
             	<div class="carousel-item active">
-                    <img src="../../public/media/img1.png" class="d-block w-100" alt="Title">
+                    <img src="media/img1.png" class="d-block w-100 h-auto mx-auto" alt="Title">
                 </div>
                 <div class="carousel-item">
-                    <img src="../../public/media/img2.png" class="d-block w-100" alt="Why Persongify">
+                    <img src="media/img2.png" class="d-block w-100 h-75 mx-auto" alt="Why Persongify">
                 </div>
                 <div class="carousel-item">
-                    <img src="../../public/media/img3.png" class="d-block w-100" alt="Personalized Playlists">
+                    <img src="media/img3.png" class="d-block w-100 h-75 mx-auto" alt="Personalized Playlists">
                 </div>
 				<div class="carousel-item">
-                    <img src="../../public/media/img4.png" class="d-block w-100" alt="Commute">
+                    <img src="media/img4.png" class="d-block w-100 h-75" alt="Commute">
                 </div>
 				<div class="carousel-item">
-                    <img src="../../public/media/img5.png" class="d-block w-100" alt="Year in Review">
+                    <img src="media/img5.png" class="d-block w-100 h-75" alt="Year in Review">
                 </div>
 				<div class="carousel-item">
-                    <img src="../../public/media/img6.png" class="d-block w-100" alt="Getting Started">
+                    <img src="media/img6.png" class="d-block w-100 h-75" alt="Getting Started">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
