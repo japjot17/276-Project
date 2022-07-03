@@ -12,15 +12,16 @@ body {
     position: relative;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(38, 0, 36);
+    background-color: rgb(15, 0, 39);
     color: white;
+    width: 100%;
 }
 
 .brand-title {
     font-size: 5rem;
     font-weight: bold;
     margin: .5rem;
-    color: rgb(239, 0, 115);
+    color: rgb(239, 0, 126);
 }
 
 .navbar-links {
@@ -51,8 +52,8 @@ body {
 
 .toggle-button {
     position: absolute;
-    top: .75rem;
-    right: 1rem;
+    top: 2rem;
+    right: 2rem;
     display: none;
     flex-direction: column;
     justify-content: space-between;
@@ -68,9 +69,10 @@ body {
     border-radius: 10px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     .navbar {
         flex-direction: column;
+        justify-content: center;
         align-items: flex-start;
     }
 
