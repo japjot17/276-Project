@@ -45,7 +45,11 @@ var redirect_uri = process.env.REDIRECT_URI;
 };
 
 app.get('/newUser', (req, res) => {
-    res.redirect('addUser');
+    res.render('pages/add-user');
+})
+
+app.get('/addUser', (req, res) => {
+
 })
 
 app.get('/login', (req, res) => {
