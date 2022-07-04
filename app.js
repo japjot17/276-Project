@@ -42,9 +42,13 @@ var generateRandomString = function (length) {
   return text;
 };
 
+var cid = "0f6749aefe004361b5c218e24c953814";
+var csec = "4940d82140ff4e47add12d60060cbcbc";
+redirect_uri = "http://localhost:5000/callback";
+
 app.get("/login", (req, res) => {
   var state = generateRandomString(16);
-  var scope = "user-read-private user-read-email"; // placeholder
+  var scope = "user-read-private playlist-read-private"; // placeholder
 
   res.cookie("spotify_auth", state);
 
@@ -52,7 +56,7 @@ app.get("/login", (req, res) => {
     "https://accounts.spotify.com/authorize?" +
       qs.stringify({
         response_type: "code",
-        client_id: client_id,
+        client_id: cid,
         scope: scope,
         redirect_uri: redirect_uri,
         state: state,
@@ -78,15 +82,17 @@ app.get("/callback", (req, res, next) => {
       }),
       headers: {
         Authorization:
-          "Basic " +
-          new Buffer.from(client_id + ":" + client_secret).toString("base64"),
+          "Basic " + new Buffer.from(cid + ":" + csec).toString("base64"),
         "Content-Type": "application/x-www-form-urlencoded",
       },
       json: true,
     })
       .then((response) => {
         if (response.status === 200) {
-          res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`); // placeholder
+          // res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`); // placeholder
+          console.log(response.data.access_token);
+
+          res.redirect("/home.html");
         } else {
           res.send(response);
         }
