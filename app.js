@@ -21,7 +21,32 @@ const pool = new Pool({
   }
 });
 
+/************************* HELPER FUNCTIONS **********************************/
 const app = express();
+
+/**
+ * generates a random string
+ * @param {number} length 
+ * @returns {string} the generated string
+ */
+ var generateRandomString = function(length) {
+    var text = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  
+    for (var i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+};
+
+var encryptSHA256 = function(plain) {
+	return new shajs.sha256().update(plain).digest('hex');
+}
+
+var checkAuthorizedUser = function() {
+	if (req.signedCookies.persongify_auth) return true;
+	return false;
+}
 
 // understand JSON
 app.use(express.json());
@@ -30,6 +55,8 @@ app.use(express.urlencoded({extended:false}));
 // work with cookies
 var cookieSecret = generateRandomString(20);
 app.use(cookieParser(cookieSecret));
+
+/*****************************************************************************/
 
 // basic routing
 app.use(express.static(path.join(__dirname, 'public')));
@@ -153,32 +180,6 @@ app.get('/spotify-callback', (req, res) => {
 		})
   }
 })
-
-/************************* HELPER FUNCTIONS **********************************/
-
-/**
- * generates a random string
- * @param {number} length 
- * @returns {string} the generated string
- */
- var generateRandomString = function(length) {
-    var text = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  
-    for (var i = 0; i < length; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-};
-
-var encryptSHA256 = function(plain) {
-	return new shajs.sha256().update(plain).digest('hex');
-}
-
-var checkAuthorizedUser = function() {
-	if (req.signedCookies.persongify_auth) return true;
-	return false;
-}
  
 // Start the server
 const PORT = process.env.PORT || 5000;
