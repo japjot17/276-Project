@@ -28,7 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 // work with cookies
-app.use(cookieParser());
+var cookieSecret = generateRandomString(20);
+app.use(cookieParser(cookieSecret));
 
 // basic routing
 app.use(express.static(path.join(__dirname, 'public')));
