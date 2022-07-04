@@ -71,8 +71,7 @@ app.get('/login', (req, res) => {
     res.render('pages/user-login');
 })
 
-// const sha256stream = new shajs.sha256().update(verifier).digest('hex');
-app.post('/verify-login', (req, res) => {
+app.post('/verify-login', async (req, res) => {
 	var chk_uname = req.body.f_uname;
 	var chk_pwd = req.body.f_pwd;
 	var chk_pwdSHA256 = encryptSHA256(chk_pwd);
