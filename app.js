@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const qs = require('qs');
+const shajs = require('sha.js');
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -49,12 +50,15 @@ app.post('/addUser', async (req, res) => {
     var lastName = req.body.f_lastName;
     var age = req.body.f_age;
 
-    var query = `INSERT INTO userAcct (id, username, firstname, lastname, age) VALUES (DEFAULT, $1, $2, $3, $4)`;
-    var values = [userName, firstName, lastName, age];
+	var pwd = req.body.f_pwd;
+	var pwdSHA256 = encryptSHA256(pwd);
+
+    var query = `INSERT INTO useracct (id, username, firstname, lastname, age, password) VALUES (DEFAULT, $1, $2, $3, $4, $5)`;
+    var values = [userName, firstName, lastName, age, pwdSHA256];
 
     var rows = await pool.query(query, values);
     if (rows) {
-        res.cookie('persongify_auth', rows, { signed: true });
+        res.cookie('persongify_auth', userName, { signed: true });
         res.send('successfully added user: ' + userName);
         // res.render('pages/dashboard', rows);
     }
@@ -65,6 +69,25 @@ app.post('/addUser', async (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('pages/user-login');
+})
+
+// const sha256stream = new shajs.sha256().update(verifier).digest('hex');
+app.post('/verify-login', (req, res) => {
+	var chk_uname = req.body.f_uname;
+	var chk_pwd = req.body.f_pwd;
+	var chk_pwdSHA256 = encryptSHA256(chk_pwd);
+
+	var query = `SELECT * FROM useracct WHERE username=$1 AND password=$2`;
+	var values = [chk_uname, chk_pwdSHA256];
+
+	var rows = await pool.query(query, values);
+	if (rows) {
+		res.cookie('persongify_auth', userName, { signed: true });
+        res.send('successfully logged on user: ' + userName);
+	}
+	else {
+		res.redirect('pages/user-login');
+	}
 })
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
@@ -144,8 +167,13 @@ app.get('/spotify-callback', (req, res) => {
     return text;
 };
 
-var checkAuthorizedUser = function() {
+var encryptSHA256 = function(plain) {
+	return new shajs.sha256().update(plain).digest('hex');
+}
 
+var checkAuthorizedUser = function() {
+	if (req.signedCookies.persongify_auth) return true;
+	return false;
 }
  
 // Start the server
