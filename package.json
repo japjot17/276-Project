@@ -2,9 +2,9 @@
   "name": "cmpt276-persongify",
   "version": "1.0.0",
   "description": "“PERSONGIFY” is an online web application allowing the user to generate their own personalized playlists using the Spotify API. Some additional features will require the Google Maps API and the Facebook/Instagram API.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
