@@ -3,6 +3,7 @@ const path = require('path');
 const axios = require('axios');
 const qs = require('qs');
 const shajs = require('sha.js');
+const cookieParser = require('cookie-parser');
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -25,6 +26,9 @@ const app = express();
 // understand JSON
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+
+// work with cookies
+app.use(cookieParser());
 
 // basic routing
 app.use(express.static(path.join(__dirname, 'public')));
