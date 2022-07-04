@@ -43,7 +43,7 @@ app.get('/newUser', (req, res) => {
     res.render('pages/add-user');
 })
 
-app.get('/addUser', async (req, res) => {
+app.post('/addUser', async (req, res) => {
     var userName = req.body.f_uname;
     var firstName = req.body.f_firstName;
     var lastName = req.body.f_lastName;
@@ -54,8 +54,8 @@ app.get('/addUser', async (req, res) => {
 
     var rows = await pool.query(query, values);
     if (rows) {
-        console.log("successfully added user: ", userName);
         res.cookie('persongify_auth', rows);
+        res.send("successfully added user: ", userName);
         // res.render('pages/dashboard', rows);
     }
     else {
