@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 /********************** POSTGRES ACCOUNT SETUP *******************************/
 
 app.get('/newUser', (req, res) => {
-    res.render('pages/add-user');
+    res.render('pages/user-add');
 })
 
 app.post('/addUser', async (req, res) => {
@@ -54,13 +54,17 @@ app.post('/addUser', async (req, res) => {
 
     var rows = await pool.query(query, values);
     if (rows) {
-        res.cookie('persongify_auth', rows);
+        res.cookie('persongify_auth', rows, { signed: true });
         res.send('successfully added user: ' + userName);
         // res.render('pages/dashboard', rows);
     }
     else {
-        res.redirect('pages/add-user');
+        res.redirect('pages/user-add');
     }
+})
+
+app.get('/login', (req, res) => {
+    res.render('pages/user-login');
 })
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
@@ -70,55 +74,56 @@ var redirect_uri = process.env.REDIRECT_URI;
 
 app.get('/spotify-login', (req, res) => {
     
-  var state = generateRandomString(16);
-  var scope = 'user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify';
+	var state = generateRandomString(16);
+  	var scope = 'user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify';
 
-  res.cookie('spotify_auth', state);
+  	// res.cookie('spotify_auth', state);
   
-  res.redirect('https://accounts.spotify.com/authorize?' + 
-      qs.stringify({
-          response_type: 'code',
-          client_id: client_id,
-          scope: scope,
-          redirect_uri: redirect_uri,
-          state: state,
-      }))
+	res.redirect('https://accounts.spotify.com/authorize?' + 
+      	qs.stringify({
+          	response_type: 'code',
+          	client_id: client_id,
+          	scope: scope,
+          	redirect_uri: redirect_uri,
+          	state: state,
+      	}))
 })
 
-app.get('/spotify-callback', (req, res, next) => {
+app.get('/spotify-callback', (req, res) => {
 
-  // given from login redirect
-  var code = req.query.code || null;
-  var state = req.query.state || null;
+	// given from login redirect
+	var code = req.query.code || null;
+	var state = req.query.state || null;
 
-  if (state === null) {
-      res.send("STATE MISMATCH");
-  } else {
-      axios({
-          method: 'post',
-          url: 'https://accounts.spotify.com/api/token',
-          data: qs.stringify({
-              code: code,
-              redirect_uri: redirect_uri,
-              grant_type: 'authorization_code',
-          }),
-          headers: {
-              'Authorization': 'Basic ' + new Buffer.from(client_id + ':' + client_secret).toString('base64'),
-              'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          json: true
-      })
-          .then((response) => {
-              if (response.status === 200) {
-                  res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);   // placeholder
-              } else {
-                  res.send(response);
-              }
-          })
-          .catch((error) => {
-              console.log(error.response);
-              res.send(error);
-          })
+  	if (state === null) {
+      	res.send("STATE MISMATCH");
+  	} else {
+      	axios({
+			method: 'post',
+			url: 'https://accounts.spotify.com/api/token',
+			data: qs.stringify({
+				code: code,
+				redirect_uri: redirect_uri,
+				grant_type: 'authorization_code',
+          	}),
+          	headers: {
+				'Authorization': 'Basic ' + new Buffer.from(client_id + ':' + client_secret).toString('base64'),
+				'Content-Type': 'application/x-www-form-urlencoded',
+          	},
+          	json: true
+      	})
+		.then((response) => {
+			if (response.status === 200) {
+				res.cookie('spotify_auth', state, { signed: true });
+				res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);   // placeholder
+			} else {
+				res.send(response);
+			}
+		})
+		.catch((error) => {
+			console.log(error.response);
+			res.send(error);
+		})
   }
 })
 
