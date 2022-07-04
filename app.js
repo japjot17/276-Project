@@ -55,7 +55,7 @@ app.post('/addUser', async (req, res) => {
     var rows = await pool.query(query, values);
     if (rows) {
         res.cookie('persongify_auth', rows);
-        res.send("successfully added user: ", userName);
+        res.send('successfully added user: ' + userName);
         // res.render('pages/dashboard', rows);
     }
     else {
