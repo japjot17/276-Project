@@ -113,8 +113,8 @@ app.post('/verify-login', async (req, res) => {
 
 	var rows = await pool.query(query, values);
 	if (rows) {
-		res.cookie('persongify_auth', userName, { signed: true });
-        res.send('successfully logged on user: ' + userName);
+		res.cookie('persongify_auth', chk_uname, { signed: true });
+        res.send('successfully logged on user: ' + chk_uname);
 	}
 	else {
 		res.redirect('pages/user-login');
