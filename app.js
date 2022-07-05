@@ -93,7 +93,7 @@ app.get("/callback", (req, res, next) => {
           // res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`); // placeholder
           // console.log(response.data.access_token);
           newToken = response.data;
-          res.redirect("/playlists.html");
+          res.redirect("/playlists");
         } else {
           res.send(response);
         }
@@ -105,6 +105,14 @@ app.get("/callback", (req, res, next) => {
   }
 });
 
+app.get("/token-api", (req, res) => {
+  res.json(newToken);
+});
+
+app.get("/playlists", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/playlists.html"));
+})
+
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
@@ -112,6 +120,3 @@ app.listen(PORT, () => {
   console.log("Press Ctrl+C to quit.");
 });
 
-app.get("/token-api", (req, res) => {
-  res.json(newToken);
-});
