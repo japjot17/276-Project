@@ -31,18 +31,34 @@ body {
   padding: 25px;
   margin-top: -1px;
   margin-left: -1px;
-  color: transparent;
+  color: white;
   font-size: 20px;
   background-color: rgba(0, 0, 0, 0);
   border: 2px solid black;
-  height: 150px;
-  width: 150px;
-  z-index: 99;
+  height: 200px;
+  width: 200px;
   border-radius: 30px;
   transition: all 500ms ease-out 100ms;
+  opacity: 0;
 }
 
 .overlay:hover {
   background-color: rgba(0, 0, 0, 0.8);
-  color: white;
+  opacity: 1;
+}
+
+.btn-container {
+  position: relative;
+  height: 100px;
+  width: 195px;
+  padding: 25px;
+  border-radius: 30px;
+  margin-left: -25px;
+  justify-content: center;
+}
+
+.btn {
+  position: absolute;
+  bottom: 0px;
+  right: 17%;
 }

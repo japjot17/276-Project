@@ -3,16 +3,24 @@
 //refresh-token = AQDn2G3IAhDEvSdQT08amw3G79I20BgRTSv7s9nALMt5vzsWK1nXw1-FnbhH1y34y5r67Kn7VVvseLbiiwvYatObqvEpiMXxiLBxHRWfhiUMn38W1gd_L4kxdJN0cc8yAck
 //code = AQCmKczC1Zs1lRWNNALnus-p0jEi0Rh_aht9HrbgdO8TvUnP9bA7HrY5L8rfnhLTjW3kDIZ68YJ9jzh5XHkS1IOuCWSRoPS2F_XL_dkWJR5lV8mL-vlLFasHQ9vMzoLQVLPxI-xki1YqMZWX0_YIemY3dxaUy9kbBV7-WhCQVzDMykpVf4YzEkBcGyNmOrCs2IgJ1MzU-J9MZRvOa4I
 
-var apiToken =
-  "BQDvrJn-w-9fWIKEawV5nV3dMNAKeMyJpCwCTnwPK7QEh84tDJxA3JWXWN6StxBvtPs-SW-GF8lx6M-Sc7R7Ef0HldMQmgKDANNhq_LCHxBRKh6i-tlnu-ARYGnTbiewfHtOtLjfyB8rUPYyMJnPz_z0DYbLQ74CV1IDxPY-sLgjv41awtm2uQZmdBbntJxJdH-hD2frSGEIwZpHbTYSBlFNjEjomQ";
-var playlist_id = "64RVqDV1d6MJUaecA0qLzh";
+let apiToken =
+  "BQC0TrBtcyfCumLRWwWEv_fojvwy4zaaD-3EiYaCGNcQ1mwbU9keoBYMBPepH3npTYHDnkKc5TYfUm43VGbOWXEjL7-aMQ19q0Yd2m3BMD4A85DAmp8P1TyDhFb4PG77StyTeDaCoLYFdHw16Kq-YmvgAfxdjiyWyUUovNsiTXcl4Or-WNAAKpMaBvrXl2DuFQmlM4NADnwX63vAJ_WTJRF8s7mW3w";
 var user_id = "22yveymmku7jub4aafyfdmlya";
 
 function test() {
-  getUserPlaylists(user_id, 15);
+  refreshToken();
+  getUserPlaylists(user_id, 5);
 }
 
+var refreshToken = async () => {
+  const response = await fetch("http://localhost:5000/token-api");
+  const data = await response.json();
+  apiToken = data.access_token;
+  console.log("refreshed: " + apiToken);
+};
+
 const getUserPlaylists = async (user_id, limit) => {
+  console.log("using: " + apiToken);
   const result = await fetch(
     `https://api.spotify.com/v1/users/${user_id}/playlists?limit=${limit}`,
     {
@@ -23,22 +31,27 @@ const getUserPlaylists = async (user_id, limit) => {
   const data = await result.json();
   console.log(data);
   for (let i = 0; i < data.items.length; i++) {
-    if (data.items[i].name != "") {
-      const overlay = document.createElement("div");
-      overlay.setAttribute("class", "overlay");
-      const playlistDisplay = document.createElement("div");
-      playlistDisplay.setAttribute("class", "playlist");
-      if (data.items[i].images[1] != null) {
-        //get 300x300 img
-        playlistDisplay.style.backgroundImage = `url(${data.items[i].images[1].url})`;
-      } else {
-        //if none available, get default image
-        playlistDisplay.style.backgroundImage = `url(${data.items[i].images[0].url})`;
-      }
-      overlay.innerHTML = data.items[i].name;
-      playlistDisplay.appendChild(overlay);
-      document.getElementById("wrapper").appendChild(playlistDisplay);
+    const overlay = document.createElement("div");
+    overlay.setAttribute("class", "overlay");
+    const playlistDisplay = document.createElement("div");
+    playlistDisplay.setAttribute("class", "playlist");
+    const overlayButton = document.createElement("button");
+    overlayButton.setAttribute("class", "btn btn-success");
+    const buttonHolder = document.createElement("div");
+    buttonHolder.setAttribute("class", "btn-container");
+    if (data.items[i].images[1] != null) {
+      //get 300x300 img
+      playlistDisplay.style.backgroundImage = `url(${data.items[i].images[1].url})`;
+    } else {
+      //if none available, get default image
+      playlistDisplay.style.backgroundImage = `url(${data.items[i].images[0].url})`;
     }
+    buttonHolder.appendChild(overlayButton);
+    overlay.innerHTML = data.items[i].name;
+    overlayButton.innerHTML = "Do something";
+    overlay.appendChild(buttonHolder);
+    playlistDisplay.appendChild(overlay);
+    document.getElementById("wrapper").appendChild(playlistDisplay);
   }
 };
 

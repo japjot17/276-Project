@@ -45,6 +45,7 @@ var generateRandomString = function (length) {
 var cid = "0f6749aefe004361b5c218e24c953814";
 var csec = "4940d82140ff4e47add12d60060cbcbc";
 redirect_uri = "http://localhost:5000/callback";
+var newToken = "";
 
 app.get("/login", (req, res) => {
   var state = generateRandomString(16);
@@ -90,9 +91,9 @@ app.get("/callback", (req, res, next) => {
       .then((response) => {
         if (response.status === 200) {
           // res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`); // placeholder
-          console.log(response.data.access_token);
-
-          res.redirect("/home.html");
+          // console.log(response.data.access_token);
+          newToken = response.data;
+          res.redirect("/playlists.html");
         } else {
           res.send(response);
         }
@@ -109,4 +110,8 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
   console.log("Press Ctrl+C to quit.");
+});
+
+app.get("/token-api", (req, res) => {
+  res.json(newToken);
 });
