@@ -3,23 +3,21 @@
 //refresh-token = AQDn2G3IAhDEvSdQT08amw3G79I20BgRTSv7s9nALMt5vzsWK1nXw1-FnbhH1y34y5r67Kn7VVvseLbiiwvYatObqvEpiMXxiLBxHRWfhiUMn38W1gd_L4kxdJN0cc8yAck
 //code = AQCmKczC1Zs1lRWNNALnus-p0jEi0Rh_aht9HrbgdO8TvUnP9bA7HrY5L8rfnhLTjW3kDIZ68YJ9jzh5XHkS1IOuCWSRoPS2F_XL_dkWJR5lV8mL-vlLFasHQ9vMzoLQVLPxI-xki1YqMZWX0_YIemY3dxaUy9kbBV7-WhCQVzDMykpVf4YzEkBcGyNmOrCs2IgJ1MzU-J9MZRvOa4I
 
-let apiToken =
-  "BQC0TrBtcyfCumLRWwWEv_fojvwy4zaaD-3EiYaCGNcQ1mwbU9keoBYMBPepH3npTYHDnkKc5TYfUm43VGbOWXEjL7-aMQ19q0Yd2m3BMD4A85DAmp8P1TyDhFb4PG77StyTeDaCoLYFdHw16Kq-YmvgAfxdjiyWyUUovNsiTXcl4Or-WNAAKpMaBvrXl2DuFQmlM4NADnwX63vAJ_WTJRF8s7mW3w";
 var user_id = "22yveymmku7jub4aafyfdmlya";
 
 function test() {
   refreshToken();
-  getUserPlaylists(user_id, 5);
 }
 
 var refreshToken = async () => {
   const response = await fetch("http://localhost:5000/token-api");
   const data = await response.json();
   apiToken = data.access_token;
+  getUserPlaylists(user_id, 7, apiToken);
   console.log("refreshed: " + apiToken);
 };
 
-const getUserPlaylists = async (user_id, limit) => {
+const getUserPlaylists = async (user_id, limit, apiToken) => {
   console.log("using: " + apiToken);
   const result = await fetch(
     `https://api.spotify.com/v1/users/${user_id}/playlists?limit=${limit}`,
@@ -29,6 +27,9 @@ const getUserPlaylists = async (user_id, limit) => {
     }
   );
   const data = await result.json();
+  if(data.error != undefined) {
+    window.location.replace("http://localhost:5000/home.html")
+  }
   console.log(data);
   for (let i = 0; i < data.items.length; i++) {
     const overlay = document.createElement("div");
