@@ -1,3 +1,5 @@
+const TOP_HITS_ID = "37i9dQZEVXbMda2apknTqH";
+
 window.onload = function test() {
   refreshToken();
 };
@@ -13,10 +15,9 @@ var refreshToken = async () => {
     window.location.replace("/login");
   }
 };
-var top_hits_url = "37i9dQZEVXbMda2apknTqH";
 const getFeaturedPlaylists = async (limit, apiToken) => {
   const result = await fetch(
-    `https://api.spotify.com/v1/playlists/${top_hits_url}`,
+    `https://api.spotify.com/v1/playlists/${TOP_HITS_ID}`,
     {
       method: "GET",
       headers: { Authorization: "Bearer " + apiToken },
@@ -26,7 +27,6 @@ const getFeaturedPlaylists = async (limit, apiToken) => {
   if (data.error != undefined) {
     window.location.replace("/login");
   }
-  console.log(data);
   addPlaylistToEndpoint(data, limit);
 };
 
@@ -58,13 +58,4 @@ function addPlaylistToEndpoint(data, limit) {
     playlistDisplay.appendChild(overlay);
     document.getElementById("wrapper").appendChild(playlistDisplay);
   }
-}
-
-function msToMinSec(duration_ms) {
-  return (
-    Math.floor(duration_ms / 60000) +
-    "m " +
-    ((duration_ms % 60000) / 1000).toFixed() +
-    "s"
-  );
 }
