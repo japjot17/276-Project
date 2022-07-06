@@ -84,6 +84,11 @@ app.get("/", (req, res) => {
   res.redirect("/home");
 });
 
+app.get("/home", (req, res) => {
+  // res.sendFile(path.join(__dirname, "/public/home.html"));
+  res.render('pages/home');
+});
+
 /********************** POSTGRES ACCOUNT SETUP *******************************/
 
 app.get("/newUser", (req, res) => {
@@ -234,11 +239,6 @@ app.get("/trending", (req, res) => {
     redir = req.originalUrl;
     res.redirect("/login");
   }
-});
-
-app.get("/home", (req, res) => {
-  // res.sendFile(path.join(__dirname, "/public/home.html"));
-  res.render('pages/home');
 });
 
 // Start the server
