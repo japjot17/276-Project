@@ -49,6 +49,10 @@ var checkAuthorizedUser = function () {
   return false;
 };
 
+var isEmptyObject = function (obj) {
+  return Object.keys(obj).length === 0;
+}
+
 // understand JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -112,7 +116,7 @@ app.post("/verify-login", async (req, res) => {
   var values = [chk_uname, chk_pwdSHA256];
 
   var rows = await pool.query(query, values);
-  if (rows) {
+  if (!isEmptyObject(rows)) {
     res.cookie("persongify_auth", chk_uname, { signed: true });
     res.send("successfully logged on user: " + chk_uname);
   } else {
