@@ -6,7 +6,7 @@ function test() {
 }
 
 var refreshToken = async () => {
-  const response = await fetch("http://localhost:5000/token-api");
+  const response = await fetch("persongify.herokuapp.com/token-api");
   const data = await response.json();
   apiToken = data.access_token;
   getUserPlaylists(user_id, 7, apiToken);
@@ -22,7 +22,7 @@ const getUserPlaylists = async (user_id, limit, apiToken) => {
   );
   const data = await result.json();
   if (data.error != undefined) {
-    window.location.replace("http://localhost:5000/home.html");
+    window.location.replace("persongify.herokuapp.com/home");
   }
   console.log(data);
   for (let i = 0; i < data.items.length; i++) {
