@@ -191,7 +191,7 @@ app.get("/spotify-callback", (req, res) => {
         if (response.status === 200) {
           res.cookie("spotify_auth", state, { signed: true });
           newToken = response.data;
-          res.redirect("/playlists");
+          res.redirect("/trending");
         } else {
           res.send(response);
         }
@@ -207,9 +207,9 @@ app.get("/token-api", (req, res) => {
   res.json(newToken);
 });
 
-app.get("/playlists", (req, res) => {
+app.get("/trending", (req, res) => {
   if (req.signedCookies["persongify_auth"]) {
-    res.sendFile(path.join(__dirname, "/public/playlists.html"));
+    res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
     res.redirect("/login");
   }
