@@ -27,6 +27,7 @@ const getFeaturedPlaylists = async (limit, apiToken) => {
     const data = await result.json();
     addPlaylistToEndpoint(data);
   } catch (e) {
+    console.log(data);
     console.log(e);
   }
 };
