@@ -8,6 +8,7 @@ var refreshToken = async () => {
     const data = await response.json();
     apiToken = data.access_token;
     // getUserPlaylists(user_id, 7, apiToken);
+    console.log(apiToken);
     getFeaturedPlaylists(9, apiToken);
   } catch (e) {
     window.location.replace("/home");
