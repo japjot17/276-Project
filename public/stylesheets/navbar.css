@@ -18,11 +18,19 @@ body {
     width: 100%;
 }
 
-.brand-title {
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 5rem;
     font-weight: bold;
     margin: .5rem;
     color: rgb(239, 0, 126);
+}
+
+.logo img {
+    height: 108px;
+    object-fit: fill;
 }
 
 .navbar-links {
