@@ -1,8 +1,4 @@
-//cid = 0f6749aefe004361b5c218e24c953814
-//csec = 4940d82140ff4e47add12d60060cbcbc
-//refresh-token = AQDn2G3IAhDEvSdQT08amw3G79I20BgRTSv7s9nALMt5vzsWK1nXw1-FnbhH1y34y5r67Kn7VVvseLbiiwvYatObqvEpiMXxiLBxHRWfhiUMn38W1gd_L4kxdJN0cc8yAck
-//code = AQCmKczC1Zs1lRWNNALnus-p0jEi0Rh_aht9HrbgdO8TvUnP9bA7HrY5L8rfnhLTjW3kDIZ68YJ9jzh5XHkS1IOuCWSRoPS2F_XL_dkWJR5lV8mL-vlLFasHQ9vMzoLQVLPxI-xki1YqMZWX0_YIemY3dxaUy9kbBV7-WhCQVzDMykpVf4YzEkBcGyNmOrCs2IgJ1MzU-J9MZRvOa4I
-
+//temporary user_id
 var user_id = "22yveymmku7jub4aafyfdmlya";
 
 function test() {
@@ -27,8 +23,8 @@ const getUserPlaylists = async (user_id, limit, apiToken) => {
     }
   );
   const data = await result.json();
-  if(data.error != undefined) {
-    window.location.replace("http://localhost:5000/home.html")
+  if (data.error != undefined) {
+    window.location.replace("http://localhost:5000/home.html");
   }
   console.log(data);
   for (let i = 0; i < data.items.length; i++) {
