@@ -4,7 +4,6 @@ const axios = require("axios");
 const qs = require("qs");
 const shajs = require("sha.js");
 const cookieParser = require("cookie-parser");
-const session = require('express-session');
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
