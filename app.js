@@ -50,7 +50,7 @@ var checkAuthorizedUser = function () {
 };
 
 var isEmptyObject = function (obj) {
-  return Object.keys(obj).length === 0;
+  return !Object.keys(obj).length;
 }
 
 // understand JSON
