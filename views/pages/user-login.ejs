@@ -16,10 +16,10 @@
                 background-size: 100%;
                 overflow-x: hidden;
             }
-            #nav-home {
+            #nav-home, #nav-newUser {
                 background-color: var(--brand-magenta);
             }
-            #formSubmit, #createAcctBtn {
+            #formSubmit {
                 background-color: var(--brand-magenta);
             }
             .span-magenta {
@@ -37,6 +37,12 @@
                         chevron_left
                     </span>
                     Back to Persongify Home
+                </button>
+            </form>
+            <form action="/newUser" method="get" class="form-inline">
+                <button type="submit" id="nav-newUser"
+                    class="btn btn-outline-dark border-noset">
+                    Not a PERSONGIFY user? Create an Account!
                 </button>
             </form>
         </div>
@@ -71,16 +77,17 @@
                         </button>
                     </a>
                     -->
-                    <button type="button" id="createAcctBtn"
-                        class="btn btn-outline-dark btn-lg btn-block border-noset">
-                        <a href="/newUser" class="btn stretched-link">
-                            Not a PERSONGIFY user? Create an account!
-                        </a>
-                    </button>
+                    
                     <button type="submit" value="Submit" id="formSubmit"
                     class="btn btn-outline-dark btn-lg btn-block border-noset">Log In</button>
                 </div>
             </form>
+            <button type="button" id="createAcctBtn"
+            class="btn btn-outline-dark btn-lg btn-block border-noset">
+                <a href="/newUser" class="btn stretched-link">
+                    Not a PERSONGIFY user? Create an account!
+                </a>
+            </button>
         </div>
     </body>
 </html>
