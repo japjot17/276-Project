@@ -10,11 +10,9 @@ var refreshToken = async () => {
   const data = await response.json();
   apiToken = data.access_token;
   getUserPlaylists(user_id, 7, apiToken);
-  console.log("refreshed: " + apiToken);
 };
 
 const getUserPlaylists = async (user_id, limit, apiToken) => {
-  console.log("using: " + apiToken);
   const result = await fetch(
     `https://api.spotify.com/v1/users/${user_id}/playlists?limit=${limit}`,
     {
