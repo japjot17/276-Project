@@ -86,6 +86,12 @@ app.get("/", (req, res) => {
 
 app.get("/home", (req, res) => {
   // res.sendFile(path.join(__dirname, "/public/home.html"));
+  if (checkAuthorizedUser) {
+    app.locals.signedIn = true;
+  }
+  else {
+    app.locals.signedIn = false;
+  }
   res.render('pages/home');
 });
 
