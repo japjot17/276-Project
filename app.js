@@ -82,7 +82,11 @@ app.get("/", (req, res) => {
   //     .send('Hello server is running')
   //     .end();
   // res.render("pages/start-page");
+  app.locals.signedIn = false;
   app.locals.redir = '/home';
+  res.clearCookie("persongify_auth", { signed: true });
+  res.clearCookie("spotify_auth", { signed: true });
+  
   res.redirect("/home");
 });
 
