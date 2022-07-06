@@ -1,6 +1,6 @@
-function test() {
+window.onload = function test() {
   refreshToken();
-}
+};
 
 var refreshToken = async () => {
   const response = await fetch("/token-api");
@@ -17,7 +17,7 @@ var refreshToken = async () => {
 
 const getFeaturedPlaylists = async (limit, apiToken) => {
   const result = await fetch(
-    `https://api.spotify.com/v1/browse/featured-playlists?limit=${limit}  `,
+    `https://api.spotify.com/v1/browse/featured-playlists?limit=${limit}`,
     {
       method: "GET",
       headers: { Authorization: "Bearer " + apiToken },
