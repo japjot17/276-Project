@@ -49,6 +49,12 @@ var checkAuthorizedUser = function () {
   return false;
 };
 
+var isEmptyObject = function (obj) {
+  console.log("testing empty object...");
+  console.log("keys(obj) length: " + Object.keys(obj).length);
+  return !Object.keys(obj).length;
+}
+
 // understand JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -112,7 +118,11 @@ app.post("/verify-login", async (req, res) => {
   var values = [chk_uname, chk_pwdSHA256];
 
   var rows = await pool.query(query, values);
+<<<<<<< HEAD
   if (notEmptyQueryCheck(rows)) {
+=======
+  if (!isEmptyObject(rows)) {
+>>>>>>> faf1a0847720f3acf4320983fb8bc2f53c4cc380
     res.cookie("persongify_auth", chk_uname, { signed: true });
     res.send("successfully logged on user: " + chk_uname);
   } else {
