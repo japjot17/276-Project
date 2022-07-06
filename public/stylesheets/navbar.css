@@ -8,6 +8,7 @@ body {
 }
 
 .navbar {
+    font-family: 'Abel';
     display: flex;
     position: relative;
     justify-content: space-between;
@@ -69,7 +70,7 @@ body {
     border-radius: 10px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1560px) {
     .navbar {
         flex-direction: column;
         justify-content: center;
