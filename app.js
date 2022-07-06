@@ -45,15 +45,18 @@ var encryptSHA256 = function (plain) {
 };
 
 var checkAuthorizedUser = function () {
-  if (req.signedCookies.persongify_auth) return true;
+  if (req.signedCookies['persongify_auth']) return true;
   return false;
 };
 
-var isEmptyObject = function (obj) {
-  console.log("testing empty object...");
-  console.log("keys(obj) length: " + Object.keys(obj).length);
-  return !Object.keys(obj).length;
-};
+// helper function to check if the query doesn't have any results
+function notEmptyQueryCheck(rows) {
+  if (rows != undefined && rows.rowCount != 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 // understand JSON
 app.use(express.json());
@@ -62,6 +65,9 @@ app.use(express.urlencoded({ extended: false }));
 // work with cookies
 var cookieSecret = generateRandomString(20);
 app.use(cookieParser(cookieSecret));
+
+// redirection after login
+var redir;
 
 /*****************************************************************************/
 
@@ -97,7 +103,7 @@ app.post("/addUser", async (req, res) => {
   var values = [userName, firstName, lastName, age, pwdSHA256];
 
   var rows = await pool.query(query, values);
-  if (rows) {
+  if (notEmptyQueryCheck(rows)) {
     res.cookie("persongify_auth", userName, { signed: true });
     res.send("successfully added user: " + userName);
     // res.render('pages/dashboard', rows);
@@ -122,20 +128,17 @@ app.post("/verify-login", async (req, res) => {
   if (notEmptyQueryCheck(rows)) {
     res.cookie("persongify_auth", chk_uname, { signed: true });
     console.log("successfully logged on user: " + chk_uname);
-    res.redirect("/home");
+    if (redir) {
+      res.redirect(redir);
+      delete redir;
+    }
+    else {
+      res.redirect("/home");
+    }
   } else {
     res.redirect("/login");
   }
 });
-
-//helper function to check if the query doesn't have any results
-function notEmptyQueryCheck(rows) {
-  if (rows != undefined && rows.rowCount != 0) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
 var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
@@ -208,9 +211,10 @@ app.get("/token-api", (req, res) => {
 });
 
 app.get("/trending", (req, res) => {
-  if (req.signedCookies["persongify_auth"]) {
+  if (checkAuthorizedUser) {
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
+    redir = req.originalUrl;
     res.redirect("/login");
   }
 });
