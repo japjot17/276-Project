@@ -28,7 +28,6 @@ const getFeaturedPlaylists = async (limit, apiToken) => {
     addPlaylistToEndpoint(data);
   } catch (e) {
     console.log(e);
-    window.location.replace("/home");
   }
 };
 
