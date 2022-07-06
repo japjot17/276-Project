@@ -105,8 +105,9 @@ app.post("/addUser", async (req, res) => {
   var rows = await pool.query(query, values);
   if (notEmptyQueryCheck(rows)) {
     res.cookie("persongify_auth", userName, { signed: true });
-    res.send("successfully added user: " + userName);
-    // res.render('pages/dashboard', rows);
+    // res.send("successfully added user: " + userName);
+    app.locals.signedIn = true;
+    res.redirect('/');
   } else {
     res.redirect("/newUser");
   }
@@ -128,6 +129,7 @@ app.post("/verify-login", async (req, res) => {
   if (notEmptyQueryCheck(rows)) {
     res.cookie("persongify_auth", chk_uname, { signed: true });
     console.log("successfully logged on user: " + chk_uname);
+    app.locals.signedIn = true;
     if (redir) {
       res.redirect(redir);
       delete redir;
