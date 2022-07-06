@@ -142,6 +142,14 @@ app.post("/verify-login", async (req, res) => {
   }
 });
 
+app.get("/logout", (req, res) => {
+  app.locals.signedIn = false;
+  res.clearCookie("persongify_auth", { signed: true });
+  res.clearCookie("spotify_auth", { signed: true });
+
+  res.redirect('/home');
+})
+
 /************************* SPOTIFY OAUTH ROUTING *****************************/
 var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
 var client_secret =
@@ -150,20 +158,27 @@ var redirect_uri =
   process.env.REDIRECT_URI || "http://localhost:5000/spotify-callback";
 
 app.get("/spotify-login", (req, res) => {
-  var state = generateRandomString(16);
-  var scope =
-    "user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify";
+  if (!checkAuthorizedUser) {
+    redir = req.originalUrl;
+    res.redirect("/login");
+  }
+  else {
+    var state = generateRandomString(16);
+    var scope =
+      "user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify";
 
-  res.redirect(
-    "https://accounts.spotify.com/authorize?" +
-      qs.stringify({
-        response_type: "code",
-        client_id: client_id,
-        scope: scope,
-        redirect_uri: redirect_uri,
-        state: state,
-      })
-  );
+    res.redirect(
+      "https://accounts.spotify.com/authorize?" +
+        qs.stringify({
+          response_type: "code",
+          client_id: client_id,
+          scope: scope,
+          redirect_uri: redirect_uri,
+          state: state,
+        })
+    );
+  }
+  
 });
 
 var newToken;
