@@ -49,10 +49,13 @@ var checkAuthorizedUser = function () {
   return false;
 };
 
-var isEmptyObject = function (obj) {
-  console.log("testing empty object...");
-  console.log("keys(obj) length: " + Object.keys(obj).length);
-  return !Object.keys(obj).length;
+// helper function to check if the query doesn't have any results
+function notEmptyQueryCheck(rows) {
+  if (rows != undefined && rows.rowCount != 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // understand JSON
@@ -118,26 +121,13 @@ app.post("/verify-login", async (req, res) => {
   var values = [chk_uname, chk_pwdSHA256];
 
   var rows = await pool.query(query, values);
-<<<<<<< HEAD
   if (notEmptyQueryCheck(rows)) {
-=======
-  if (!isEmptyObject(rows)) {
->>>>>>> faf1a0847720f3acf4320983fb8bc2f53c4cc380
     res.cookie("persongify_auth", chk_uname, { signed: true });
     res.send("successfully logged on user: " + chk_uname);
   } else {
     res.redirect("/login");
   }
 });
-
-//helper function to check if the query doesn't have any results
-function notEmptyQueryCheck(rows) {
-  if (rows != undefined && rows.rowCount != 0) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
 var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
