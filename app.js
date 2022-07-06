@@ -170,7 +170,7 @@ var redirect_uri =
   process.env.REDIRECT_URI || "http://localhost:5000/spotify-callback";
 
 app.get("/spotify-login", (req, res) => {
-  if (!checkAuthorizedUser) {
+  if (!checkAuthorizedUser()) {
     redir = req.originalUrl;
     res.redirect("/login");
   }
@@ -240,7 +240,7 @@ app.get("/token-api", (req, res) => {
 });
 
 app.get("/trending", (req, res) => {
-  if (checkAuthorizedUser) {
+  if (checkAuthorizedUser()) {
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
     redir = req.originalUrl;
