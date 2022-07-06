@@ -7,7 +7,6 @@ var refreshToken = async () => {
   try {
     const data = await response.json();
     apiToken = data.access_token;
-    // getUserPlaylists(user_id, 7, apiToken);
     getFeaturedPlaylists(9, apiToken);
   } catch (e) {
     console.log(e);
@@ -23,6 +22,7 @@ const getFeaturedPlaylists = async (limit, apiToken) => {
       headers: { Authorization: "Bearer " + apiToken },
     }
   );
+  console.log(result);
   const data = await result.json();
   if (data.error != undefined) {
     window.location.replace("/home");
