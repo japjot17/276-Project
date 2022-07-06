@@ -121,7 +121,8 @@ app.post("/verify-login", async (req, res) => {
   var rows = await pool.query(query, values);
   if (notEmptyQueryCheck(rows)) {
     res.cookie("persongify_auth", chk_uname, { signed: true });
-    res.send("successfully logged on user: " + chk_uname);
+    console.log("successfully logged on user: " + chk_uname);
+    res.redirect("/home");
   } else {
     res.redirect("/login");
   }
@@ -190,7 +191,6 @@ app.get("/spotify-callback", (req, res) => {
         if (response.status === 200) {
           res.cookie("spotify_auth", state, { signed: true });
           newToken = response.data;
-          // res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`); // placeholder
           res.redirect("/playlists");
         } else {
           res.send(response);
@@ -211,7 +211,7 @@ app.get("/playlists", (req, res) => {
   if (req.signedCookies["persongify_auth"]) {
     res.sendFile(path.join(__dirname, "/public/playlists.html"));
   } else {
-    res.redirect("/");
+    res.redirect("/login");
   }
 });
 

@@ -10,13 +10,13 @@ var refreshToken = async () => {
     getFeaturedPlaylists(9, apiToken);
   } catch (e) {
     console.log(e);
-    window.location.replace("/home");
+    window.location.replace("/login");
   }
 };
-//top hits: 37i9dQZEVXbMda2apknTqH
+var top_hits_url = "37i9dQZEVXbMda2apknTqH";
 const getFeaturedPlaylists = async (limit, apiToken) => {
   const result = await fetch(
-    `https://api.spotify.com/v1/playlists/37i9dQZEVXbMda2apknTqH`,
+    `https://api.spotify.com/v1/playlists/${top_hits_url}`,
     {
       method: "GET",
       headers: { Authorization: "Bearer " + apiToken },
@@ -24,7 +24,7 @@ const getFeaturedPlaylists = async (limit, apiToken) => {
   );
   const data = await result.json();
   if (data.error != undefined) {
-    window.location.replace("/home");
+    window.location.replace("/login");
   }
   console.log(data);
   addPlaylistToEndpoint(data, limit);
