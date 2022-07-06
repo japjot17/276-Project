@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang = 'en' dir = 'ltr'>
+
+    <head>
+        <link rel="stylesheet" href="css/playlistgenerates.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    
+    <body>
+        <div class="musicCreatpart">
+        <div class="musicbody">
+            <div class="musiccreater"> 
+        <form method = "post" action = "/parameters">
+    
+      
+            <h1>Generating Recommendations</h1><br>
+           
+            <input type = "number" name = "limit" value = "" placeholder = "number of songs">
+           
+            <label for ="genre">select genre</label>
+            <select id = "genre" name = "genre">
+                <option value = "hip-hop">hip-hop</option>
+                <option value = "rock">rock</option>
+                <option value = "sad">sad</option>
+                <option value = "romance">romance</option>
+                <option value = "jazz">jazz</option>
+                <option value = "r-n-b">r-n-b</option>
+            </select> <br><br>
+            <h2>Parameters (enter values between 0 and 1)</h2><br>
+                  
+            <input type = "number" step = "0.01" name = "danceability" value = "" placeholder = "danceability"> <br><br>
+            <input type = "number" step = "0.01" name = "energy" value = "" placeholder = "energy"><br><br>
+           
+    
+            <!--<input type = "submit" name  = "sub" value = "send to server">-->
+            <button id = "button" type = "submit" name = "button" value = "add"> Create </button>
+          
+            
+            </form>
+        </div>
+        
+    </div>
+    
+    <div class="list">
+        <div class="musiccreater"> 
+        <h1>Song Recommendations</h1>
+    
+        <% for (var i = 0; i<songs.length;i++){ %>
+            <li>
+                <a class="songName"><%= songs[i] %></a> by <a class="songArtists"><%= artists[i] %></a>
+            </li>
+            
+        <%}%>
+        </div>
+    </div>
+</div>
+    <div class="musicplayer">
+        <div class="musicplayer2"> 
+            <audio id="music"></audio>
+            <div id="disks" class="disk">
+            </div>
+            
+            <p id="SongName"></p>
+            <p id="artists"></p><br><br>
+
+            <div class="player-controls">
+            <button class="sidebutton" id="prev"><i class="fa fa-step-backward"></i></button>
+            <button class="playbutton" id="play-button"><i id="play-icon" class="fa fa-play"></i></button>
+            <button class="sidebutton" id="next"><i class="fa fa-step-forward"></i></button>
+            
+        </div>
+        </div>
+    </div>
+    <script src="musicplayer.js">
+    </script>
+    
+</body>
+
+</html>
