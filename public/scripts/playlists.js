@@ -13,26 +13,10 @@ var refreshToken = async () => {
     window.location.replace("/home");
   }
 };
-
+//top hits: 37i9dQZEVXbMda2apknTqH
 const getFeaturedPlaylists = async (limit, apiToken) => {
   const result = await fetch(
-    `https://api.spotify.com/v1/browse/featured-playlists?limit=${limit}`,
-    {
-      method: "GET",
-      headers: { Authorization: "Bearer " + apiToken },
-    }
-  );
-  console.log(result);
-  const data = await result.json();
-  if (data.error != undefined) {
-    window.location.replace("/home");
-  }
-  addPlaylistToEndpoint(data);
-};
-
-const getUserPlaylists = async (user_id, limit, apiToken) => {
-  const result = await fetch(
-    `https://api.spotify.com/v1/users/${user_id}/playlists?limit=${limit}`,
+    `https://api.spotify.com/v1/playlists/37i9dQZEVXbMda2apknTqH`,
     {
       method: "GET",
       headers: { Authorization: "Bearer " + apiToken },
@@ -42,33 +26,13 @@ const getUserPlaylists = async (user_id, limit, apiToken) => {
   if (data.error != undefined) {
     window.location.replace("/home");
   }
-  for (let i = 0; i < data.items.length; i++) {
-    const overlay = document.createElement("div");
-    overlay.setAttribute("class", "overlay");
-    const playlistDisplay = document.createElement("div");
-    playlistDisplay.setAttribute("class", "playlist");
-    const overlayButton = document.createElement("button");
-    overlayButton.setAttribute("class", "btn btn-success");
-    const buttonHolder = document.createElement("div");
-    buttonHolder.setAttribute("class", "btn-container");
-    if (data.items[i].images[1] != null) {
-      //get 300x300 img
-      playlistDisplay.style.backgroundImage = `url(${data.items[i].images[1].url})`;
-    } else {
-      //if none available, get default image
-      playlistDisplay.style.backgroundImage = `url(${data.items[i].images[0].url})`;
-    }
-    buttonHolder.appendChild(overlayButton);
-    overlay.innerHTML = data.items[i].name;
-    overlayButton.innerHTML = "Do something";
-    overlay.appendChild(buttonHolder);
-    playlistDisplay.appendChild(overlay);
-    document.getElementById("wrapper").appendChild(playlistDisplay);
-  }
+  console.log(data);
+  addPlaylistToEndpoint(data, limit);
 };
 
-function addPlaylistToEndpoint(data) {
-  for (let i = 0; i < data.playlists.items.length; i++) {
+function addPlaylistToEndpoint(data, limit) {
+  let lowLimit = Math.min(limit, data.tracks.items.length);
+  for (let i = 0; i < lowLimit; i++) {
     const overlay = document.createElement("div");
     overlay.setAttribute("class", "overlay");
     const playlistDisplay = document.createElement("div");
@@ -77,23 +41,24 @@ function addPlaylistToEndpoint(data) {
     overlayButton.setAttribute("class", "btn btn-success");
     const buttonHolder = document.createElement("div");
     buttonHolder.setAttribute("class", "btn-container");
-    if (data.playlists.items[i].images[1] != null) {
+    if (data.tracks.items[i].track.album.images[1] == undefined) {
       //get 300x300 img
-      playlistDisplay.style.backgroundImage = `url(${data.playlists.items[i].images[1].url})`;
+      playlistDisplay.style.backgroundImage = `url(${data.tracks.items[i].track.album.images[1].url})`;
     } else {
       //if none available, get default image
-      playlistDisplay.style.backgroundImage = `url(${data.playlists.items[i].images[0].url})`;
+      playlistDisplay.style.backgroundImage = `url(${data.tracks.items[i].track.album.images[0].url})`;
     }
     buttonHolder.appendChild(overlayButton);
-    overlay.innerHTML = data.playlists.items[i].name;
-    overlayButton.innerHTML = "Do something";
+    overlay.innerHTML = data.tracks.items[i].track.name;
+    overlayButton.innerHTML = "Preview";
+    overlayButton.onclick = function () {
+      location.href = data.tracks.items[i].track.external_urls.spotify;
+    };
     overlay.appendChild(buttonHolder);
     playlistDisplay.appendChild(overlay);
     document.getElementById("wrapper").appendChild(playlistDisplay);
   }
 }
-
-// function getToken() {}
 
 function msToMinSec(duration_ms) {
   return (
