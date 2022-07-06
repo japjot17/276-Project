@@ -87,7 +87,7 @@ app.get("/", (req, res) => {
 
 app.get("/home", (req, res) => {
   // res.sendFile(path.join(__dirname, "/public/home.html"));
-  // if (checkAuthorizedUser) {
+  // if (checkAuthorizedUser(req)) {
   //   app.locals.signedIn = true;
   // }
   // else {
@@ -142,14 +142,9 @@ app.post("/verify-login", async (req, res) => {
     res.cookie("persongify_auth", chk_uname, { signed: true });
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
-    if (redir) {
-      let url = redir;
-      delete redir;
-      res.redirect(url);
-    }
-    else {
-      res.redirect("/home");
-    }
+    let url = app.locals.redir;
+    app.locals.redir = '/home';
+    res.redirect(url);
   } else {
     res.redirect("/login");
   }
@@ -157,6 +152,7 @@ app.post("/verify-login", async (req, res) => {
 
 app.get("/logout", (req, res) => {
   app.locals.signedIn = false;
+  app.locals.redir = '/home';
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
 
@@ -172,7 +168,7 @@ var redirect_uri =
 
 app.get("/spotify-login", (req, res) => {
   if (!checkAuthorizedUser(req)) {
-    redir = req.originalUrl;
+    app.locals.redir = req.originalUrl;
     res.redirect("/login");
   }
   else {
