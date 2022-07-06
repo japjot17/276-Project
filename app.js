@@ -50,6 +50,8 @@ var checkAuthorizedUser = function () {
 };
 
 var isEmptyObject = function (obj) {
+  console.log("testing empty object...");
+  console.log("keys(obj) length: " + Object.keys(obj).length);
   return !Object.keys(obj).length;
 }
 
