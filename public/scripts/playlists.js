@@ -8,9 +8,9 @@ var refreshToken = async () => {
     const data = await response.json();
     apiToken = data.access_token;
     // getUserPlaylists(user_id, 7, apiToken);
-    console.log(apiToken);
     getFeaturedPlaylists(9, apiToken);
   } catch (e) {
+    console.log(e);
     window.location.replace("/home");
   }
 };
@@ -23,8 +23,13 @@ const getFeaturedPlaylists = async (limit, apiToken) => {
       headers: { Authorization: "Bearer " + apiToken },
     }
   );
-  const data = await result.json();
-  addPlaylistToEndpoint(data);
+  try {
+    const data = await result.json();
+    addPlaylistToEndpoint(data);
+  } catch (e) {
+    console.log(e);
+    window.location.replace("/home");
+  }
 };
 
 const getUserPlaylists = async (user_id, limit, apiToken) => {
