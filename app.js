@@ -14,11 +14,11 @@ const pool = new Pool({
   // connectionString: 'schema://user:password@host/database'
 
   // heroku server
-  connectionString: "postgres://postgres:root@localhost",
-  // ssl: {
-  //   require: true,
-  //   rejectUnauthorized: false,
-  // },
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -49,14 +49,11 @@ var checkAuthorizedUser = function () {
   return false;
 };
 
-// helper function to check if the query doesn't have any results
-function notEmptyQueryCheck(rows) {
-  if (rows != undefined && rows.rowCount != 0) {
-    return true;
-  } else {
-    return false;
-  }
-}
+var isEmptyObject = function (obj) {
+  console.log("testing empty object...");
+  console.log("keys(obj) length: " + Object.keys(obj).length);
+  return !Object.keys(obj).length;
+};
 
 // understand JSON
 app.use(express.json());
@@ -129,6 +126,15 @@ app.post("/verify-login", async (req, res) => {
     res.redirect("/login");
   }
 });
+
+//helper function to check if the query doesn't have any results
+function notEmptyQueryCheck(rows) {
+  if (rows != undefined && rows.rowCount != 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
 var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
