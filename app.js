@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   // localhost server
-  // connectionString: 'schema://user:password@host/database'
+  // connectionString: "postgres://postgres:root@localhost",
 
   // heroku server
   connectionString: process.env.DATABASE_URL,
@@ -75,7 +75,7 @@ app.get("/", (req, res) => {
   //     .send('Hello server is running')
   //     .end();
   // res.render("pages/start-page");
-  res.redirect("https://persongify.herokuapp.com/home.html");
+  res.redirect("/home");
 });
 
 /********************** POSTGRES ACCOUNT SETUP *******************************/
@@ -147,8 +147,6 @@ app.get("/spotify-login", (req, res) => {
   var state = generateRandomString(16);
   var scope =
     "user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify";
-
-  // res.cookie('spotify_auth', state);
 
   res.redirect(
     "https://accounts.spotify.com/authorize?" +
