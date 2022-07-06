@@ -1,3 +1,7 @@
+:root {
+  --brand-magenta: #ef007e
+}
+
 body {
   overflow-x: hidden;
   overflow-y: hidden;
@@ -70,4 +74,5 @@ body {
   width: 200px;
   top: 20px;
   left: 20px;
+  background-color: var(--brand-magenta);
 }
