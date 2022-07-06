@@ -44,7 +44,7 @@ var encryptSHA256 = function (plain) {
   return new shajs.sha256().update(plain).digest("hex");
 };
 
-var checkAuthorizedUser = function () {
+var checkAuthorizedUser = function (req) {
   console.log("req.signedCookies['persongify_auth']: ", req.signedCookies['persongify_auth']);
   if (req.signedCookies['persongify_auth']) return true;
   return false;
@@ -170,7 +170,7 @@ var redirect_uri =
   process.env.REDIRECT_URI || "http://localhost:5000/spotify-callback";
 
 app.get("/spotify-login", (req, res) => {
-  if (!checkAuthorizedUser()) {
+  if (!checkAuthorizedUser(req)) {
     redir = req.originalUrl;
     res.redirect("/login");
   }
@@ -240,7 +240,7 @@ app.get("/token-api", (req, res) => {
 });
 
 app.get("/trending", (req, res) => {
-  if (checkAuthorizedUser()) {
+  if (checkAuthorizedUser(req)) {
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
     redir = req.originalUrl;
