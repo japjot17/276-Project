@@ -45,6 +45,7 @@ var encryptSHA256 = function (plain) {
 };
 
 var checkAuthorizedUser = function () {
+  console.log("req.signedCookies['persongify_auth']: ", req.signedCookies['persongify_auth']);
   if (req.signedCookies['persongify_auth']) return true;
   return false;
 };
