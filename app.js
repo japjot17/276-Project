@@ -193,7 +193,7 @@ app.get("/spotify-callback", (req, res) => {
           res.cookie("spotify_auth", state, { signed: true });
           newToken = response.data;
           // res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`); // placeholder
-          res.redirect("/home");
+          res.redirect("/playlists");
         } else {
           res.send(response);
         }
