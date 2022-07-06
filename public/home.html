@@ -1,57 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="./stylesheets/navbar.css" />
-    <link rel="stylesheet" href="./stylesheets/carousel.css" />
-    <script src="carousel.js" defer></script>
-    <script src="navbar.js" defer></script>
-    <title>Persongify - Home</title>
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="brand-title">Persongify</div>
-      <a href="#" class="toggle-button">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </a>
-      <div class="navbar-links">
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="/login">Generate</a></li>
-          <li><a href="#">Profile</a></li>
-        </ul>
-      </div>
-    </nav>
-    <div class="carousel-container">
+    <head>
+      <link rel="stylesheet" href="./stylesheets/navbar.css">
+      <link rel="stylesheet" href="./stylesheets/carousel.css">
+      <script src="carousel.js" defer></script>
+      <script src="navbar.js" defer></script>
+      <title>Persongify - Home</title>
+    </head>
+    <body>
+      <nav class="navbar">
+        <div class="brand-title">Persongify</div>
+        <a href="#" class="toggle-button">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </a>
+        <div class="navbar-links">
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Generate</a></li>
+            <li><a href="#">Profile</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- carousel start -->
       <div class="carousel">
-        <button class="carousel-button prev" onclick="plusSlides(-1)">
-          &#10094;
-        </button>
-        <button class="carousel-button next" onclick="plusSlides(1)">
-          &#10095;
-        </button>
-        <ul>
-          <li class="slide fade">
-            <img src="img1.png" alt="Title" />
-          </li>
-          <li class="slide fade">
-            <img src="img2.png" alt="Why Persongify" />
-          </li>
-          <li class="slide fade">
-            <img src="img3.png" alt="Personalized Playlists" />
-          </li>
-          <li class="slide fade">
-            <img src="img4.png" alt="Commute" />
-          </li>
-          <li class="slide fade">
-            <img src="img5.png" alt="Year in Review" />
-          </li>
-          <li class="slide fade">
-            <img src="img6.png" alt="Getting Started" />
-          </li>
-        </ul>
+        <!-- slides start -->
+        <div class="slide active">
+          <img src="img1.png" alt="Title">
+        </div>
+        <div class="slide">
+          <img src="img2.png" alt="Why Persongify">
+        </div>
+        <div class="slide">
+          <img src="img3.png" alt="Personalized Playlists">
+        </div>
+        <div class="slide">
+          <img src="img4.png" alt="Perfect for your Commute">
+        </div>
+        <div class="slide">
+          <img src="img5.png" alt="Year in Review">
+        </div>
+        <div class="slide">
+          <img src="img6.png" alt="Getting Started">
+        </div>
+        <!-- slides end -->
+        <!-- buttons start -->
+        <div class="navigation">
+          <div class="carousel-button prev">&#10094;</div>
+          <div class="carousel-button next">&#10095;</div>
+        </div>
+        <!-- buttons end -->
+        <!-- slide icons start -->
+        <div class="slide-icons">
+          <div class="icon active"></div>
+          <div class="icon"></div>
+          <div class="icon"></div>
+          <div class="icon"></div>
+          <div class="icon"></div>
+          <div class="icon"></div>
+        </div>
+        <!-- slide icons end -->
       </div>
-    </div>
-  </body>
+      <!-- carousel end -->
+    </body>
 </html>
