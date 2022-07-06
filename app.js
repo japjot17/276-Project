@@ -4,6 +4,7 @@ const axios = require("axios");
 const qs = require("qs");
 const shajs = require("sha.js");
 const cookieParser = require("cookie-parser");
+const session = require('express-session');
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -62,6 +63,9 @@ app.use(express.urlencoded({ extended: false }));
 // work with cookies
 var cookieSecret = generateRandomString(20);
 app.use(cookieParser(cookieSecret));
+
+// redirection after login
+var redir;
 
 /*****************************************************************************/
 
@@ -122,7 +126,13 @@ app.post("/verify-login", async (req, res) => {
   if (notEmptyQueryCheck(rows)) {
     res.cookie("persongify_auth", chk_uname, { signed: true });
     console.log("successfully logged on user: " + chk_uname);
-    res.redirect("/home");
+    if (redir) {
+      res.redirect(redir);
+      delete redir;
+    }
+    else {
+      res.redirect("/home");
+    }
   } else {
     res.redirect("/login");
   }
@@ -211,6 +221,7 @@ app.get("/trending", (req, res) => {
   if (req.signedCookies["persongify_auth"]) {
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
+    redir = req.originalUrl;
     res.redirect("/login");
   }
 });
