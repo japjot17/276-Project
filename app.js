@@ -74,7 +74,8 @@ app.get("/", (req, res) => {
   //     .status(200)
   //     .send('Hello server is running')
   //     .end();
-  res.render("pages/start-page");
+  // res.render("pages/start-page");
+  res.redirect("https://persongify.herokuapp.com/home.html");
 });
 
 /********************** POSTGRES ACCOUNT SETUP *******************************/
