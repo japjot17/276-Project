@@ -45,7 +45,7 @@ var encryptSHA256 = function (plain) {
 };
 
 var checkAuthorizedUser = function () {
-  if (req.signedCookies.persongify_auth) return true;
+  if (req.signedCookies['persongify_auth']) return true;
   return false;
 };
 
@@ -211,7 +211,7 @@ app.get("/token-api", (req, res) => {
 });
 
 app.get("/trending", (req, res) => {
-  if (req.signedCookies["persongify_auth"]) {
+  if (checkAuthorizedUser) {
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
     redir = req.originalUrl;
