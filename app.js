@@ -143,8 +143,9 @@ app.post("/verify-login", async (req, res) => {
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
     if (redir) {
-      res.redirect(redir);
+      let url = redir;
       delete redir;
+      res.redirect(url);
     }
     else {
       res.redirect("/home");
