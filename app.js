@@ -82,6 +82,7 @@ app.get("/", (req, res) => {
   //     .send('Hello server is running')
   //     .end();
   // res.render("pages/start-page");
+  app.locals.redir = '/home';
   res.redirect("/home");
 });
 
