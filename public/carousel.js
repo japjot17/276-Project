@@ -1,27 +1,42 @@
-let slideIndex = 1;
-showSlides(slideIndex);
+const nextBtn = document.querySelector(".next");
+const prevBtn = document.querySelector(".prev");
+const slides = document.querySelectorAll(".slide");
+const slideIcons = document.querySelectorAll(".icon");
+const numberOfSlides = slides.length;
+var slideNumber = 0;
 
-// next/prev controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
+nextBtn.addEventListener("click", () => {
+    slides.forEach((slide) => {
+        slide.classList.remove("active");
+    });
+    slideIcons.forEach((slideIcon) => {
+        slideIcon.classList.remove("active");
+    });
+    
+    slideNumber++;
 
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("slide");
-  // ensure it loops around
-  if (n > slides.length) {
-    slideIndex = 1;
-  }
-  if (n < 1) {
-    slideIndex = slides.length;
-  }
+    if (slideNumber > (numberOfSlides - 1)){
+        slideNumber = 0;
+    }
 
-  // hide all the images
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none"
-  }
-  
-  // display the correct image
-  slides[slideIndex-1].style.display = "block";
-}
+  slides[slideNumber].classList.add("active");
+  slideIcons[slideNumber].classList.add("active");
+});
+
+prevBtn.addEventListener("click", () => {
+    slides.forEach((slide) => {
+        slide.classList.remove("active");
+    });
+    slideIcons.forEach((slideIcon) => {
+        slideIcon.classList.remove("active");
+    });
+    
+    slideNumber--;
+
+    if (slideNumber < 0){
+        slideNumber = numberOfSlides -1;
+    }
+
+  slides[slideNumber].classList.add("active");
+  slideIcons[slideNumber].classList.add("active");
+})
