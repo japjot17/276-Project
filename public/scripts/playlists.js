@@ -17,19 +17,17 @@ var refreshToken = async () => {
 
 const getFeaturedPlaylists = async (limit, apiToken) => {
   const result = await fetch(
-    `https://api.spotify.com/v1/browse/featured-playlists?limit=${limit}`,
+    `https://api.spotify.com/v1/browse/featured-playlists?limit=${limit}  `,
     {
       method: "GET",
       headers: { Authorization: "Bearer " + apiToken },
     }
   );
-  console.log(apiToken);
-  try {
-    const data = await result.json();
-    addPlaylistToEndpoint(data);
-  } catch (e) {
-    console.log(e);
+  const data = await result.json();
+  if (data.error != undefined) {
+    window.location.replace("/home");
   }
+  addPlaylistToEndpoint(data);
 };
 
 const getUserPlaylists = async (user_id, limit, apiToken) => {
