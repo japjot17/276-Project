@@ -208,7 +208,13 @@ app.get("/token-api", (req, res) => {
 });
 
 app.get("/playlists", (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/playlists.html"));
+  if (req.signedCookies['persongify_auth']) {
+    res.sendFile(path.join(__dirname, "/public/playlists.html"));
+  }
+  else {
+    res.redirect('/');
+  }
+  
 });
 
 app.get("/home", (req, res) => {
