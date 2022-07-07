@@ -250,6 +250,65 @@ app.get("/trending", (req, res) => {
   }
 });
 
+//generating recommendations
+var songs = [];
+var artists = [];
+var SpotifyWebApi = require('spotify-web-api-node');
+
+var spotifyApi = new SpotifyWebApi();
+
+spotifyApi.setAccessToken('BQAKi2EWp5kdiRhflyIiLor4NFV_EEQyRyjAAMuV7XFVK4MA-58zRejrnmRwHtakrfabzmyWNP8Hc5NpY4Me43Xyqe9QBd6N78wJ--11qHT06DnOPgKJHK_DxyG9BPI2Osb9xE6RQ28R4GZhlyT-DIILkpyWN-aIFeRIpotoNA');
+
+
+app.post("/songs", function(req,res){
+
+    var limit = req.body.limit;
+    var genre = req.body.genre;
+    var dance = req.body.danceability;
+    var energy = req.body.energy;
+
+
+    spotifyApi.getRecommendations({
+        limit: limit,
+        seed_genres: genre,
+        target_danceability: dance,
+        target_energy: energy
+      })
+    .then(function(data) {
+        console.log("working");
+
+        
+      let recommendations = data.body.tracks;
+      for(let i = 0; i<recommendations.length; i++){
+
+        songs.push(recommendations[i].name);
+        artists.push(recommendations[i].artists[0].name);
+
+        
+      }
+      res.redirect("/songs");
+    
+    }, function(err) {
+      console.log("Something went wrong!", err);
+    });
+
+
+})
+
+
+app.get("/songs", function(req,res){
+
+    for(let i = 0; i<songs.length;i++){
+        console.log(artists[i]);
+    }
+
+    res.render("pages/songs", {songs:songs, artists:artists});
+    
+})
+
+
+
+
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
