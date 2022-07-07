@@ -78,7 +78,7 @@ body {
     border-radius: 10px;
 }
 
-@media (max-width: 1560px) {
+@media (max-width: 1712px) {
     .navbar {
         flex-direction: column;
         justify-content: center;
