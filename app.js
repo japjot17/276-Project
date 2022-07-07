@@ -124,7 +124,9 @@ app.post("/addUser", async (req, res) => {
     res.cookie("persongify_auth", userName, { signed: true });
     // res.send("successfully added user: " + userName);
     app.locals.signedIn = true;
-    res.redirect('/');
+    let url = app.locals.redir;
+    app.locals.redir = '/home';
+    res.redirect(url);
   } else {
     res.redirect("/newUser");
   }
