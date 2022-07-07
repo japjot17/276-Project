@@ -171,6 +171,7 @@ var client_secret =
 var redirect_uri =
   process.env.REDIRECT_URI || "http://localhost:5000/spotify-callback";
 
+
 app.get("/spotify-login", (req, res) => {
   if (!checkAuthorizedUser(req)) {
     app.locals.redir = req.originalUrl;
@@ -238,7 +239,9 @@ app.get("/spotify-callback", (req, res) => {
 });
 
 app.get("/token-api", (req, res) => {
+  
   res.json(newToken);
+
 });
 
 app.get("/trending", (req, res) => {
@@ -255,9 +258,29 @@ var songs = [];
 var artists = [];
 var SpotifyWebApi = require('spotify-web-api-node');
 
-var spotifyApi = new SpotifyWebApi();
+var spotifyApi = new SpotifyWebApi({
+  clientId: client_id,
+  clientSecret: client_secret
+});
 
-spotifyApi.setAccessToken('BQAKi2EWp5kdiRhflyIiLor4NFV_EEQyRyjAAMuV7XFVK4MA-58zRejrnmRwHtakrfabzmyWNP8Hc5NpY4Me43Xyqe9QBd6N78wJ--11qHT06DnOPgKJHK_DxyG9BPI2Osb9xE6RQ28R4GZhlyT-DIILkpyWN-aIFeRIpotoNA');
+
+
+// Retrieve an access token.
+spotifyApi.clientCredentialsGrant().then(
+  function(data) {
+    console.log('The access token expires in ' + data.body['expires_in']);
+    
+
+    // Save the access token so that it's used in future calls
+    spotifyApi.setAccessToken(data.body['access_token']);
+  },
+  function(err) {
+    console.log('Something went wrong when retrieving an access token', err);
+  }
+);
+
+
+
 
 
 app.post("/songs", function(req,res){
