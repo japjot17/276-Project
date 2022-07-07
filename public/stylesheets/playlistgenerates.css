@@ -6,7 +6,7 @@
 }
 body {
     display: flex;
-    background-image: url("../img7.png");
+    background-image: url("../media/bg-hollow-bottom-right.png");
     background-size: cover;
     
 }
@@ -69,7 +69,7 @@ body {
     width: 180px;
     height: 180px;
     border-radius: 50%;
-    background-image: url(../music.png);
+    background-image: url(../media/record-player.png);
     background-size: cover;
     animation: rotate 20s linear infinite;
     animation-play-state: paused;
