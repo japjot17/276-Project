@@ -86,7 +86,7 @@ app.get("/", (req, res) => {
   app.locals.redir = '/home';
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
-  
+
   res.redirect("/home");
 });
 
@@ -263,8 +263,6 @@ var spotifyApi = new SpotifyWebApi({
   clientSecret: client_secret
 });
 
-
-
 // Retrieve an access token.
 spotifyApi.clientCredentialsGrant().then(
   function(data) {
@@ -278,10 +276,6 @@ spotifyApi.clientCredentialsGrant().then(
     console.log('Something went wrong when retrieving an access token', err);
   }
 );
-
-
-
-
 
 app.post("/songs", function(req,res){
 
@@ -318,19 +312,20 @@ app.post("/songs", function(req,res){
 
 })
 
-
 app.get("/songs", function(req,res){
 
-    for(let i = 0; i<songs.length;i++){
-        console.log(artists[i]);
-    }
+  for(let i = 0; i<songs.length;i++){
+      console.log(artists[i]);
+  }
 
+  if (checkAuthorizedUser(req)) {
     res.render("pages/songs", {songs:songs, artists:artists});
-    
+  } else {
+    redir = req.originalUrl;
+    res.redirect("/login");
+  }
+
 })
-
-
-
 
 // Start the server
 const PORT = process.env.PORT || 5000;
