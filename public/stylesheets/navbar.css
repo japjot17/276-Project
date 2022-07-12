@@ -7,6 +7,7 @@ body {
     padding: 0;
 }
 
+/* css for navbar */
 .navbar {
     font-family: 'Abel';
     display: flex;
@@ -18,6 +19,7 @@ body {
     width: 100%;
 }
 
+/* css for logo */
 .logo {
     display: flex;
     justify-content: space-between;
@@ -33,10 +35,13 @@ body {
     object-fit: fill;
 }
 
+/* css for links */
 .navbar-links {
     height: 100%;
 }
 
+/* Note: Flex direction is rows by default. This means items will be placed one after the other
+         in the horizontally*/
 .navbar-links ul {
     display: flex;
     margin: 0;
@@ -59,11 +64,13 @@ body {
     background-color: #555;
 }
 
+/* css for hamburger menu */
+/* Note: "display: none" makes this hidden until the media max width is reached */
 .toggle-button {
     position: absolute;
     top: 2rem;
     right: 2rem;
-    display: none;
+    display: none;  
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -78,6 +85,8 @@ body {
     border-radius: 10px;
 }
 
+/* Will display hamburger drop down menu when a breakpoint is reached 
+   This code will only apply after the condition of max-width <= ____ px is true*/
 @media (max-width: 1712px) {
     .navbar {
         flex-direction: column;
@@ -89,11 +98,16 @@ body {
         display: flex;
     }
 
+    /* hides the navbar links until they become "active" */
     .navbar-links {
         display: none;
         width: 100%;
     }
 
+    /* Note: - Changes the flex direction to column! This means when items are placed
+                on top of each other
+             - The links are still hidden because of the display: none property
+             */
     .navbar-links ul {
         width: 100%;
         flex-direction: column;
@@ -107,6 +121,7 @@ body {
         padding: .5rem 1rem;
     }
 
+    /* When the hamburger menu is clicked, the navbar-links become "active" and you can see them */
     .navbar-links.active {
         display: flex;
     }
