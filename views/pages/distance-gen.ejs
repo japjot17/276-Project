@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include ("../partials/bs5.ejs") %>
+        <%- include ("../partials/google-fonts.ejs") %>
+        <%- include ("../partials/google-icons.ejs") %>
+    </head>
+    <body>
+
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="logo">
+                <img src="./media/note.png" alt="Music Note">
+                PERSONGIFY
+            </div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/songs">Find New Music</a></li>
+                    <li><a href="/spotify-login">Trending</a></li>
+                    <% if (!locals.signedIn) { %>
+                        <li><a href="/newUser">Sign Up</a></li>
+                        <li><a href="/login">Log In</a></li>
+                    <% } else { %>
+                        <li><a href="/logout">Log Out</a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- 
+            [TEMP CONTENT FOR TESTING]
+            - assumes there is only 1 origin, 1 destination
+            - means only 1 result should be returned in dist_mat_results
+        -->
+        <!-- DISTANCE RESPONSE -->
+        <ul>
+            <li>going from <%= orig_address[1] %></li>
+            <li>going to <%= dest_address[1] %></li>
+            <% dist_mat_results.forEach(r => { %>
+                <li>duration: <%= r.elements.duration.text %></li>
+            <% }) %>
+        </ul>
+    </body>
+</html>

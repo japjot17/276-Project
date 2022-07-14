@@ -60,7 +60,7 @@ function notEmptyQueryCheck(rows) {
 
 // understand JSON
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // work with cookies
 var cookieSecret = generateRandomString(20);
@@ -85,7 +85,6 @@ app.get("/", (req, res) => {
 	app.locals.redir = "/home";
 	res.clearCookie("persongify_auth", { signed: true });
 	res.clearCookie("spotify_auth", { signed: true });
-
 	res.redirect("/home");
 });
 
@@ -235,10 +234,13 @@ app.get("/spotify-callback", (req, res) => {
 	}
 });
 
+/********************* [END] SPOTIFY OAUTH ROUTING ***************************/
+
 app.get("/token-api", (req, res) => {
   	res.json(newToken);
 });
 
+/*************************** SPOTIFY TRENDING ********************************/
 app.get("/trending", (req, res) => {
 	if (checkAuthorizedUser(req)) {
 		res.sendFile(path.join(__dirname, "/public/trending.html"));
@@ -247,7 +249,9 @@ app.get("/trending", (req, res) => {
 		res.redirect(303, "/login");
 	}
 });
+/************************ [END] SPOTIFY TRENDING *****************************/
 
+/******************** SPOTIFY PLAYLIST GENERATOR *****************************/
 //generating recommendations
 var songs = [];
 var artists = [];
