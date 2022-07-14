@@ -11,12 +11,16 @@ body {
 .navbar {
     font-family: 'Abel';
     display: flex;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     justify-content: space-between;
     align-items: center;
     background-color: rgb(15, 0, 39);
     color: white;
     width: 100%;
+    z-index: 999;
 }
 
 /* css for logo */
@@ -42,26 +46,49 @@ body {
 
 /* Note: Flex direction is rows by default. This means items will be placed one after the other
          in the horizontally*/
-.navbar-links ul {
-    display: flex;
-    margin: 0;
-    padding: 0;
+.navbar .navbar-links ul {
+    list-style: none;
 }
 
-.navbar-links li {
-    list-style: none;
+.navbar .navbar-links ul li {
+    position: relative;
+    float: left;
     font-size: 4rem;
 }
 
-.navbar-links li a {
+.navbar .navbar-links ul li a {
     display: block;
     text-decoration: none;
     color: white;
     padding: 1rem;
 }
 
-.navbar-links li:hover {
+.navbar .navbar-links ul li:hover {
     background-color: #555;
+}
+
+/* css for nested tabs */
+.navbar .navbar-links ul li ul {
+    position: absolute;
+    left: 0;
+    width: 200px;
+    background: rgb(25, 0, 63);
+    display: none;
+}
+
+.navbar .navbar-links ul li ul li {
+    width: 100%;
+    border-top: 1px solid #ef007e;
+}
+
+/* .navbar .navbar-links ul li ul li ul {
+    left: 200px;
+    top: 0;
+} */
+
+.navbar .navbar-links ul li:focus-within > ul,
+.navbar .navbar-links ul li:hover > ul {
+    display: initial;
 }
 
 /* css for hamburger menu */
@@ -85,44 +112,48 @@ body {
     border-radius: 10px;
 }
 
-/* Will display hamburger drop down menu when a breakpoint is reached 
-   This code will only apply after the condition of max-width <= ____ px is true*/
+/* - Will display hamburger drop down menu when a breakpoint is reached 
+   - This code will only apply after the condition of max-width <= ____ px is true
+   - Changes the flex direction to column! This means when items are placed
+                on top of each other
+   */
 @media (max-width: 1712px) {
+    .toggle-button {
+        display: flex;
+    }
+
     .navbar {
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
     }
 
-    .toggle-button {
-        display: flex;
-    }
-
-    /* hides the navbar links until they become "active" */
-    .navbar-links {
+    .navbar .navbar-links {
         display: none;
         width: 100%;
     }
 
-    /* Note: - Changes the flex direction to column! This means when items are placed
-                on top of each other
-             - The links are still hidden because of the display: none property
-             */
-    .navbar-links ul {
+    .navbar .navbar-links ul li {
         width: 100%;
         flex-direction: column;
-    }
-
-    .navbar-links ul li {
         text-align: center;
     }
 
-    .navbar-links ul li a {
-        padding: .5rem 1rem;
+    .navbar .navbar-links ul li ul {
+        position: relative;
+        width: 100%;
     }
 
-    /* When the hamburger menu is clicked, the navbar-links become "active" and you can see them */
+    .navbar .navbar-links ul li ul li {
+        background: rgb(25, 0, 63);
+    }
+
+    .navbar .navbar-links ul li ul li ul {
+        width: 100%;
+    }
+
     .navbar-links.active {
         display: flex;
     }
+
 }
