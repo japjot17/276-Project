@@ -67,7 +67,7 @@ var cookieSecret = generateRandomString(20);
 app.use(cookieParser(cookieSecret));
 
 // redirection after login
-var redir;
+// var redir;
 
 /*****************************************************************************/
 
@@ -346,6 +346,7 @@ app.get("/songs", function (req, res) {
 		res.redirect(303, "/login");
 	}
 });
+/******************** [END] SPOTIFY PLAYLIST GENERATOR ***********************/
 
 app.get("/account", function (req, res) {
 	// if (checkAuthorizedUser(req)) {
@@ -355,6 +356,47 @@ app.get("/account", function (req, res) {
 	//   res.redirect("/login");
 	// }
 });
+
+/*********************** SPOTIFY DISTANCE GENERATOR **************************/
+const DIST_MATRIX_API_KEY = process.env.DIST_MATRIX_API_KEY;
+
+app.get("/distance-playlist", (req, res) => {
+	if (checkAuthorizedUser(req)) {
+		// distance matrix req params
+		var lang = "en";
+		var mode = "walking";
+		var orig_loc = "Vancouver BC";
+		var dest_loc = "Seattle WA";
+		// uri-encoded
+		var enc_orig_loc = encodeURI(orig_loc);
+		var enc_dest_loc = encodeURI(dest_loc);
+
+		var config = {
+			method: "get",
+			url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${enc_orig_loc}&destinations=${enc_dest_loc}&language=${lang}&mode=${mode}&key=${DIST_MATRIX_API_KEY}`,
+			headers: { },
+		};
+		axios(config)
+		.then(response => {
+			const results = { 
+				dest_address: response.data.destination_addresses,
+				orig_address: response.data.origin_addresses,
+				dist_mat_results: response.data.rows,
+			};
+			res.render("pages/distance-gen", results);
+		})
+		.catch((error) => {
+			console.log(error.response);
+			res.send(error);
+		});
+
+		
+	} else {
+		app.locals.redir = req.originalUrl;
+		res.redirect("/login");
+	}
+})
+/******************** [END] SPOTIFY DISTANCE GENERATOR ***********************/
 
 app.get("/playlists", function (req, res) {
   	res.render("pages/saved-playlists");
