@@ -68,7 +68,7 @@ var cookieSecret = generateRandomString(20);
 app.use(cookieParser(cookieSecret));
 
 // redirection after login
-var redir;
+// var redir;
 
 /*****************************************************************************/
 
@@ -249,7 +249,7 @@ app.get("/trending", (req, res) => {
 	if (checkAuthorizedUser(req)) {
 		res.sendFile(path.join(__dirname, "/public/trending.html"));		// TODO: change to dynamic .ejs
 	} else {
-		redir = req.originalUrl;
+		app.locals.redir = req.originalUrl;
 		res.redirect("/login");
 	}
 });
@@ -325,7 +325,7 @@ app.get("/songs", function(req,res){
 	if (checkAuthorizedUser(req)) {
 		res.render("pages/songs", {songs:songs, artists:artists});
 	} else {
-		redir = req.originalUrl;
+		app.locals.redir = req.originalUrl;
 		res.redirect("/login");
 	}
 
@@ -367,7 +367,7 @@ app.get("/distance-playlist", (req, res) => {
 
 		
 	} else {
-		redir = req.originalUrl;
+		app.locals.redir = req.originalUrl;
 		res.redirect("/login");
 	}
 })
