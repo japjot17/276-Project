@@ -2,6 +2,7 @@
 <html>
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+        <!-- TODO: change <link>'s to .ejs templates -->
         <link rel="stylesheet" href="./stylesheets/navbar.css" />
         <link rel="stylesheet" href="./stylesheets/carousel.css" />
         <script src="scripts/carousel.js" defer></script>
@@ -21,16 +22,17 @@
             </a>
             <div class="navbar-links">
                 <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/songs">Find New Music</a></li>
-                <li><a href="/spotify-login">Trending</a></li>
-                <li><a href="/distance-playlist">Travel Playlist</a></li>
-                <% if (!locals.signedIn) { %>
-                    <li><a href="/newUser">Sign Up</a></li>
-                    <li><a href="/login">Log In</a></li>
-                <% } else { %>
-                    <li><a href="/logout">Log Out</a></li>
-                <% } %>
+                    <!-- TODO: remove Home, minimize links -->
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/songs">Find New Music</a></li>
+                    <li><a href="/spotify-login">Trending</a></li>
+                    <li><a href="/new-distance-playlist">Travel Playlist</a></li>
+                    <% if (!locals.signedIn) { %>
+                        <li><a href="/newUser">Sign Up</a></li>
+                        <li><a href="/login">Log In</a></li>
+                    <% } else { %>
+                        <li><a href="/logout">Log Out</a></li>
+                    <% } %>
                 </ul>
             </div>
         </nav>
