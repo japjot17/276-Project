@@ -9,7 +9,8 @@
   position: relative;
   background-color: rgb(15, 0, 39);
   width: 100%;
-  height: calc(100vh - 108px);
+  height: 100vh;
+  /* height: calc(100vh - 108px); */
   /* margin: 20px; */
   overflow: hidden;
   /* border-radius: 10px; */
@@ -19,7 +20,8 @@
 .carousel .slide{
   position: absolute;
   width: 100vw;
-  height: calc(100vh - 108px);
+  height: 100vh;
+  /* height: calc(100vh - 108px); */
   clip-path: circle(0% at 0 50%);
 }
 
@@ -32,12 +34,13 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* css for buttons */
 .navigation {
-  height: calc(100vh - 108px);
+  height: 100vh;
+  /* height: calc(100vh - 108px); */
   display: flex;
   align-items: center;
   justify-content: space-between;
