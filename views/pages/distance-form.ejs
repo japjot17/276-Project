@@ -8,6 +8,7 @@
         <!-- TODO: change css/js links to .ejs templates -->
         <link rel="stylesheet" href="./stylesheets/navbar.css" />
         <script src="scripts/navbar.js" defer></script>
+        <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
     </head>
     <body>
         
@@ -39,7 +40,7 @@
 
         <!-- HEADINGS -->
         <div class="container text-center mb-3 clearfix">
-            <h1 class="display-1 text-uppercase text-white">PERSONGIFY Travel</h1>
+            <h1 class="display-1 text-white">PERSONGIFY Travel</h1>
             <h1 class="display-6 text-white">Please specify start and end points.</h1>
         </div>
 
@@ -77,14 +78,16 @@
                     </div>
                 </div>
                 <!-- Transport Mode -->
-                <select class="form-select mb-3" id="travel_mode" name="f_travel_mode"
-                aria-label="Mode of Travel" required>
-                    <option selected>Select Mode of Travel</option>
-                    <option value="driving">Driving</option>
-                    <option value="transit">Public Transit</option>
-                    <option value="walking">Walking</option>
-                    <option value="bicycling">Bicycling</option>
-                </select>
+                <div class="form-floating">
+                    <select class="form-select mb-3" id="travel_mode" name="f_travel_mode"
+                    aria-label="Mode of Travel" required>
+                        <option value="driving" selected>Driving</option>
+                        <option value="transit">Public Transit</option>
+                        <option value="walking">Walking</option>
+                        <option value="bicycling">Bicycling</option>
+                    </select>
+                    <label for="travel_mode">Select Mode of Travel:</label>
+                </div>
 
                 <!-- form buttons -->
                 <div class="d-grid gap-3">
