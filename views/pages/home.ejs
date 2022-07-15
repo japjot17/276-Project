@@ -11,7 +11,7 @@
   </head>
   <body>
     <!-- navbar start -->
-    <nav class="navbar">
+    <header>
       <!-- logo start -->
       <div class="logo">
         <img src="./media/note.png" alt="Music Note">
@@ -25,22 +25,33 @@
         <span class="bar"></span>
       </a>
       <!-- hamburger menu end -->
-      <!-- navbar links start -->
-      <div class="navbar-links">
+      <!-- links start here -->
+      <nav class="navbar">
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/songs">Find New Music</a></li>
+          <li><a href="/songs">Discover +</a>
+            <ul>
+              <li><a href="/songs">Create Playlist</a></li>
+              <li><a href="#">Commute</a></li>
+              <li><a href="#">Year in Review</a></li>
+            </ul>
+          </li>
           <li><a href="/spotify-login">Trending</a></li>
           <% if (!locals.signedIn) { %>
             <li><a href="/newUser">Sign Up</a></li>
             <li><a href="/login">Log In</a></li>
 					<% } else { %>
-						<li><a href="/logout">Log Out</a></li>
+            <li><a href="#">Hello _____</a>
+              <li><a href="#">Account Info</a></li>
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Saved Playlist</a></li>
+              <li><a href="/logout">Log Out</a></li>
+            </li>
 					<% } %>
         </ul>
-      </div>
-      <!-- navbar links ends -->
-    </nav>
+      </nav>
+      <!-- links ends here -->
+    </header>
     <!-- navbar ends -->
     <!-- carousel start -->
     <div class="carousel">
