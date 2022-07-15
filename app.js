@@ -333,16 +333,25 @@ app.get("/songs", function(req,res){
 /******************** [END] SPOTIFY PLAYLIST GENERATOR ***********************/
 
 /*********************** SPOTIFY DISTANCE GENERATOR **************************/
-const DIST_MATRIX_API_KEY = process.env.DIST_MATRIX_API_KEY;
+app.get("/new-distance-playlist", (req, res) => {
+	if (checkAuthorizedUser(req)) {
+		res.render("pages/distance-form");
+	} else {
+		app.locals.redir = req.originalUrl;
+		res.redirect("/login");
+	}
+})
 
-app.get("/distance-playlist", (req, res) => {
+const DIST_MATRIX_API_KEY = process.env.DIST_MATRIX_API_KEY;
+app.post("/distance-playlist", (req, res) => {
+
 	if (checkAuthorizedUser(req)) {
 		// distance matrix req params
 		var lang = "en";
-		var mode = "walking";
-		var orig_loc = "Vancouver BC";
-		var dest_loc = "Seattle WA";
-		// uri-encoded
+		var mode = req.body.f_travel_mode;
+		var orig_loc = `${req.body.f_orig_city} ${req.body.f_orig_province}`;
+		var dest_loc = `${req.body.f_dest_city} ${req.body.f_dest_province}`;
+		// uri-encoded orig + dest addresses
 		var enc_orig_loc = encodeURI(orig_loc);
 		var enc_dest_loc = encodeURI(dest_loc);
 
@@ -366,13 +375,12 @@ app.get("/distance-playlist", (req, res) => {
 		.catch((error) => {
 			console.log(error.response);
 			res.send(error);
-		});
-
-		
+		});	
 	} else {
 		app.locals.redir = req.originalUrl;
 		res.redirect("/login");
 	}
+
 })
 /******************** [END] SPOTIFY DISTANCE GENERATOR ***********************/
 
