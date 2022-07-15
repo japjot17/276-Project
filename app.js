@@ -378,10 +378,13 @@ app.get("/distance-playlist", (req, res) => {
 		};
 		axios(config)
 		.then(response => {
-			const results = { 
-				dest_address: response.data.destination_addresses,
+			// const results = response.data;
+			// res.send(JSON.stringify(results));
+			const results = {
 				orig_address: response.data.origin_addresses,
+				dest_address: response.data.destination_addresses,
 				dist_mat_results: response.data.rows,
+				travel_mode: mode,
 			};
 			res.render("pages/distance-gen", results);
 		})
