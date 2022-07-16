@@ -204,7 +204,8 @@ app.get("/spotify-callback", (req, res) => {
   // given from login redirect
   var code = req.query.code || null;
   var state = req.query.state || null;
-
+  console.log("code: " + code);
+  console.log("state: " + state);
   if (state === null) {
     res.send("STATE MISMATCH");
   } else {
@@ -214,7 +215,7 @@ app.get("/spotify-callback", (req, res) => {
       data: qs.stringify({
         code: code,
         redirect_uri: redirect_uri,
-        grant_type: "authorization_code",
+        grant_type: "client_credentials",
       }),
       headers: {
         Authorization:
@@ -228,6 +229,7 @@ app.get("/spotify-callback", (req, res) => {
         if (response.status === 200) {
           res.cookie("spotify_auth", state, { signed: true });
           newToken = response.data;
+          console.log(response);
           res.redirect("/trending");
         } else {
           res.send(response);
