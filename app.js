@@ -121,6 +121,7 @@ app.post("/addUser", async (req, res) => {
 
   var rows = await pool.query(query, values);
   if (notEmptyQueryCheck(rows)) {
+	res.status(201);
     res.cookie("persongify_auth", userName, { signed: true });
     // res.send("successfully added user: " + userName);
     app.locals.signedIn = true;
@@ -335,3 +336,6 @@ app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
   console.log("Press Ctrl+C to quit.");
 });
+
+// for testing
+module.exports = app;
