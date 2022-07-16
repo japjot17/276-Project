@@ -52,6 +52,7 @@ header .navbar ul li {
 }
 
 header .navbar ul li a {
+    text-decoration: none;
     font-size: 3rem;
     padding: 20px;
     color: white;
