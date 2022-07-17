@@ -11,14 +11,14 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   // localhost server
-  // connectionString: "postgres://postgres:root@localhost",
+  connectionString: "postgres://postgres:wwwertyuiop12345@localhost/persongify",
 
   // heroku server
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    require: true,
-    rejectUnauthorized: false,
-  },
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: {
+  //   require: true,
+  //   rejectUnauthorized: false,
+  // },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -258,6 +258,8 @@ app.get("/trending", (req, res) => {
 //generating recommendations
 var songs = [];
 var artists = [];
+var audios = [];
+var images = [];
 var SpotifyWebApi = require('spotify-web-api-node');
 
 var spotifyApi = new SpotifyWebApi({
@@ -279,12 +281,32 @@ spotifyApi.clientCredentialsGrant().then(
   }
 );
 
+
+app.get('/play_some_song', (req,res)=> {
+    spotifyApi.play()
+    .then(function() {
+      console.log('Playback started');
+    }, function(err) {
+      //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+      console.log('Something went wrong!', err);
+    });
+})
+
 app.post("/songs", function(req,res){
 
     var limit = req.body.limit;
     var genre = req.body.genre;
     var dance = req.body.danceability;
     var energy = req.body.energy;
+
+    // res.json({
+    //   limit,
+    //   genre,
+    //   dance,
+    //   energy
+    // })
+
+    // return
 
 
     spotifyApi.getRecommendations({
@@ -294,17 +316,23 @@ app.post("/songs", function(req,res){
         target_energy: energy
       })
     .then(function(data) {
-        console.log("working");
 
         
+        console.log("working");
+
+    
       let recommendations = data.body.tracks;
+      
       for(let i = 0; i<recommendations.length; i++){
 
         songs.push(recommendations[i].name);
         artists.push(recommendations[i].artists[0].name);
-
-        
+        audios.push(recommendations[i].uri)
+        images.push(recommendations[i].album.images[0].url)
+        console.log(recommendations)
       }
+
+     //res.json({ songs, artists, audios, images})
       res.redirect("/songs");
     
     }, function(err) {
@@ -321,7 +349,7 @@ app.get("/songs", function(req,res){
   }
 
   if (checkAuthorizedUser(req)) {
-    res.render("pages/songs", {songs:songs, artists:artists});
+    res.render("pages/songs", {songs, artists, audios, images});
   } else {
     redir = req.originalUrl;
     res.redirect("/login");
