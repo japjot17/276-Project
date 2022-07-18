@@ -52,3 +52,12 @@ body {
 .info {
   margin: 20px;
 }
+
+.btn-home {
+  position: relative;
+  height: 40px;
+  width: 200px;
+  top: 20px;
+  left: 20px;
+  background-color: var(--brand-magenta);
+}

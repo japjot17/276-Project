@@ -11,14 +11,14 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   // localhost server
-  connectionString: "postgres://postgres:root@localhost",
+  // connectionString: "postgres://postgres:root@localhost",
 
   // heroku server
-  // connectionString: process.env.DATABASE_URL,
-  // ssl: {
-  //   require: true,
-  //   rejectUnauthorized: false,
-  // },
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -247,10 +247,8 @@ app.get("/token-api", (req, res) => {
 
 app.get("/trending", (req, res) => {
   if (checkAuthorizedUser(req)) {
-    console.log("yep");
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
-    console.log("yep");
     redir = req.originalUrl;
     res.redirect("/login");
   }

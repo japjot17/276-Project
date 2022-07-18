@@ -9,8 +9,7 @@ var refreshToken = async () => {
     apiToken = data.access_token;
     getFeaturedPlaylists(9, apiToken);
   } catch (e) {
-    console.log(e);
-    // window.location.replace("/login");
+    window.location.replace("/login");
   }
 };
 
@@ -21,7 +20,7 @@ const getFeaturedPlaylists = async (limit, apiToken) => {
   });
   const data = await result.json();
   if (data.error != undefined) {
-    // window.location.replace("/login");
+    window.location.replace("/login");
   }
   console.log(data);
   addAccountToEndpoint(data);
