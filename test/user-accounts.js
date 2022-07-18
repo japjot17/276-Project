@@ -15,6 +15,7 @@ describe('User Signup', () => {
             f_pwd: "testpwd123",
         }
         var res = await chai.request(server).post("/addUser").send(userInfo);
+        res.should.have.cookie("persongify_auth");
         res.should.have.status(201);
     });
 
@@ -28,8 +29,8 @@ describe('User Login', () => {
             f_pwd: "testpwd123",
         }
         var res = await chai.request(server).post("/verify-login").send(userInfo);
+        res.should.have.cookie("persongify_auth");
         res.should.have.status(200);
-        // TODO: check for cookie
     })
 
     it('should fail to log in on POST /verify-login', async() => {
@@ -42,5 +43,29 @@ describe('User Login', () => {
     })
 })
 
-// TODO: can users access features when not logged in?
-// TODO: user logout
+describe('User Logout', () => {
+    it('should log out current user on GET /logout', async() => {
+        var res = await chai.request(server).get("/logout");
+        res.should.not.have.cookie("persongify_auth");
+        res.should.not.have.cookie("spotify_auth");
+        res.should.have.status(200);
+    })
+})
+
+describe('Redirects for logged out users', () => {
+    it('should redirect to login on GET /spotify-login', async() => {
+        var res = await chai.request(server).get("/spotify-login");
+        res.should.not.have.cookie("persongify_auth");
+        res.should.have.status(401);
+    })
+    it('should redirect to login on GET /trending', async() => {
+        var res = await chai.request(server).get("/trending");
+        res.should.not.have.cookie("persongify_auth");
+        res.should.have.status(401);
+    })
+    it('should redirect to login on GET /songs', async() => {
+        var res = await chai.request(server).get("/songs");
+        res.should.not.have.cookie("persongify_auth");
+        res.should.have.status(401);
+    })
+})

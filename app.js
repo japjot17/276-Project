@@ -164,7 +164,7 @@ app.get("/logout", (req, res) => {
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
 
-  res.redirect('/home');
+  res.redirect(200, '/home');
 })
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
