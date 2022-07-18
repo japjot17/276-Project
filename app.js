@@ -11,10 +11,10 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  // ssl: {
-  //   require: true,
-  //   rejectUnauthorized: false,
-  // },
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -121,15 +121,14 @@ app.post("/addUser", async (req, res) => {
 
   var rows = await pool.query(query, values);
   if (notEmptyQueryCheck(rows)) {
-    // res.status(201);
     res.cookie("persongify_auth", userName, { signed: true });
     // res.send("successfully added user: " + userName);
     app.locals.signedIn = true;
-    app.locals.redir = "/home";
     let url = app.locals.redir;
-    res.redirect(url);
+    app.locals.redir = "/home";
+    res.redirect(302, url);
   } else {
-    res.redirect("/newUser");
+    res.redirect(303, "/newUser");
   }
 });
 
@@ -152,11 +151,11 @@ app.post("/verify-login", async (req, res) => {
     res.cookie("persongify_auth", chk_uname, { signed: true });
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
-    app.locals.redir = "/home";
     let url = app.locals.redir;
-    res.redirect("/spotify-login");
+    app.locals.redir = "/home";
+    res.redirect(302, "/spotify-login");
   } else {
-    res.redirect("/login");
+    res.redirect(303, "/login");
   }
 });
 
@@ -165,20 +164,18 @@ app.get("/logout", (req, res) => {
   app.locals.redir = "/home";
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
-  res.redirect("/home");
+  res.redirect(302, "/home");
 });
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
-var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
-var client_secret =
-  process.env.CLIENT_SECRET || "4940d82140ff4e47add12d60060cbcbc";
-var redirect_uri =
-  process.env.REDIRECT_URI || "http://localhost:5000/spotify-callback";
+var client_id = process.env.CLIENT_ID;
+var client_secret = process.env.CLIENT_SECRET;
+var redirect_uri = process.env.REDIRECT_URI;
 
 app.get("/spotify-login", (req, res) => {
   if (!checkAuthorizedUser(req)) {
     app.locals.redir = req.originalUrl;
-    res.redirect("/login");
+    res.redirect(303, "/login");
   } else {
     var state = generateRandomString(16);
     var scope =
@@ -246,10 +243,10 @@ app.get("/token-api", (req, res) => {
 
 app.get("/trending", (req, res) => {
   if (checkAuthorizedUser(req)) {
-    res.sendFile(path.join(__dirname, "/public/trending.html"));
+    res.render("pages/trending", { name: globalUname });
   } else {
     redir = req.originalUrl;
-    res.redirect("/login");
+    res.redirect(303, "/login");
   }
 });
 
@@ -344,7 +341,7 @@ app.get("/songs", function (req, res) {
     res.render("pages/songs", { songs, artists, audios, images });
   } else {
     redir = req.originalUrl;
-    res.redirect(401, "/login");
+    res.redirect(303, "/login");
   }
 });
 

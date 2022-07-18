@@ -15,6 +15,10 @@ body {
   background-color: #0f0027;
 }
 
+#playlist-wrapper {
+  margin-top: 108px;
+}
+
 @media (max-width: 1712px) {
   body {
     overflow-y: auto;
