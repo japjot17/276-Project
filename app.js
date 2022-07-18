@@ -120,14 +120,15 @@ app.post("/addUser", async (req, res) => {
 
   var rows = await pool.query(query, values);
   if (notEmptyQueryCheck(rows)) {
+	  // res.status(201);
     res.cookie("persongify_auth", userName, { signed: true });
     // res.send("successfully added user: " + userName);
     app.locals.signedIn = true;
     let url = app.locals.redir;
-    app.locals.redir = "/home";
-    res.redirect(url);
+    app.locals.redir = '/home';
+    res.redirect(201, url);
   } else {
-    res.redirect("/newUser");
+    res.redirect(500, "/newUser");
   }
 });
 
@@ -149,10 +150,10 @@ app.post("/verify-login", async (req, res) => {
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
     let url = app.locals.redir;
-    app.locals.redir = "/home";
-    res.redirect("/spotify-login");
+    app.locals.redir = '/home';
+    res.redirect(200, url);
   } else {
-    res.redirect("/login");
+    res.redirect(401, "/login");
   }
 });
 
@@ -161,9 +162,8 @@ app.get("/logout", (req, res) => {
   app.locals.redir = "/home";
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
-
-  res.redirect("/home");
-});
+  res.redirect(200, '/home');
+})
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
 var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
@@ -175,8 +175,9 @@ var redirect_uri =
 app.get("/spotify-login", (req, res) => {
   if (!checkAuthorizedUser(req)) {
     app.locals.redir = req.originalUrl;
-    res.redirect("/login");
-  } else {
+    res.redirect(401, "/login");
+  }
+  else {
     var state = generateRandomString(16);
     var scope =
       "user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify";
@@ -246,7 +247,7 @@ app.get("/trending", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
     redir = req.originalUrl;
-    res.redirect("/login");
+    res.redirect(401, "/login");
   }
 });
 
@@ -341,7 +342,7 @@ app.get("/songs", function (req, res) {
     res.render("pages/songs", { songs, artists, audios, images });
   } else {
     redir = req.originalUrl;
-    res.redirect("/login");
+    res.redirect(401, "/login");
   }
 });
 
@@ -364,3 +365,6 @@ app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
   console.log("Press Ctrl+C to quit.");
 });
+
+// for testing
+module.exports = app;
