@@ -1,5 +1,5 @@
 :root {
-  --brand-magenta: #ef007e
+  --brand-magenta: #ef007e;
 }
 
 body {
@@ -10,21 +10,34 @@ body {
   height: 100%;
   background-size: 100%, 100%;
   background-repeat: no-repeat;
+  background-color: #0f0027;
+  background-position: bottom;
+}
+
+@media (max-width: 1712px) {
+  body {
+    overflow-y: auto;
+    background-image: none;
+    background-color: #0f0027;
+  }
 }
 
 .playlist-wrapper {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   width: 99vw;
   height: 95vh;
+  margin-top: 80px;
   justify-content: left;
+  column-gap: 100px;
 }
 
 .playlist {
+  margin: 40px;
   text-align: center;
   vertical-align: middle;
   border-radius: 30px;
-  margin: 50px;
   width: 200px;
   height: 200px;
   background-position: center;

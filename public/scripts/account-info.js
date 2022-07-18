@@ -7,13 +7,13 @@ var refreshToken = async () => {
   try {
     const data = await response.json();
     apiToken = data.access_token;
-    getFeaturedPlaylists(9, apiToken);
+    getFeaturedPlaylists(apiToken);
   } catch (e) {
     window.location.replace("/login");
   }
 };
 
-const getFeaturedPlaylists = async (limit, apiToken) => {
+const getFeaturedPlaylists = async (apiToken) => {
   const result = await fetch(`https://api.spotify.com/v1/me`, {
     method: "GET",
     headers: { Authorization: "Bearer " + apiToken },
