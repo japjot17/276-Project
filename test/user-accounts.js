@@ -16,7 +16,7 @@ describe('User Signup', () => {
         }
         var res = await chai.request(server).post("/addUser").send(userInfo);
         res.should.have.cookie("persongify_auth");
-        res.should.have.status(201);
+        res.should.have.status(302);
     });
 
     // TODO: write test for failed userAdd? (status 500)
@@ -30,7 +30,7 @@ describe('User Login', () => {
         }
         var res = await chai.request(server).post("/verify-login").send(userInfo);
         res.should.have.cookie("persongify_auth");
-        res.should.have.status(200);
+        res.should.have.status(302);
     })
 
     it('should fail to log in on POST /verify-login', async() => {
@@ -39,7 +39,7 @@ describe('User Login', () => {
             f_pwd: "wrongPassword",
         }
         var res = await chai.request(server).post("/verify-login").send(userInfo);
-        res.should.have.status(401);
+        res.should.have.status(303);
     })
 })
 
@@ -48,7 +48,7 @@ describe('User Logout', () => {
         var res = await chai.request(server).get("/logout");
         res.should.not.have.cookie("persongify_auth");
         res.should.not.have.cookie("spotify_auth");
-        res.should.have.status(200);
+        res.should.have.status(302);
     })
 })
 
@@ -56,16 +56,16 @@ describe('Redirects for logged out users', () => {
     it('should redirect to login on GET /spotify-login', async() => {
         var res = await chai.request(server).get("/spotify-login");
         res.should.not.have.cookie("persongify_auth");
-        res.should.have.status(401);
+        res.should.have.status(303);
     })
     it('should redirect to login on GET /trending', async() => {
         var res = await chai.request(server).get("/trending");
         res.should.not.have.cookie("persongify_auth");
-        res.should.have.status(401);
+        res.should.have.status(303);
     })
     it('should redirect to login on GET /songs', async() => {
         var res = await chai.request(server).get("/songs");
         res.should.not.have.cookie("persongify_auth");
-        res.should.have.status(401);
+        res.should.have.status(303);
     })
 })
