@@ -22,7 +22,6 @@ const getFeaturedPlaylists = async (apiToken) => {
   if (data.error != undefined) {
     window.location.replace("/login");
   }
-  console.log(data);
   addAccountToEndpoint(data);
 };
 

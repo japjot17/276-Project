@@ -12,6 +12,15 @@ body {
   background-repeat: no-repeat;
   color: #ffffff;
   justify-content: center;
+  background-color: #0f0027;
+}
+
+@media (max-width: 1712px) {
+  body {
+    overflow-y: auto;
+    background-image: none;
+    background-color: #0f0027;
+  }
 }
 
 .wrapper {

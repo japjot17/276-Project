@@ -11,14 +11,14 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   // localhost server
-  connectionString: "postgres://postgres:root@localhost",
+  // connectionString: "postgres://postgres:root@localhost",
 
   // heroku server
-  // connectionString: process.env.DATABASE_URL,
-  // ssl: {
-  //   require: true,
-  //   rejectUnauthorized: false,
-  // },
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
