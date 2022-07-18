@@ -3,6 +3,9 @@
 <html lang = 'en' dir = 'ltr'>
 
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="stylesheets/playlistgenerates.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
@@ -48,7 +51,8 @@
     
         <% for (var i = 0; i<songs.length;i++){ %>
             <li>
-                <a class="songName"><%= songs[i] %></a> by <a class="songArtists"><%= artists[i] %></a>
+                <a class="songName"><%= songs[i] %></a> by <a class="songArtists"><%= artists[i] %></a><a class="songAudio" target="_blank"><%= audios[i] %></a>
+                <a class="songImages"><%= images[i] %></a>
             </li>
             
         <%}%>
@@ -63,7 +67,7 @@
             
             <p id="SongName"></p>
             <p id="artists"></p><br><br>
-
+            <!-- <input id="volumeslider" type="range" min="0" max="100" value="100" step="1"> -->
             <div class="player-controls">
             <button class="sidebutton" id="prev"><i class="fa fa-step-backward"></i></button>
             <button class="playbutton" id="play-button"><i id="play-icon" class="fa fa-play"></i></button>
@@ -72,7 +76,7 @@
         </div>
         </div>
     </div>
-    <script src="./../../public/scripts/musicplayer.js">
+    <script src="scripts/musicplayer.js">
     </script>
     
 </body>
