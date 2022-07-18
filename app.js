@@ -178,7 +178,7 @@ var redirect_uri =
 app.get("/spotify-login", (req, res) => {
   if (!checkAuthorizedUser(req)) {
     app.locals.redir = req.originalUrl;
-    res.redirect("/login");
+    res.redirect(401, "/login");
   }
   else {
     var state = generateRandomString(16);
@@ -252,7 +252,7 @@ app.get("/trending", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
     redir = req.originalUrl;
-    res.redirect("/login");
+    res.redirect(401, "/login");
   }
 });
 
@@ -325,7 +325,7 @@ app.get("/songs", function(req,res){
     res.render("pages/songs", {songs:songs, artists:artists});
   } else {
     redir = req.originalUrl;
-    res.redirect("/login");
+    res.redirect(401, "/login");
   }
 
 })
