@@ -11,14 +11,14 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   // localhost server
-  // connectionString: "postgres://postgres:root@localhost",
+  connectionString: "postgres://postgres:root@localhost",
 
   // heroku server
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    require: true,
-    rejectUnauthorized: false,
-  },
+  // connectionString: process.env.DATABASE_URL,
+  // ssl: {
+  //   require: true,
+  //   rejectUnauthorized: false,
+  // },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -45,8 +45,11 @@ var encryptSHA256 = function (plain) {
 };
 
 var checkAuthorizedUser = function (req) {
-  console.log("req.signedCookies['persongify_auth']: ", req.signedCookies['persongify_auth']);
-  if (req.signedCookies['persongify_auth']) return true;
+  console.log(
+    "req.signedCookies['persongify_auth']: ",
+    req.signedCookies["persongify_auth"]
+  );
+  if (req.signedCookies["persongify_auth"]) return true;
   return false;
 };
 
@@ -83,7 +86,7 @@ app.get("/", (req, res) => {
   //     .end();
   // res.render("pages/start-page");
   app.locals.signedIn = false;
-  app.locals.redir = '/home';
+  app.locals.redir = "/home";
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
 
@@ -98,7 +101,7 @@ app.get("/home", (req, res) => {
   // else {
   //   app.locals.signedIn = false;
   // }
-  res.render('pages/home');
+  res.render("pages/home");
 });
 
 /********************** POSTGRES ACCOUNT SETUP *******************************/
@@ -125,7 +128,7 @@ app.post("/addUser", async (req, res) => {
     // res.send("successfully added user: " + userName);
     app.locals.signedIn = true;
     let url = app.locals.redir;
-    app.locals.redir = '/home';
+    app.locals.redir = "/home";
     res.redirect(url);
   } else {
     res.redirect("/newUser");
@@ -150,8 +153,8 @@ app.post("/verify-login", async (req, res) => {
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
     let url = app.locals.redir;
-    app.locals.redir = '/home';
-    res.redirect(url);
+    app.locals.redir = "/home";
+    res.redirect("/spotify-login");
   } else {
     res.redirect("/login");
   }
@@ -159,12 +162,12 @@ app.post("/verify-login", async (req, res) => {
 
 app.get("/logout", (req, res) => {
   app.locals.signedIn = false;
-  app.locals.redir = '/home';
+  app.locals.redir = "/home";
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
 
-  res.redirect('/home');
-})
+  res.redirect("/home");
+});
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
 var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
@@ -173,13 +176,11 @@ var client_secret =
 var redirect_uri =
   process.env.REDIRECT_URI || "http://localhost:5000/spotify-callback";
 
-
 app.get("/spotify-login", (req, res) => {
   if (!checkAuthorizedUser(req)) {
     app.locals.redir = req.originalUrl;
     res.redirect("/login");
-  }
-  else {
+  } else {
     var state = generateRandomString(16);
     var scope =
       "user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify";
@@ -195,7 +196,6 @@ app.get("/spotify-login", (req, res) => {
         })
     );
   }
-  
 });
 
 var newToken;
@@ -204,7 +204,8 @@ app.get("/spotify-callback", (req, res) => {
   // given from login redirect
   var code = req.query.code || null;
   var state = req.query.state || null;
-
+  console.log("code: " + code);
+  console.log("state: " + state);
   if (state === null) {
     res.send("STATE MISMATCH");
   } else {
@@ -228,7 +229,7 @@ app.get("/spotify-callback", (req, res) => {
         if (response.status === 200) {
           res.cookie("spotify_auth", state, { signed: true });
           newToken = response.data;
-          res.redirect("/trending");
+          res.redirect("/home");
         } else {
           res.send(response);
         }
@@ -241,15 +242,15 @@ app.get("/spotify-callback", (req, res) => {
 });
 
 app.get("/token-api", (req, res) => {
-  
   res.json(newToken);
-
 });
 
 app.get("/trending", (req, res) => {
   if (checkAuthorizedUser(req)) {
+    console.log("yep");
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
+    console.log("yep");
     redir = req.originalUrl;
     res.redirect("/login");
   }
@@ -258,76 +259,77 @@ app.get("/trending", (req, res) => {
 //generating recommendations
 var songs = [];
 var artists = [];
-var SpotifyWebApi = require('spotify-web-api-node');
+var SpotifyWebApi = require("spotify-web-api-node");
 
 var spotifyApi = new SpotifyWebApi({
   clientId: client_id,
-  clientSecret: client_secret
+  clientSecret: client_secret,
 });
 
 // Retrieve an access token.
 spotifyApi.clientCredentialsGrant().then(
-  function(data) {
-    console.log('The access token expires in ' + data.body['expires_in']);
-    
+  function (data) {
+    console.log("The access token expires in " + data.body["expires_in"]);
 
     // Save the access token so that it's used in future calls
-    spotifyApi.setAccessToken(data.body['access_token']);
+    spotifyApi.setAccessToken(data.body["access_token"]);
   },
-  function(err) {
-    console.log('Something went wrong when retrieving an access token', err);
+  function (err) {
+    console.log("Something went wrong when retrieving an access token", err);
   }
 );
 
-app.post("/songs", function(req,res){
+app.post("/songs", function (req, res) {
+  var limit = req.body.limit;
+  var genre = req.body.genre;
+  var dance = req.body.danceability;
+  var energy = req.body.energy;
 
-    var limit = req.body.limit;
-    var genre = req.body.genre;
-    var dance = req.body.danceability;
-    var energy = req.body.energy;
-
-
-    spotifyApi.getRecommendations({
-        limit: limit,
-        seed_genres: genre,
-        target_danceability: dance,
-        target_energy: energy
-      })
-    .then(function(data) {
+  spotifyApi
+    .getRecommendations({
+      limit: limit,
+      seed_genres: genre,
+      target_danceability: dance,
+      target_energy: energy,
+    })
+    .then(
+      function (data) {
         console.log("working");
 
-        
-      let recommendations = data.body.tracks;
-      for(let i = 0; i<recommendations.length; i++){
-
-        songs.push(recommendations[i].name);
-        artists.push(recommendations[i].artists[0].name);
-
-        
+        let recommendations = data.body.tracks;
+        for (let i = 0; i < recommendations.length; i++) {
+          songs.push(recommendations[i].name);
+          artists.push(recommendations[i].artists[0].name);
+        }
+        res.redirect("/songs");
+      },
+      function (err) {
+        console.log("Something went wrong!", err);
       }
-      res.redirect("/songs");
-    
-    }, function(err) {
-      console.log("Something went wrong!", err);
-    });
+    );
+});
 
-
-})
-
-app.get("/songs", function(req,res){
-
-  for(let i = 0; i<songs.length;i++){
-      console.log(artists[i]);
+app.get("/songs", function (req, res) {
+  for (let i = 0; i < songs.length; i++) {
+    console.log(artists[i]);
   }
 
   if (checkAuthorizedUser(req)) {
-    res.render("pages/songs", {songs:songs, artists:artists});
+    res.render("pages/songs", { songs: songs, artists: artists });
   } else {
     redir = req.originalUrl;
     res.redirect("/login");
   }
+});
 
-})
+app.get("/account", function (req, res) {
+  // if (checkAuthorizedUser(req)) {
+  res.render("pages/account-info");
+  // } else {
+  //   redir = req.originalUrl;
+  //   res.redirect("/login");
+  // }
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;
