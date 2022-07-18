@@ -247,10 +247,8 @@ app.get("/token-api", (req, res) => {
 
 app.get("/trending", (req, res) => {
   if (checkAuthorizedUser(req)) {
-    console.log("yep");
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
-    console.log("yep");
     redir = req.originalUrl;
     res.redirect("/login");
   }

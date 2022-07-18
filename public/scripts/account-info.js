@@ -9,8 +9,7 @@ var refreshToken = async () => {
     apiToken = data.access_token;
     getFeaturedPlaylists(9, apiToken);
   } catch (e) {
-    console.log(e);
-    // window.location.replace("/login");
+    window.location.replace("/login");
   }
 };
 
@@ -21,7 +20,7 @@ const getFeaturedPlaylists = async (limit, apiToken) => {
   });
   const data = await result.json();
   if (data.error != undefined) {
-    // window.location.replace("/login");
+    window.location.replace("/login");
   }
   console.log(data);
   addAccountToEndpoint(data);
@@ -51,4 +50,7 @@ function addAccountToEndpoint(data) {
   email.setAttribute("class", "info");
   email.innerHTML = "Email: " + data.email;
   document.getElementById("details-wrapper").appendChild(email);
+
+  const spotifyButton = document.getElementById("spotify-button");
+  spotifyButton.setAttribute("href", data.external_urls.spotify);
 }
