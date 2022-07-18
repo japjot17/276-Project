@@ -257,13 +257,9 @@ app.get("/trending", (req, res) => {
 //generating recommendations
 var songs = [];
 var artists = [];
-<<<<<<< HEAD
 var audios = [];
 var images = [];
 var SpotifyWebApi = require('spotify-web-api-node');
-=======
-var SpotifyWebApi = require("spotify-web-api-node");
->>>>>>> 905bbd2dd1318b4bd86e70a002222ac9afb02f42
 
 var spotifyApi = new SpotifyWebApi({
   clientId: client_id,
@@ -276,19 +272,14 @@ spotifyApi.clientCredentialsGrant().then(
     console.log("The access token expires in " + data.body["expires_in"]);
 
     // Save the access token so that it's used in future calls
-<<<<<<< HEAD
     spotifyApi.setAccessToken(data.body['access_token']);
    
-=======
-    spotifyApi.setAccessToken(data.body["access_token"]);
->>>>>>> 905bbd2dd1318b4bd86e70a002222ac9afb02f42
   },
   function (err) {
     console.log("Something went wrong when retrieving an access token", err);
   }
 );
 
-<<<<<<< HEAD
 app.get('/play_some_song', (req,res)=> {
     spotifyApi.play()
     .then(function() {
@@ -344,38 +335,9 @@ app.post("/songs", function(req,res){
     
     }, function(err) {
       console.log("Something went wrong!", err);
-    });
-=======
-app.post("/songs", function (req, res) {
-  var limit = req.body.limit;
-  var genre = req.body.genre;
-  var dance = req.body.danceability;
-  var energy = req.body.energy;
-
-  spotifyApi
-    .getRecommendations({
-      limit: limit,
-      seed_genres: genre,
-      target_danceability: dance,
-      target_energy: energy,
-    })
-    .then(
-      function (data) {
-        console.log("working");
-
-        let recommendations = data.body.tracks;
-        for (let i = 0; i < recommendations.length; i++) {
-          songs.push(recommendations[i].name);
-          artists.push(recommendations[i].artists[0].name);
-        }
-        res.redirect("/songs");
-      },
-      function (err) {
-        console.log("Something went wrong!", err);
-      }
+    }
     );
 });
->>>>>>> 905bbd2dd1318b4bd86e70a002222ac9afb02f42
 
 app.get("/songs", function (req, res) {
   for (let i = 0; i < songs.length; i++) {
@@ -383,11 +345,7 @@ app.get("/songs", function (req, res) {
   }
 
   if (checkAuthorizedUser(req)) {
-<<<<<<< HEAD
     res.render("pages/songs", {songs, artists, audios, images});
-=======
-    res.render("pages/songs", { songs: songs, artists: artists });
->>>>>>> 905bbd2dd1318b4bd86e70a002222ac9afb02f42
   } else {
     redir = req.originalUrl;
     res.redirect("/login");
