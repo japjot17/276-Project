@@ -51,4 +51,7 @@ function addAccountToEndpoint(data) {
   email.setAttribute("class", "info");
   email.innerHTML = "Email: " + data.email;
   document.getElementById("details-wrapper").appendChild(email);
+
+  const spotifyButton = document.getElementById("spotify-button");
+  spotifyButton.setAttribute("href", data.external_urls.spotify);
 }
