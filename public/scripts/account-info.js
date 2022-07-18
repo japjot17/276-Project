@@ -30,6 +30,25 @@ const getFeaturedPlaylists = async (limit, apiToken) => {
 function addAccountToEndpoint(data) {
   const pfp = document.createElement("div");
   pfp.setAttribute("class", "pfp");
-  pfp.style.backgroundImage = `url(${data.images[0].url})`;
+  if (data.images[0] != undefined) {
+    pfp.style.backgroundImage = `url(${data.images[0].url})`;
+  } else {
+    pfp.style.backgroundImage = `url(/media/generic-pfp.png)`;
+  }
   document.getElementById("account-wrapper").appendChild(pfp);
+
+  const dname = document.createElement("div");
+  dname.setAttribute("class", "dname");
+  dname.innerHTML = data.display_name;
+  document.getElementById("account-wrapper").appendChild(dname);
+
+  const country = document.createElement("div");
+  country.setAttribute("class", "info");
+  country.innerHTML = "Country: " + data.country;
+  document.getElementById("details-wrapper").appendChild(country);
+
+  const email = document.createElement("div");
+  email.setAttribute("class", "info");
+  email.innerHTML = "Email: " + data.email;
+  document.getElementById("details-wrapper").appendChild(email);
 }

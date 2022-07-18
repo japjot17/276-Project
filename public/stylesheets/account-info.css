@@ -3,7 +3,6 @@
 }
 
 body {
-  display: flex;
   overflow-x: hidden;
   overflow-y: hidden;
   background-image: url("../media/bg-hollow.png");
@@ -17,10 +16,15 @@ body {
 
 .wrapper {
   display: flex;
-  height: 100vh;
+  flex-wrap: wrap;
+  height: 20vh;
   width: 100vw;
   justify-content: center;
   align-items: center;
+}
+
+.top {
+  margin-top: 100px;
 }
 
 .pfp {
@@ -30,4 +34,22 @@ body {
   border: 2px solid black;
   background-position: center;
   background-size: 200px;
+}
+
+.dname {
+  font-size: 50px;
+  margin: 30px;
+}
+
+.btn {
+  position: relative;
+  display: block;
+  height: 50px;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info {
+  margin: 20px;
 }
