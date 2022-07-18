@@ -28,10 +28,37 @@
         </style>
         <!-- override BS5 border styling -->
         <link href="/stylesheets/bsOverride.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./stylesheets/navbar.css" />
+        <script src="scripts/navbar.js" defer></script>
     </head>
+    <!-- navbar start -->
+    <header>
+        <!-- logo start -->
+        <div class="logo">
+            <img src="./media/note.png" alt="Music Note">
+            PERSONGIFY
+        </div>
+        <!-- logo end -->
+        <!-- hamburger menu start -->
+        <a href="#" class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </a>
+        <!-- hamburger menu end -->
+        <!-- links start here -->
+        <nav class="navbar">
+            <ul>
+            <li><a href="/">Home</a></li>
+            </ul>
+        </nav>
+        <!-- links ends here -->
+        </header>
+        <!-- navbar ends -->
     <body>
         <!-- HEADINGS -->
-        <div class="container-fluid mx-3 my-4 float-start">
+        <div class="container-fluid mx-3 my-5 float-start">
             <form action="/" method="get" class="form-inline">
                 <button type="submit" id="nav-home"
                     class="btn btn-outline-dark border-noset">
