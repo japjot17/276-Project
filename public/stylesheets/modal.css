@@ -1,0 +1,37 @@
+.modal-wrapper {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 30;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  height: 300px;
+  width: 500px;
+  background-color: #0f0027;
+  color: white;
+  opacity: unset;
+  z-index: 31;
+  border: 2px solid gray;
+  margin: auto;
+  padding: 15px;
+  border-radius: 10px;
+  font-family: Abel;
+}
+
+.close-button {
+  color: gray;
+  float: right;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.close-button:hover {
+  color: black;
+  cursor: pointer;
+}
