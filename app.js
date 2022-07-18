@@ -165,11 +165,9 @@ app.get("/logout", (req, res) => {
 })
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
-var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
-var client_secret =
-  process.env.CLIENT_SECRET || "4940d82140ff4e47add12d60060cbcbc";
-var redirect_uri =
-  process.env.REDIRECT_URI || "http://localhost:5000/spotify-callback";
+var client_id = process.env.CLIENT_ID;
+var client_secret = process.env.CLIENT_SECRET;
+var redirect_uri = process.env.REDIRECT_URI;
 
 app.get("/spotify-login", (req, res) => {
   	if (!checkAuthorizedUser(req)) {
