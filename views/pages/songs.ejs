@@ -51,8 +51,8 @@
     
         <% for (var i = 0; i<songs.length;i++){ %>
             <li>
-                <a class="songName"><%= songs[i] %></a> by <a class="songArtists"><%= artists[i] %></a><audio source src="<%= audios[i] %>" class="songAudio"></audio>
-                <a class="songImages" src="<%= images[i] %>"><%= images[i] %></a>
+                <a class="songName"><%= songs[i] %></a> by <a class="songArtists"><%= artists[i] %></a><a class="songAudio" target="_blank"><%= audios[i] %></a>
+                <a class="songImages"><%= images[i] %></a>
             </li>
             
         <%}%>
@@ -63,7 +63,6 @@
         <div class="musicplayer2"> 
             <audio id="music"></audio>
             <div id="disks" class="disk">
-                <img class="imageDisk" src="<%= images[i] %>">
             </div>
             
             <p id="SongName"></p>
@@ -73,7 +72,7 @@
             <button class="sidebutton" id="prev"><i class="fa fa-step-backward"></i></button>
             <button class="playbutton" id="play-button"><i id="play-icon" class="fa fa-play"></i></button>
             <button class="sidebutton" id="next"><i class="fa fa-step-forward"></i></button>
-            
+            <div><% availableDevices %></div>
         </div>
         </div>
     </div>

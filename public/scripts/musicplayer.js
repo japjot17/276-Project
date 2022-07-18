@@ -9,7 +9,7 @@ const next = document.getElementById('next')
 const songName = document.getElementsByClassName('songName')
 const songArtist = document.getElementsByClassName('songArtists')
 const songImages = document.getElementsByClassName('songImages')
-const songAudio = document.querySelectorAll('songAudio')
+const songAudio = document.getElementsByClassName('songAudio')
 const imageDisk = document.getElementsByClassName('imageDisk')
 
 const song = []
@@ -21,20 +21,31 @@ prev.addEventListener('click', prevClick)
 playbutton.addEventListener('click', change)
 next.addEventListener('click', nextClick)
 
-var tracks = new Audio(songAudio)
-tracks.src = audios[currentSelectedSongIndex]
+
+for (const audioHTML of songAudio) {
+  audios.push(`https://api.${audioHTML.innerHTML}`)
+}
+var audio = new Audio()
+
+
+audio.volume = 0.3;
+audio.loop = false;
+audio.src = audios[1];
+audio.play();
+
+console.log("audio", audios)
 
 function change () {
     const isPlayButton = play_icons.classList.contains('fa-play')
     if (isPlayButton) {
-      tracks.play()
       
+      audio.play();
         play_icons.classList.remove('fa-play')
         play_icons.classList.add('fa-pause')
         
         
     } else {
-      tracks.pause()
+      audio.pause();
         play_icons.classList.remove('fa-pause')
         play_icons.classList.add('fa-play')
        
@@ -53,13 +64,13 @@ for(const songHTML of songName){
 for(const artistHTML of songArtist){
     artists.push(artistHTML.innerHTML)
   }
+
   for(const imagetHTML of songImages){
     images.push(imagetHTML.innerHTML)
     disk[0].style.backgroundImage = 'url('+images[currentSelectedSongIndex]+')'
     imagetHTML.innerHTML = ""
   }
-  console.log("image", images)
-  console.log("song", song)
+
 if (!song.length) {
     title.innerHTML = "Song Name"
 }else {
@@ -77,7 +88,7 @@ function prevClick() {
     title.innerHTML = song[prevIndex]
     artist.innerHTML = artists[prevIndex]
     disk[0].style.backgroundImage = 'url('+images[prevIndex]+')'
-    tracks.src = audios[prevIndex]
+   
     --currentSelectedSongIndex;
   }
 }
@@ -87,7 +98,7 @@ function nextClick() {
     title.innerHTML = song[nextIndex]
     artist.innerHTML = artists[nextIndex]
     disk[0].style.backgroundImage = 'url('+images[nextIndex]+')'
-    tracks.src = audios[nextIndex]
+    
     ++currentSelectedSongIndex;
   }
 }

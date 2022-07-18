@@ -275,12 +275,12 @@ spotifyApi.clientCredentialsGrant().then(
 
     // Save the access token so that it's used in future calls
     spotifyApi.setAccessToken(data.body['access_token']);
+   
   },
   function(err) {
     console.log('Something went wrong when retrieving an access token', err);
   }
 );
-
 
 app.get('/play_some_song', (req,res)=> {
     spotifyApi.play()
@@ -356,6 +356,7 @@ app.get("/songs", function(req,res){
   }
 
 })
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;
