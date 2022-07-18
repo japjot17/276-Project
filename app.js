@@ -11,10 +11,10 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    require: true,
-    rejectUnauthorized: false,
-  },
+  // ssl: {
+  //   require: true,
+  //   rejectUnauthorized: false,
+  // },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -89,6 +89,7 @@ app.get("/", (req, res) => {
   res.redirect("/home");
 });
 
+var globalUname = "";
 app.get("/home", (req, res) => {
   // res.sendFile(path.join(__dirname, "/public/home.html"));
   // if (checkAuthorizedUser(req)) {
@@ -97,7 +98,7 @@ app.get("/home", (req, res) => {
   // else {
   //   app.locals.signedIn = false;
   // }
-  res.render("pages/home");
+  res.render("pages/home", { name: globalUname });
 });
 
 /********************** POSTGRES ACCOUNT SETUP *******************************/
@@ -124,11 +125,11 @@ app.post("/addUser", async (req, res) => {
     res.cookie("persongify_auth", userName, { signed: true });
     // res.send("successfully added user: " + userName);
     app.locals.signedIn = true;
-    let url = app.locals.redir;
     app.locals.redir = "/home";
-    res.redirect(201, url);
+    let url = app.locals.redir;
+    res.redirect(url);
   } else {
-    res.redirect(500, "/newUser");
+    res.redirect("/newUser");
   }
 });
 
@@ -141,6 +142,8 @@ app.post("/verify-login", async (req, res) => {
   var chk_pwd = req.body.f_pwd;
   var chk_pwdSHA256 = encryptSHA256(chk_pwd);
 
+  globalUname = chk_uname;
+
   var query = `SELECT * FROM useracct WHERE username=$1 AND password=$2`;
   var values = [chk_uname, chk_pwdSHA256];
 
@@ -149,11 +152,11 @@ app.post("/verify-login", async (req, res) => {
     res.cookie("persongify_auth", chk_uname, { signed: true });
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
-    let url = app.locals.redir;
     app.locals.redir = "/home";
-    res.redirect(200, url);
+    let url = app.locals.redir;
+    res.redirect("/spotify-login");
   } else {
-    res.redirect(401, "/login");
+    res.redirect("/login");
   }
 });
 
@@ -162,7 +165,7 @@ app.get("/logout", (req, res) => {
   app.locals.redir = "/home";
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
-  res.redirect(200, "/home");
+  res.redirect("/home");
 });
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
@@ -175,7 +178,7 @@ var redirect_uri =
 app.get("/spotify-login", (req, res) => {
   if (!checkAuthorizedUser(req)) {
     app.locals.redir = req.originalUrl;
-    res.redirect(401, "/login");
+    res.redirect("/login");
   } else {
     var state = generateRandomString(16);
     var scope =
@@ -246,7 +249,7 @@ app.get("/trending", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
     redir = req.originalUrl;
-    res.redirect(401, "/login");
+    res.redirect("/login");
   }
 });
 

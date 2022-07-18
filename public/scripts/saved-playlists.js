@@ -40,9 +40,19 @@ function addSpotifyPlaylistsToEndpoint(limit, data) {
   console.log(data);
   //Reset the page
   deleteChildren();
+  document.getElementById("saved-button").setAttribute("class", "btn btn-dark");
+  document
+    .getElementById("spotify-button")
+    .setAttribute("class", "btn btn-success");
 
+  if (data.total == 0) {
+    return;
+  }
   var lowlimit = Math.min(limit, data.limit);
   for (let i = 0; i < lowlimit; i++) {
+    if (data.items[i] == undefined) {
+      return;
+    }
     const overlay = document.createElement("div");
     overlay.setAttribute("class", "overlay");
     const playlistDisplay = document.createElement("div");
@@ -51,7 +61,11 @@ function addSpotifyPlaylistsToEndpoint(limit, data) {
     overlayButton.setAttribute("class", "btn btn-success");
     const buttonHolder = document.createElement("div");
     buttonHolder.setAttribute("class", "btn-container");
-    playlistDisplay.style.backgroundImage = `url(${data.items[i].images[0].url})`;
+    if (data.items[i].images != undefined) {
+      playlistDisplay.style.backgroundImage = `url(${data.items[i].images[0].url})`;
+    } else {
+      playlistDisplay.style.backgroundImage = `url(/media/generic_pfp.png)`;
+    }
 
     buttonHolder.appendChild(overlayButton);
     overlay.innerHTML = data.items[i].name;
@@ -62,13 +76,6 @@ function addSpotifyPlaylistsToEndpoint(limit, data) {
     overlay.appendChild(buttonHolder);
     playlistDisplay.appendChild(overlay);
     document.getElementById("playlist-wrapper").appendChild(playlistDisplay);
-
-    document
-      .getElementById("saved-button")
-      .setAttribute("class", "btn btn-dark");
-    document
-      .getElementById("spotify-button")
-      .setAttribute("class", "btn btn-success");
   }
 }
 

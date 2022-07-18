@@ -29,7 +29,7 @@
       <!-- links start here -->
       <nav class="navbar">
         <ul>
-          <li><a href="/">Home</a></li>
+          <li><a href="/home">Home</a></li>
           <li><a href="/songs">Discover +</a>
             <ul>
               <li><a href="/songs">Create Playlist</a></li>
@@ -42,7 +42,7 @@
             <li><a href="/newUser">Sign Up</a></li>
             <li><a href="/login">Log In</a></li>
 					<% } else { %>
-            <li><a href="#">Hello _____</a>
+            <li><a href="#">Hello <%= name %></a>
               <li><a href="/account">Account Info</a></li>
               <li><a href="#">Profile</a></li>
               <li><a href="/playlists">Saved Playlist</a></li>

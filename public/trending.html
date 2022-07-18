@@ -13,50 +13,55 @@
     />
     <script src="./scripts/trending.js" defer></script>
     <link rel="stylesheet" href="./stylesheets/trending.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abel&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./stylesheets/navbar.css" />
     <script src="scripts/navbar.js" defer></script>
   </head>
   <body>
-        <!-- navbar start -->
-        <header>
-          <!-- logo start -->
-          <div class="logo">
-            <img src="./media/note.png" alt="Music Note">
-            PERSONGIFY
-          </div>
-          <!-- logo end -->
-          <!-- hamburger menu start -->
-          <a href="#" class="toggle-button">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </a>
-          <!-- hamburger menu end -->
-          <!-- links start here -->
-          <nav class="navbar">
+    <!-- navbar start -->
+    <header>
+      <!-- logo start -->
+      <div class="logo">
+        <img src="./media/note.png" alt="Music Note" />
+        PERSONGIFY
+      </div>
+      <!-- logo end -->
+      <!-- hamburger menu start -->
+      <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </a>
+      <!-- hamburger menu end -->
+      <!-- links start here -->
+      <nav class="navbar">
+        <ul>
+          <li><a href="/home">Home</a></li>
+          <li>
+            <a href="/songs">Discover +</a>
             <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/songs">Discover +</a>
-                <ul>
-                  <li><a href="/songs">Create Playlist</a></li>
-                  <li><a href="#">Commute</a></li>
-                  <li><a href="#">Year in Review</a></li>
-                </ul>
-              </li>
-              <li><a href="/spotify-login">Trending</a></li>
-              <li><a href="#">Hello _____</a>
-                <ul>
-                  <li><a href="/account">Account Info</a></li>
-                  <li><a href="#">Saved Playlist</a></li>
-                  <li><a href="/logout">Log Out</a></li>
-                </ul>
-              </li>
+              <li><a href="/songs">Create Playlist</a></li>
+              <li><a href="#">Commute</a></li>
+              <li><a href="#">Year in Review</a></li>
             </ul>
-          </nav>
-          <!-- links ends here -->
-        </header>
-        <!-- navbar ends -->
+          </li>
+          <li><a href="/spotify-login">Trending</a></li>
+          <li>
+            <a href="#">Hello _____</a>
+            <ul>
+              <li><a href="/account">Account Info</a></li>
+              <li><a href="#">Saved Playlist</a></li>
+              <li><a href="/logout">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- links ends here -->
+    </header>
+    <!-- navbar ends -->
     <a class="btn btn-home" href="/home">Return Home</a>
     <div class="playlist-wrapper" id="wrapper"></div>
   </body>
