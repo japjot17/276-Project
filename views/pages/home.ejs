@@ -36,14 +36,14 @@
               <li><a href="#">Year in Review</a></li>
             </ul>
           </li>
-          <li><a href="/spotify-login">Trending</a></li>
+          <li><a href="/trending">Trending</a></li>
           <% if (!locals.signedIn) { %>
             <li><a href="/newUser">Sign Up</a></li>
             <li><a href="/login">Log In</a></li>
 					<% } else { %>
             <li><a href="#">Hello _____</a>
               <ul>
-                <li><a href="#">Profile</a></li>
+                <li><a href="/account">Account Info</a></li>
                 <li><a href="#">Saved Playlist</a></li>
                 <li><a href="/logout">Log Out</a></li>
               </ul>

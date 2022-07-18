@@ -9,7 +9,7 @@ var refreshToken = async () => {
   try {
     const data = await response.json();
     apiToken = data.access_token;
-    getFeaturedPlaylists(9, apiToken);
+    getFeaturedPlaylists(15, apiToken);
   } catch (e) {
     console.log(e);
     window.location.replace("/login");
