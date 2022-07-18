@@ -255,7 +255,7 @@ var songs = [];
 var artists = [];
 var audios = [];
 var images = [];
-var SpotifyWebApi = require('spotify-web-api-node');
+var SpotifyWebApi = require("spotify-web-api-node");
 
 var spotifyApi = new SpotifyWebApi({
   clientId: client_id,
@@ -268,70 +268,67 @@ spotifyApi.clientCredentialsGrant().then(
     console.log("The access token expires in " + data.body["expires_in"]);
 
     // Save the access token so that it's used in future calls
-    spotifyApi.setAccessToken(data.body['access_token']);
-   
+    spotifyApi.setAccessToken(data.body["access_token"]);
   },
   function (err) {
     console.log("Something went wrong when retrieving an access token", err);
   }
 );
 
-app.get('/play_some_song', (req,res)=> {
-    spotifyApi.play()
-    .then(function() {
-      console.log('Playback started');
-    }, function(err) {
+app.get("/play_some_song", (req, res) => {
+  spotifyApi.play().then(
+    function () {
+      console.log("Playback started");
+    },
+    function (err) {
       //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-      console.log('Something went wrong!', err);
-    });
-})
-
-app.post("/songs", function(req,res){
-
-    var limit = req.body.limit;
-    var genre = req.body.genre;
-    var dance = req.body.danceability;
-    var energy = req.body.energy;
-
-    // res.json({
-    //   limit,
-    //   genre,
-    //   dance,
-    //   energy
-    // })
-
-    // return
-
-
-    spotifyApi.getRecommendations({
-        limit: limit,
-        seed_genres: genre,
-        target_danceability: dance,
-        target_energy: energy
-      })
-    .then(function(data) {
-
-        
-        console.log("working");
-
-    
-      let recommendations = data.body.tracks;
-      
-      for(let i = 0; i<recommendations.length; i++){
-
-        songs.push(recommendations[i].name);
-        artists.push(recommendations[i].artists[0].name);
-        audios.push(recommendations[i].uri)
-        images.push(recommendations[i].album.images[0].url)
-        console.log(recommendations)
-      }
-
-     //res.json({ songs, artists, audios, images})
-      res.redirect("/songs");
-    
-    }, function(err) {
       console.log("Something went wrong!", err);
     }
+  );
+});
+
+app.post("/songs", function (req, res) {
+  var limit = req.body.limit;
+  var genre = req.body.genre;
+  var dance = req.body.danceability;
+  var energy = req.body.energy;
+
+  // res.json({
+  //   limit,
+  //   genre,
+  //   dance,
+  //   energy
+  // })
+
+  // return
+
+  spotifyApi
+    .getRecommendations({
+      limit: limit,
+      seed_genres: genre,
+      target_danceability: dance,
+      target_energy: energy,
+    })
+    .then(
+      function (data) {
+        console.log("working");
+
+        let recommendations = data.body.tracks;
+
+        for (let i = 0; i < recommendations.length; i++) {
+          songs.push(recommendations[i].name);
+          artists.push(recommendations[i].artists[0].name);
+          audios.push(recommendations[i].uri);
+          images.push(recommendations[i].album.images[0].url);
+          console.log(recommendations);
+        }
+
+        //res.json({ songs, artists, audios, images})
+        res.redirect("/songs");
+      },
+      function (err) {
+        console.log("Something went wrong!", err);
+      }
     );
 });
 
@@ -341,7 +338,7 @@ app.get("/songs", function (req, res) {
   }
 
   if (checkAuthorizedUser(req)) {
-    res.render("pages/songs", {songs, artists, audios, images});
+    res.render("pages/songs", { songs, artists, audios, images });
   } else {
     redir = req.originalUrl;
     res.redirect("/login");
@@ -357,6 +354,9 @@ app.get("/account", function (req, res) {
   // }
 });
 
+app.get("/playlists", function (req, res) {
+  res.render("pages/saved-playlists");
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;
