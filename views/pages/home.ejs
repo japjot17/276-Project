@@ -4,9 +4,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./stylesheets/navbar.css" />
     <link rel="stylesheet" href="./stylesheets/carousel.css" />
+    <link rel="stylesheet" href="./stylesheets/modal.css" />
     <script src="scripts/carousel.js" defer></script>
     <script src="scripts/navbar.js" defer></script>
-    <script src="scripts/carousel.js" defer></script>
+    <script src="scripts/modal.js" defer></script>
     <title>PERSONGIFY - Home</title>
   </head>
   <body>
@@ -53,6 +54,31 @@
       </nav>
       <!-- links ends here -->
     </header>
+
+    <!-- Modal popup for webpage information -->
+    <% if (!locals.signedIn) { %>
+      <div class="modal-wrapper" id="modal-wrapper">
+        <div class="modal">
+          <span class="close-button" onclick="hideModal()">&times;</span>
+          <h1>Welcome to Persongify!</h1>
+          <br>
+          <p>Welcome, and thank you for using Persongify! To get started you can log in or sign up!</p>
+          <br>
+          <p>This app is currently using Spotify's API in development mode.
+            This means that unless you have access from the developers, you are unable to access our website's full functionality with your own spotify account.
+          </p>
+          <br>
+          <p>
+            For demo purposes, please feel free to use our spotify demo account:
+          </p>
+          <p>Spotify email: persongify276@gmail.com
+            <br>
+            Spotify password: persongify
+          </p>
+        </div>
+      </div>
+    <% } %>
+
     <!-- navbar ends -->
     <!-- carousel start -->
     <div class="carousel">

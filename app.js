@@ -11,10 +11,10 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    require: true,
-    rejectUnauthorized: false,
-  },
+  // ssl: {
+  //   require: true,
+  //   rejectUnauthorized: false,
+  // },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -120,12 +120,12 @@ app.post("/addUser", async (req, res) => {
 
   var rows = await pool.query(query, values);
   if (notEmptyQueryCheck(rows)) {
-	  // res.status(201);
+    // res.status(201);
     res.cookie("persongify_auth", userName, { signed: true });
     // res.send("successfully added user: " + userName);
     app.locals.signedIn = true;
     let url = app.locals.redir;
-    app.locals.redir = '/home';
+    app.locals.redir = "/home";
     res.redirect(201, url);
   } else {
     res.redirect(500, "/newUser");
@@ -150,8 +150,9 @@ app.post("/verify-login", async (req, res) => {
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
     let url = app.locals.redir;
-    app.locals.redir = '/home';
-    res.redirect(200, url);
+    app.locals.redir = "/home";
+    // Todo figure out redirect problem
+    res.redirect("/spotify-login");
   } else {
     res.redirect(401, "/login");
   }
@@ -162,8 +163,8 @@ app.get("/logout", (req, res) => {
   app.locals.redir = "/home";
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
-  res.redirect(200, '/home');
-})
+  res.redirect(200, "/home");
+});
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
 var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
@@ -176,8 +177,7 @@ app.get("/spotify-login", (req, res) => {
   if (!checkAuthorizedUser(req)) {
     app.locals.redir = req.originalUrl;
     res.redirect(401, "/login");
-  }
-  else {
+  } else {
     var state = generateRandomString(16);
     var scope =
       "user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify";
