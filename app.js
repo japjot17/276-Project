@@ -154,7 +154,7 @@ app.post("/verify-login", async (req, res) => {
     app.locals.signedIn = true;
     let url = app.locals.redir;
     app.locals.redir = "/home";
-    res.redirect(url);
+    res.redirect("/spotify-login");
   } else {
     res.redirect("/login");
   }
@@ -229,7 +229,7 @@ app.get("/spotify-callback", (req, res) => {
         if (response.status === 200) {
           res.cookie("spotify_auth", state, { signed: true });
           newToken = response.data;
-          res.redirect("/trending");
+          res.redirect("/home");
         } else {
           res.send(response);
         }
@@ -247,8 +247,10 @@ app.get("/token-api", (req, res) => {
 
 app.get("/trending", (req, res) => {
   if (checkAuthorizedUser(req)) {
+    console.log("yep");
     res.sendFile(path.join(__dirname, "/public/trending.html"));
   } else {
+    console.log("yep");
     redir = req.originalUrl;
     res.redirect("/login");
   }
@@ -321,12 +323,12 @@ app.get("/songs", function (req, res) {
 });
 
 app.get("/account", function (req, res) {
-  if (checkAuthorizedUser(req)) {
-    res.render("pages/account-info");
-  } else {
-    redir = req.originalUrl;
-    res.redirect("/login");
-  }
+  // if (checkAuthorizedUser(req)) {
+  res.render("pages/account-info");
+  // } else {
+  //   redir = req.originalUrl;
+  //   res.redirect("/login");
+  // }
 });
 
 // Start the server
