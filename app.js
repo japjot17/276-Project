@@ -121,15 +121,15 @@ app.post("/addUser", async (req, res) => {
 
   var rows = await pool.query(query, values);
   if (notEmptyQueryCheck(rows)) {
-	res.status(201);
+	  // res.status(201);
     res.cookie("persongify_auth", userName, { signed: true });
     // res.send("successfully added user: " + userName);
     app.locals.signedIn = true;
     let url = app.locals.redir;
     app.locals.redir = '/home';
-    res.redirect(url);
+    res.redirect(201, url);
   } else {
-    res.redirect("/newUser");
+    res.redirect(500, "/newUser");
   }
 });
 
@@ -152,9 +152,9 @@ app.post("/verify-login", async (req, res) => {
     app.locals.signedIn = true;
     let url = app.locals.redir;
     app.locals.redir = '/home';
-    res.redirect(url);
+    res.redirect(200, url);
   } else {
-    res.redirect("/login");
+    res.redirect(401, "/login");
   }
 });
 
