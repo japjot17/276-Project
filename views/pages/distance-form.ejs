@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include ("../partials/bs5.ejs") %>
+        <%- include ("../partials/bs5-override.ejs") %>
+        <%- include ("../partials/google-fonts.ejs") %>
+        <%- include ("../partials/google-icons.ejs") %>
+        <!-- TODO: change css/js links to .ejs templates -->
+        <link rel="stylesheet" href="./stylesheets/navbar.css" />
+        <script src="scripts/navbar.js" defer></script>
+        <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="logo">
+                <img src="./media/note.png" alt="Music Note">
+                PERSONGIFY
+            </div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/songs">Find New Music</a></li>
+                    <li><a href="/spotify-login">Trending</a></li>
+                    <% if (!locals.signedIn) { %>
+                        <li><a href="/newUser">Sign Up</a></li>
+                        <li><a href="/login">Log In</a></li>
+                    <% } else { %>
+                        <li><a href="/logout">Log Out</a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- HEADINGS -->
+        <div class="container text-center mb-3 clearfix">
+            <h1 class="display-1 text-white">PERSONGIFY Travel</h1>
+            <h1 class="display-6 text-white">Please specify start and end points.</h1>
+        </div>
+
+        <!-- DISTANCE CALC FORM -->
+        <div class="container w-50 p-3">
+            <form action="/distance-playlist" method="post">
+                <!-- Origin Address -->
+                <div class="input-group mb-3">
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" id="orig_city" name="f_orig_city" 
+                        class="form-control radius-start" placeholder="Starting City"
+                        required>
+                        <label for="orig_city">Starting City</label>
+                    </div>
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" id="orig_province" name="f_orig_province" 
+                        class="form-control radius-end" placeholder="Starting Province"
+                        required>
+                        <label for="orig_province">Starting Province/State</label>
+                    </div>
+                </div>
+                <!-- Destination Address -->
+                <div class="input-group mb-3">
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" id="dest_city" name="f_dest_city" 
+                        class="form-control radius-start" placeholder="Destination City"
+                        required>
+                        <label for="dest_city">Destination City</label>
+                    </div>
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" id="dest_province" name="f_dest_province" 
+                        class="form-control radius-end" placeholder="Destination Province"
+                        required>
+                        <label for="dest_province">Destination Province/State</label>
+                    </div>
+                </div>
+                <!-- Transport Mode -->
+                <div class="form-floating">
+                    <select class="form-select mb-3" id="travel_mode" name="f_travel_mode"
+                    aria-label="Mode of Travel" required>
+                        <option value="driving" selected>Driving</option>
+                        <option value="transit">Public Transit</option>
+                        <option value="walking">Walking</option>
+                        <option value="bicycling">Bicycling</option>
+                    </select>
+                    <label for="travel_mode">Select Mode of Travel:</label>
+                </div>
+
+                <!-- form buttons -->
+                <div class="d-grid gap-3">
+                    <button type="reset" value="Reset"
+                    class="btn btn-danger btn-sm btn-block">Reset</button>
+                    <button type="submit" value="Submit" id="formSubmit"
+                    class="btn btn-outline-dark btn-lg btn-block border-noset">Generate Playlist</button>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>

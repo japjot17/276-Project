@@ -1,102 +1,109 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Persongify Signup</title>
-    <%- include ("../partials/bs5.ejs") %> <%- include
-    ("../partials/google-fonts.ejs") %> <%- include
-    ("../partials/google-icons.ejs") %>
+    <head>
+        <title>PERSONGIFY - Signup</title>
 
-    <style>
-      :root {
-        --brand-magenta: #ef007e;
-      }
-      body {
-        background-image: url("media/bg-hollow.png");
-        background-repeat: no-repeat;
-        background-size: 100%;
-        overflow-x: hidden;
-      }
-      #nav-home {
-        background-color: var(--brand-magenta);
-      }
-      #formSubmit {
-        background-color: var(--brand-magenta);
-      }
-      .span-magenta {
-        color: var(--brand-magenta);
-      }
-    </style>
-    <!-- override BS5 border styling -->
-    <link href="/stylesheets/bsOverride.css" rel="stylesheet" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Abel&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./stylesheets/navbar.css" />
-    <script src="scripts/navbar.js" defer></script>
-  </head>
-  <!-- navbar start -->
-  <header>
-    <!-- logo start -->
-    <div class="logo">
-      <img src="./media/note.png" alt="Music Note" />
-      PERSONGIFY
-    </div>
-    <!-- logo end -->
-    <!-- hamburger menu start -->
-    <a href="#" class="toggle-button">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </a>
-    <!-- hamburger menu end -->
-    <!-- links start here -->
-    <nav class="navbar">
-      <ul>
-        <li><a href="/home">Home</a></li>
-      </ul>
-    </nav>
-    <!-- links ends here -->
-  </header>
-  <!-- navbar ends -->
-  <body>
-    <!-- HEADINGS -->
-    <!-- TODO fix how it looks on vertical screens-->
-    <div class="container-fluid mx-3 my-5 float-start">
-      <form action="/" method="get" class="form-inline">
-        <button
-          type="submit"
-          id="nav-home"
-          class="btn btn-outline-dark border-noset"
-        >
-          <span class="material-symbols-outlined align-text-top">
-            chevron_left
-          </span>
-          Back to Persongify Home
-        </button>
-      </form>
-    </div>
-    <div class="container text-center mb-3 clearfix">
-      <h1 class="display-1 text-uppercase text-white">
-        Sign Up for <span class="span-magenta">Persongify</span>
-      </h1>
-      <h1 class="display-6 text-white">Please fill out user information.</h1>
-    </div>
+        <%- include ("../partials/bs5.ejs") %>
+        <%- include ("../partials/bs5-override.ejs") %>
+        <%- include ("../partials/google-fonts.ejs") %>
+        <%- include ("../partials/google-icons.ejs") %>
+        
+    </head>
+    <!-- navbar start -->
+    <header>
+        <!-- logo start -->
+        <div class="logo">
+            <img src="./media/note.png" alt="Music Note">
+            PERSONGIFY
+        </div>
+        <!-- logo end -->
+        <!-- hamburger menu start -->
+        <a href="#" class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </a>
+        <!-- hamburger menu end -->
+        <!-- links start here -->
+        <nav class="navbar">
+            <ul>
+            <li><a href="/home">Home</a></li>
+            </ul>
+        </nav>
+        <!-- links ends here -->
+        </header>
+        <!-- navbar ends -->
+    <body>
+        <!-- TODO: change to navbar -->
+        <!-- HEADINGS -->
+        <!-- TODO fix how it looks on vertical screens-->
+        <div class="container-fluid mx-3 my-5 float-start">
+            <form action="/" method="get" class="form-inline">
+                <button type="submit" id="nav-home"
+                    class="btn btn-outline-dark border-noset">
+                    <span class="material-symbols-outlined align-text-top">
+                        chevron_left
+                    </span>
+                    Back to PERSONGIFY Home
+                </button>
+            </form>
+        </div>
+        <div class="container text-center mb-3 clearfix">
+            <h1 class="display-1 text-uppercase text-white">Sign Up for <span class="span-magenta">PERSONGIFY</span></h1>
+            <h1 class="display-6 text-white">Please fill out user information.</h1>
+        </div>
 
-    <!-- USER INFO FORM -->
-    <div class="container w-50 p-3">
-      <form action="/addUser" method="post">
-        <!-- username -->
-        <div class="form-floating flex-grow-1 mb-3">
-          <input
-            type="text"
-            id="uname"
-            name="f_uname"
-            class="form-control"
-            placeholder="Username"
-            required
-          />
-          <label for="firstName">Username</label>
+        <!-- USER INFO FORM -->
+        <div class="container w-50 p-3">
+            <form action="/addUser" method="post">
+                <!-- username -->
+                <div class="form-floating flex-grow-1 mb-3">
+                    <input type="text" id="uname" name="f_uname" 
+                    class="form-control" placeholder="Username"
+                    required>
+                    <label for="uname">Username</label>
+                </div>
+                <!-- first/last names -->
+                <div class="input-group mb-3">
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" id="firstName" name="f_firstName" 
+                        class="form-control radius-start" placeholder="First Name"
+                        required>
+                        <label for="firstName">First Name</label>
+                    </div>
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" id="lastName" name="f_lastName" 
+                        class="form-control radius-end" placeholder="Last Name"
+                        required>
+                        <label for="lastName">Last Name</label>
+                    </div>
+                </div>
+                <!-- age -->
+                <div class="input-group mb-3">
+                    <div class="form-floating flex-grow-1">
+                        <input type="number" min="0" max="150" id="age" name="f_age"
+                        class="form-control radius-start" placeholder="Age"
+                        required>
+                        <label for="age">Age</label>
+                    </div>
+                    <span class="input-group-text">years old</span>
+                </div>
+                <!-- TODO: add password verification (double entry) -->
+                <!-- password -->
+                <div class="form-floating flex-grow-1 mb-3">
+                    <input type="password" id="pwd" name="f_pwd"
+                    class="form-control" placeholder="Password"
+                    required>
+                    <label for="age">Password</label>
+                </div>
+                <!-- form buttons -->
+                <div class="d-grid gap-3">
+                    <button type="reset" value="Reset"
+                    class="btn btn-danger btn-sm btn-block">Reset</button>
+                    <button type="submit" value="Submit" id="formSubmit"
+                    class="btn btn-outline-dark btn-lg btn-block border-noset">Start Listening</button>
+                </div>
+            </form>
         </div>
         <!-- first/last names -->
         <div class="input-group mb-3">

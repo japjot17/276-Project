@@ -60,14 +60,14 @@ function notEmptyQueryCheck(rows) {
 
 // understand JSON
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // work with cookies
 var cookieSecret = generateRandomString(20);
 app.use(cookieParser(cookieSecret));
 
 // redirection after login
-var redir;
+// var redir;
 
 /*****************************************************************************/
 
@@ -76,17 +76,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
-  //   res
-  //     .status(200)
-  //     .send('Hello server is running')
-  //     .end();
-  // res.render("pages/start-page");
-  app.locals.signedIn = false;
-  app.locals.redir = "/home";
-  res.clearCookie("persongify_auth", { signed: true });
-  res.clearCookie("spotify_auth", { signed: true });
-
-  res.redirect("/home");
+	//   res
+	//     .status(200)
+	//     .send('Hello server is running')
+	//     .end();
+	// res.render("pages/start-page");
+	app.locals.signedIn = false;
+	app.locals.redir = "/home";
+	res.clearCookie("persongify_auth", { signed: true });
+	res.clearCookie("spotify_auth", { signed: true });
+	res.redirect("/home");
 });
 
 var globalUname = "";
@@ -237,10 +236,13 @@ app.get("/spotify-callback", (req, res) => {
   }
 });
 
+/********************* [END] SPOTIFY OAUTH ROUTING ***************************/
+
 app.get("/token-api", (req, res) => {
   res.json(newToken);
 });
 
+/*************************** SPOTIFY TRENDING ********************************/
 app.get("/trending", (req, res) => {
   if (checkAuthorizedUser(req)) {
     res.render("pages/trending", { name: globalUname });
@@ -249,7 +251,9 @@ app.get("/trending", (req, res) => {
     res.redirect(303, "/login");
   }
 });
+/************************ [END] SPOTIFY TRENDING *****************************/
 
+/******************** SPOTIFY PLAYLIST GENERATOR *****************************/
 //generating recommendations
 var songs = [];
 var artists = [];
@@ -344,6 +348,7 @@ app.get("/songs", function (req, res) {
     res.redirect(303, "/login");
   }
 });
+/******************** [END] SPOTIFY PLAYLIST GENERATOR ***********************/
 
 app.get("/account", function (req, res) {
   // if (checkAuthorizedUser(req)) {
@@ -353,6 +358,58 @@ app.get("/account", function (req, res) {
   //   res.redirect("/login");
   // }
 });
+
+/*********************** SPOTIFY DISTANCE GENERATOR **************************/
+app.get("/new-distance-playlist", (req, res) => {
+	if (checkAuthorizedUser(req)) {
+		res.render("pages/distance-form");
+	} else {
+		app.locals.redir = req.originalUrl;
+		res.redirect("/login");
+	}
+})
+
+const DIST_MATRIX_API_KEY = process.env.DIST_MATRIX_API_KEY;
+app.post("/distance-playlist", (req, res) => {
+
+	if (checkAuthorizedUser(req)) {
+		// distance matrix req params
+		var lang = "en";
+		var mode = req.body.f_travel_mode;
+		var orig_loc = `${req.body.f_orig_city} ${req.body.f_orig_province}`;
+		var dest_loc = `${req.body.f_dest_city} ${req.body.f_dest_province}`;
+		// uri-encoded orig + dest addresses
+		var enc_orig_loc = encodeURI(orig_loc);
+		var enc_dest_loc = encodeURI(dest_loc);
+
+		var config = {
+			method: "get",
+			url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${enc_orig_loc}&destinations=${enc_dest_loc}&language=${lang}&mode=${mode}&key=${DIST_MATRIX_API_KEY}`,
+			headers: { },
+		};
+		axios(config)
+		.then(response => {
+			// const results = response.data;
+			// res.send(JSON.stringify(results));
+			const results = {
+				orig_address: response.data.origin_addresses,
+				dest_address: response.data.destination_addresses,
+				dist_mat_results: response.data.rows,
+				travel_mode: mode,
+			};
+			res.render("pages/distance-gen", results);
+		})
+		.catch((error) => {
+			console.log(error.response);
+			res.send(error);
+		});	
+	} else {
+		app.locals.redir = req.originalUrl;
+		res.redirect("/login");
+	}
+
+})
+/******************** [END] SPOTIFY DISTANCE GENERATOR ***********************/
 
 app.get("/playlists", function (req, res) {
   res.render("pages/saved-playlists", { name: globalUname });
