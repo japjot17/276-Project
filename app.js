@@ -158,6 +158,7 @@ app.post("/verify-login", async (req, res) => {
 
 app.get("/logout", (req, res) => {
     app.locals.signedIn = false;
+    app.locals.username = undefined;
     app.locals.redir = "/home";
     res.clearCookie("persongify_auth", { signed: true });
     res.clearCookie("spotify_auth", { signed: true });
