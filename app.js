@@ -363,7 +363,7 @@ app.get("/account", function (req, res) {
 /*********************** SPOTIFY DISTANCE GENERATOR **************************/
 app.get("/new-distance-playlist", (req, res) => {
 	if (checkAuthorizedUser(req)) {
-		res.render(302, "pages/distance-form");
+		res.render("pages/distance-form");
 	} else {
 		app.locals.redir = req.originalUrl;
 		res.redirect(303, "/login");
