@@ -5,6 +5,13 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
+// TODO: use different assertions to check for redirection
+// e.g. res.should.redirectTo(link);
+// e.g. res.should.redirect;
+
+// TODO: check request object somehow?
+// e.g. req.should.have.param(parameter)
+
 describe('User Signup', () => {
     it('should have added the user on POST /addUser', async() => {
         var userInfo = {
