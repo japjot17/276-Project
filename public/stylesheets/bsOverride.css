@@ -1,0 +1,20 @@
+.radius-start {
+    border-radius: 4px 0 0 4px;
+}
+
+.radius-end {
+    border-radius: 0 4px 4px 0;
+}
+
+.radius-top {
+    border-radius: 4px 4px 0 0;
+}
+
+.radius-bottom {
+    border-radius: 0 0 4px 4px;
+}
+
+.border-noset {
+    border: none;
+    border-style: none;
+}

@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Times New Roman", Times, serif;
+}
+body {
+    display: flex;
+    background-image: url("../media/bg-hollow-bottom-right.png");
+    background-size: cover;
+    
+}
+.musicCreatpart {
+    flex-wrap: wrap;
+}
+.musicbody {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-left: 50px;
+    
+}
+.list {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    margin-top: 5px;
+    margin-left: 50px;
+}
+.musicplayer{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    margin-right: 250px;
+    margin-bottom: 75px;
+}
+.musicplayer2 {
+    background: rgba(255, 255, 255, 0.08);
+    width: 350px;
+    height: 550px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 40px 100px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    justify-content: center;
+    color: #d5eebb;
+    margin-right: 100px;
+}
+.musiccreater {
+    background: rgba(255, 255, 255, 0.08);
+    width: 550px;
+    height: 350px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 40px 100px rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    justify-content: center;
+    color: #d5eebb;
+    margin-right: 100px;
+    text-align: center;
+}
+.disk {
+    position: relative;
+    display: block;
+    margin: 40px auto;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-image: url(../media/record-player.png);
+    background-size: cover;
+    animation: rotate 20s linear infinite;
+    animation-play-state: paused;
+}
+.disk-move {
+    animation-play-state: running;
+}
+#SongName {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+#artists {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+.playbutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #FE4880;
+    color: #FFF;
+    margin: auto;
+    font-size:16pt;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 6px 12px rgba(254, 72, 128, 0.6);
+    transition: 0.4s;
+    
+}
+.sidebutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #FE4880;
+    color: #FFF;
+    margin: auto;
+    font-size:16pt;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 6px 12px rgba(254, 72, 128, 0.6);
+    transition: 0.4s;
+}
+.player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+#button {
+    font-size:16pt
+}
+input {
+    font-size:14pt
+}
+select {
+    font-size:14pt
+}
+label {
+    font-size:14pt
+}
+
+@keyframes rotate {
+    0%{
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

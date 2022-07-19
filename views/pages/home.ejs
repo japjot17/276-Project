@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./stylesheets/navbar.css" />
+    <link rel="stylesheet" href="./stylesheets/carousel.css" />
+    <script src="scripts/carousel.js" defer></script>
+    <script src="scripts/navbar.js" defer></script>
+    <script src="scripts/carousel.js" defer></script>
+    <title>PERSONGIFY - Home</title>
+  </head>
+  <body>
+    <!-- navbar start -->
+    <header>
+      <!-- logo start -->
+      <div class="logo">
+        <img src="./media/note.png" alt="Music Note">
+        PERSONGIFY
+      </div>
+      <!-- logo end -->
+      <!-- hamburger menu start -->
+      <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </a>
+      <!-- hamburger menu end -->
+      <!-- links start here -->
+      <nav class="navbar">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/songs">Discover +</a>
+            <ul>
+              <li><a href="/songs">Create Playlist</a></li>
+              <li><a href="#">Commute</a></li>
+              <li><a href="#">Year in Review</a></li>
+            </ul>
+          </li>
+          <li><a href="/spotify-login">Trending</a></li>
+          <% if (!locals.signedIn) { %>
+            <li><a href="/newUser">Sign Up</a></li>
+            <li><a href="/login">Log In</a></li>
+					<% } else { %>
+            <li><a href="#">Hello _____</a>
+              <li><a href="#">Account Info</a></li>
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Saved Playlist</a></li>
+              <li><a href="/logout">Log Out</a></li>
+            </li>
+					<% } %>
+        </ul>
+      </nav>
+      <!-- links ends here -->
+    </header>
+    <!-- navbar ends -->
+    <!-- carousel start -->
+    <div class="carousel">
+      <!-- slides start -->
+      <div class="slide active">
+        <img src="./media/title.png" alt="Title" />
+      </div>
+      <div class="slide">
+        <img src="./media/why-persongify.png" alt="Why Persongify" />
+      </div>
+      <div class="slide">
+        <img src="./media/personalized.png" alt="Personalized Playlists" />
+      </div>
+      <div class="slide">
+        <img src="./media/commute.png" alt="Perfect for your Commute" />
+      </div>
+      <div class="slide">
+        <img src="./media/year-in-review.png" alt="Year in Review" />
+      </div>
+      <div class="slide">
+        <img src="./media/get-started.png" alt="Getting Started" />
+      </div>
+      <!-- slides end -->
+      <!-- buttons start -->
+      <div class="navigation">
+        <div class="carousel-button prev">&#10094;</div>
+        <div class="carousel-button next">&#10095;</div>
+      </div>
+      <!-- buttons end -->
+      <!-- slide icons start -->
+      <div class="slide-icons">
+        <div class="icon active"></div>
+        <div class="icon"></div>
+        <div class="icon"></div>
+        <div class="icon"></div>
+        <div class="icon"></div>
+        <div class="icon"></div>
+      </div>
+      <!-- slide icons end -->
+    </div>
+    <!-- carousel end -->
+  </body>
+</html>
