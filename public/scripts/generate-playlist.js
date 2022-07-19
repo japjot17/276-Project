@@ -37,10 +37,27 @@ function addTracks() {
 //Creates a new playlist
 //Playlist id is stored in data.id when api call is made
 const createPlaylist = async () => {
+  if (track_ids.length == 0) {
+    return;
+  }
   var today = new Date();
   var date =
-    today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear();
-  var playlistName = "Generated playlist (" + date + ")";
+    today.getMonth() +
+    "/" +
+    today.getDate() +
+    "/" +
+    today.getFullYear() +
+    " " +
+    today.getHours() +
+    ":" +
+    today.getMinutes();
+  var playlistName =
+    "Generated " +
+    document.getElementById("genre").value +
+    " playlist " +
+    "(" +
+    date +
+    ")";
 
   const result = await fetch(
     `https://api.spotify.com/v1/users/${user_id}/playlists`,
