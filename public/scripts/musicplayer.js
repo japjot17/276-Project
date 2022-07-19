@@ -18,7 +18,6 @@ const audios = []
 const images = []
 let currentSelectedSongIndex = 0 
 prev.addEventListener('click', prevClick)
-// playbutton.addEventListener('click', change)
 next.addEventListener('click', nextClick)
 
 
@@ -32,33 +31,7 @@ if (audios.length){
 var audio = new Audio()
 
 
-// audio.volume = 0.3;
-// audio.loop = false;
-// audio.src = audios[1];
 
-// console.log("audio", audios)
-// console.log("e",  elements[0])
-// function change () {
-//     const isPlayButton = play_icons.classList.contains('fa-play')
-//     if (isPlayButton) {
-      
-//       audio.play();
-//         play_icons.classList.remove('fa-play')
-//         play_icons.classList.add('fa-pause')
-        
-        
-//     } else {
-//       audio.pause();
-//         play_icons.classList.remove('fa-pause')
-//         play_icons.classList.add('fa-play')
-       
-//     }
-//   }
-
-
-// playbutton.onclick = function() {
-//     disk[0].classList.toggle('disk-move')
-// }
 
 for(const songHTML of songName){
 
@@ -70,7 +43,7 @@ for(const artistHTML of songArtist){
 
   for(const imagetHTML of songImages){
     images.push(imagetHTML.innerHTML)
-    // disk[0].style.backgroundImage = 'url('+images[currentSelectedSongIndex]+')'
+   
     imagetHTML.innerHTML = ""
   }
 
@@ -91,7 +64,6 @@ function prevClick() {
     title.innerHTML = song[prevIndex]
     artist.innerHTML = artists[prevIndex]
     
-    // disk[0].style.backgroundImage = 'url('+images[prevIndex]+')'
     elements[0].src = audios[prevIndex]
     --currentSelectedSongIndex;
   }
@@ -101,7 +73,7 @@ function nextClick() {
   if(nextIndex < song.length){
     title.innerHTML = song[nextIndex]
     artist.innerHTML = artists[nextIndex]
-    // disk[0].style.backgroundImage = 'url('+images[nextIndex]+')'
+ 
     elements[0].src = audios[nextIndex]
     ++currentSelectedSongIndex;
   }
