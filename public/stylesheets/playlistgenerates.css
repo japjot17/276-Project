@@ -31,10 +31,11 @@ body {
     margin-left: 50px;
 }
 .musicplayer{
+    margin-top: 108px;
     width: 100%;
     display: flex;
-    justify-content: right;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: flex-start;
     margin-right: 250px;
     margin-bottom: 75px;
 }
