@@ -52,7 +52,7 @@ function addPlaylistToEndpoint(data, limit) {
     overlay.innerHTML = data.tracks.items[i].track.name;
     overlayButton.innerHTML = "Preview";
     overlayButton.onclick = function () {
-      location.href = data.tracks.items[i].track.external_urls.spotify;
+      window.open(data.tracks.items[i].track.external_urls.spotify);
     };
     overlay.appendChild(buttonHolder);
     playlistDisplay.appendChild(overlay);

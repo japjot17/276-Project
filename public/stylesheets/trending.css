@@ -23,6 +23,7 @@ body {
 }
 
 .playlist-wrapper {
+  margin-top: 108px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Log In To Persongify</title>
+        <title>PERSONGIFY - Log In</title>
+
         <%- include ("../partials/bs5.ejs") %>
+        <%- include ("../partials/bs5-override.ejs") %>
         <%- include ("../partials/google-fonts.ejs") %>
         <%- include ("../partials/google-icons.ejs") %>
 
-        <style>
-            :root {
-                --brand-magenta: #ef007e
-            }
-            body {
-                background-image: url('media/bg-hollow.png');
-                background-repeat: no-repeat;
-                background-size: 100%;
-                overflow-x: hidden;
-            }
-            #nav-home, #nav-newUser {
-                background-color: var(--brand-magenta);
-            }
-            #formSubmit {
-                background-color: var(--brand-magenta);
-            }
-            .span-magenta {
-                color: var(--brand-magenta);
-            }
-        </style>
+        <link rel="stylesheet" href="./stylesheets/navbar.css" />
+        <script src="scripts/navbar.js" defer></script>
+        <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+
     </head>
     <body>
+    <!-- navbar start -->
+    <header>
+        <!-- logo start -->
+        <div class="logo">
+            <img src="./media/note.png" alt="Music Note">
+            PERSONGIFY
+        </div>
+        <!-- logo end -->
+        <!-- hamburger menu start -->
+        <a href="#" class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </a>
+        <!-- hamburger menu end -->
+        <!-- links start here -->
+        <nav class="navbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/newUser">Create an Account!</a></li>
+            </ul>
+        </nav>
+        <!-- links ends here -->
+      </header>
+      <!-- navbar ends -->
         <!-- HEADINGS -->
+        <!-- TODO: these are still here and are just hidden by navbar, delete upon approval of group -->
         <div class="container-fluid mx-3 my-4 float-start">
             <form action="/" method="get" class="form-inline">
                 <button type="submit" id="nav-home"
@@ -36,7 +48,7 @@
                     <span class="material-symbols-outlined align-text-top">
                         chevron_left
                     </span>
-                    Back to Persongify Home
+                    Back to PERSONGIFY Home
                 </button>
             </form>
             <form action="/newUser" method="get" class="form-inline">
@@ -47,7 +59,7 @@
             </form>
         </div>
         <div class="container text-center mb-3 clearfix">
-            <h1 class="display-1 text-uppercase text-white">Log in to <span class="span-magenta">Persongify</span></h1>
+            <h1 class="display-1 text-uppercase text-white">Log in to <span class="span-magenta">PERSONGIFY</span></h1>
         </div>
 
         <!-- LOGIN FORM -->

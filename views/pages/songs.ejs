@@ -14,33 +14,54 @@
         <div class="musicCreatpart">
         <div class="musicbody">
             <div class="musiccreater"> 
-        <form method = "post" action = "/songs">
+                <form method = "post" action = "/songs">
     
       
-            <h1>Generating Recommendations</h1><br>
-           
-            <input type = "number" name = "limit" value = "" placeholder = "number of songs">
-           
-            <label for ="genre">select genre</label>
-            <select id = "genre" name = "genre">
-                <option value = "hip-hop">hip-hop</option>
-                <option value = "rock">rock</option>
-                <option value = "sad">sad</option>
-                <option value = "romance">romance</option>
-                <option value = "jazz">jazz</option>
-                <option value = "r-n-b">r-n-b</option>
-            </select> <br><br>
-            <h2>Parameters (enter values between 0 and 1)</h2><br>
-                  
-            <input type = "number" step = "0.01" name = "danceability" value = "" placeholder = "danceability"> <br><br>
-            <input type = "number" step = "0.01" name = "energy" value = "" placeholder = "energy"><br><br>
-           
-    
-            <!--<input type = "submit" name  = "sub" value = "send to server">-->
-            <button id = "button" type = "submit" name = "button" value = "add"> Create </button>
-          
+                    <h1>Generating Recommendations</h1><br>
+                   
+                    <input type = "number" name = "limit" value = "" placeholder = "number of songs">
+                    <label for ="genre">select genre</label>
+                    <select id = "genre" name = "genre">
+                        <option value = "hip-hop">hip-hop</option>
+                        <option value = "rock">rock</option>
+                        <option value = "sad">sad</option>
+                        <option value = "romance">romance</option>
+                        <option value = "jazz">jazz</option>
+                        <option value = "r-n-b">r-n-b</option>
+                        <option value = "acoustic">acoustic</option>
+                        <option value = "bluegrass">bluegrass</option>
+                        <option value = "classical">classical</option>
+                        <option value ="country">country</option>
+                        <option value ="dancehall">dancehall</option>
+                        <option value = "dubstep">dubstep</option>
+                        <option value = "folk">folk</option>
+                        <option value = "latin">latin</option>
+                        <option value ="metal">metal</option>
+                        <option value ="soul">soul</option>
+                        <option value ="work-out">work-out</option>
+                        <option value ="study">study</option>
+        
+                    </select> <br><br>
+        
+                    <h2>Parameters (enter values between 0 and 1)</h2><br>
+                          
+                    <input type = "number" step = "0.01" name = "danceability" value = "" placeholder = "danceability"> 
+                    <input type = "number" step = "0.01" name = "energy" value = "" placeholder = "energy">
+                    <input type = "number" step = "0.01" name ="acousticness" value="" placeholder="acousticness"><br><br>
+        
+                    <h2>Enter your current favourite artist and track to improve recommendations</h2>
+                    <label for ="artist">artist name</label>
+                    <input id ="artist" type = "text" name = "seed_artist" value ="" placeholder = "(Ex. Kendrick Lamar)"><br>
+                    <label for ="seed_song">song name</label>
+                    <input id ="seed_song" type = "text" name ="seed_song" value ="" placeholder ="(Ex.First Class)"><br><br>
+        
+                   
             
-            </form>
+                    <!--<input type = "submit" name  = "sub" value = "send to server">-->
+                    <button id = "button" type = "submit" name = "button" value = "add"> Create </button>
+                  
+                    
+                    </form>
         </div>
         
     </div>
@@ -84,3 +105,4 @@
 </body>
 
 </html>
+

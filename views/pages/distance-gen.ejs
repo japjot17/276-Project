@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PERSONGIFY - Travel Results</title>
+        <%- include ("../partials/bs5.ejs") %>
+        <%- include ("../partials/bs5-override.ejs") %>
+        <%- include ("../partials/google-fonts.ejs") %>
+        <%- include ("../partials/google-icons.ejs") %>
+        <!-- TODO: change css/js links to .ejs templates -->
+        <link rel="stylesheet" href="./stylesheets/navbar.css" />
+        <script src="scripts/navbar.js" defer></script>
+        <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    </head>
+    <body>
+
+        <!-- NAVBAR start -->
+        <header>
+            <!-- LOGO start -->
+            <div class="logo">
+                <img src="./media/note.png" alt="Music Note">
+                PERSONGIFY
+            </div>
+            <!-- LOGO end -->
+            <!-- HAMBURGER MENU start -->
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <!-- HAMBURGER MENU end -->
+            <!-- LINKS start -->
+            <nav class="navbar">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/songs">Discover +</a>
+                        <ul>
+                            <li><a href="/songs">Create Playlist</a></li>
+                            <li><a href="/new-distance-playlist">Commute</a></li>
+                            <li><a href="#">Year in Review</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/trending">Trending</a></li>
+                    <li><a href="#">Hello, <%= locals.username %></a>
+                        <ul>
+                            <li><a href="/account">Account Info</a></li>
+                            <li><a href="/playlists">Saved Playlist</a></li>
+                            <li><a href="/logout">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <!-- LINKS end -->
+        </header>
+        <!-- NAVBAR end -->
+
+        <!-- 
+            [TEMP CONTENT FOR TESTING]
+            - assumes there is only 1 origin, 1 destination
+            - means only 1 result should be returned in dist_mat_results
+        -->
+        <!-- DISTANCE RESPONSE -->
+        <!-- TODO: change text color/add text backdrop -->
+        <ul>
+            
+            <li>going from <%= orig_address[0] %></li>
+            <li>going to <%= dest_address[0] %></li>
+            <li>mode of transportation: <%= travel_mode %></li>
+            <!-- 
+                <% dist_mat_results.forEach(r => { %> 
+            -->
+                <li>duration: <%= dist_mat_results[0].elements[0].duration.text %></li>
+            <!-- 
+                <% }) %> 
+            -->
+            
+        </ul>
+    </body>
+</html>
