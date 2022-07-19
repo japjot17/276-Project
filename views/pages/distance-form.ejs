@@ -12,31 +12,45 @@
     </head>
     <body>
         
-        <!-- NAVBAR -->
-        <nav class="navbar">
+        <!-- NAVBAR start -->
+        <header>
+            <!-- LOGO start -->
             <div class="logo">
                 <img src="./media/note.png" alt="Music Note">
                 PERSONGIFY
             </div>
+            <!-- LOGO end -->
+            <!-- HAMBURGER MENU start -->
             <a href="#" class="toggle-button">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </a>
-            <div class="navbar-links">
+            <!-- HAMBURGER MENU end -->
+            <!-- LINKS start -->
+            <nav class="navbar">
                 <ul>
                     <li><a href="/home">Home</a></li>
-                    <li><a href="/songs">Find New Music</a></li>
-                    <li><a href="/spotify-login">Trending</a></li>
-                    <% if (!locals.signedIn) { %>
-                        <li><a href="/newUser">Sign Up</a></li>
-                        <li><a href="/login">Log In</a></li>
-                    <% } else { %>
-                        <li><a href="/logout">Log Out</a></li>
-                    <% } %>
+                    <li><a href="/songs">Discover +</a>
+                        <ul>
+                            <li><a href="/songs">Create Playlist</a></li>
+                            <li><a href="#">Commute</a></li>
+                            <li><a href="#">Year in Review</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/trending">Trending</a></li>
+                    <li><a href="#">Hello <%= locals.username %></a>
+                        <ul>
+                            <li><a href="/account">Account Info</a></li>
+                            <li><a href="/playlists">Saved Playlist</a></li>
+                            <li><a href="/logout">Log Out</a></li>
+                        </ul>
+                    </li>
                 </ul>
-            </div>
-        </nav>
+            </nav>
+            <!-- LINKS end -->
+        </header>
+        <!-- NAVBAR end -->
 
         <!-- HEADINGS -->
         <div class="container text-center mb-3 clearfix">
