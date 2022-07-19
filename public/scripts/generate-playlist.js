@@ -37,14 +37,19 @@ function addTracks() {
 //Creates a new playlist
 //Playlist id is stored in data.id when api call is made
 const createPlaylist = async () => {
+  var today = new Date();
+  var date =
+    today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear();
+  var playlistName = "Generated playlist (" + date + ")";
+
   const result = await fetch(
     `https://api.spotify.com/v1/users/${user_id}/playlists`,
     {
       method: "POST",
       headers: { Authorization: "Bearer " + apiToken },
       body: JSON.stringify({
-        name: "test",
-        description: "creating playlist",
+        name: playlistName,
+        description: "Playlist generated via Persongify",
         public: false,
       }),
     }

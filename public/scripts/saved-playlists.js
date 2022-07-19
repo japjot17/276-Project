@@ -63,7 +63,7 @@ function addSpotifyPlaylistsToEndpoint(limit, data) {
     if (data.items[i].images[0] != undefined) {
       playlistDisplay.style.backgroundImage = `url(${data.items[i].images[0].url})`;
     } else {
-      playlistDisplay.style.backgroundImage = `url(/media/generic_pfp.png)`;
+      playlistDisplay.style.backgroundImage = `url(/media/generic-pfp.png)`;
     }
 
     buttonHolder.appendChild(overlayButton);
