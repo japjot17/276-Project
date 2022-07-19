@@ -73,11 +73,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
-	//   res
-	//     .status(200)
-	//     .send('Hello server is running')
-	//     .end();
-	// res.render("pages/start-page");
 	app.locals.signedIn = false;
 	app.locals.redir = "/home";
 	res.clearCookie("persongify_auth", { signed: true });
@@ -87,13 +82,6 @@ app.get("/", (req, res) => {
 
 var globalUname = "";
 app.get("/home", (req, res) => {
-    // res.sendFile(path.join(__dirname, "/public/home.html"));
-    // if (checkAuthorizedUser(req)) {
-    //   app.locals.signedIn = true;
-    // }
-    // else {
-    //   app.locals.signedIn = false;
-    // }
     res.render("pages/home");
 });
 
@@ -120,7 +108,7 @@ app.post("/addUser", async (req, res) => {
     var rows = await pool.query(query, values);
     if (notEmptyQueryCheck(rows)) {
         res.cookie("persongify_auth", userName, { signed: true });
-        // res.send("successfully added user: " + userName);
+        console.log("successfully added user: " + userName);
         app.locals.signedIn = true;
         let url = app.locals.redir;
         app.locals.redir = "/home";
@@ -138,8 +126,6 @@ app.post("/verify-login", async (req, res) => {
     var chk_uname = req.body.f_uname;
     var chk_pwd = req.body.f_pwd;
     var chk_pwdSHA256 = encryptSHA256(chk_pwd);
-
-    // globalUname = chk_uname;
 
     var query = `SELECT * FROM useracct WHERE username=$1 AND password=$2`;
     var values = [chk_uname, chk_pwdSHA256];
@@ -286,7 +272,7 @@ app.get("/play_some_song", (req, res) => {
         console.log("Playback started");
         },
         function (err) {
-        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+        // if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
         console.log("Something went wrong!", err);
         }
     );
@@ -328,7 +314,7 @@ app.post("/songs", function (req, res) {
                 console.log(recommendations);
             }
 
-            //res.json({ songs, artists, audios, images})
+            // res.json({ songs, artists, audios, images})
             res.redirect("/songs");
         },
         function (err) {
@@ -352,12 +338,12 @@ app.get("/songs", function (req, res) {
 /******************** [END] SPOTIFY PLAYLIST GENERATOR ***********************/
 
 app.get("/account", function (req, res) {
-  // if (checkAuthorizedUser(req)) {
-  res.render("pages/account-info");
-  // } else {
-  //   redir = req.originalUrl;
-  //   res.redirect("/login");
-  // }
+    // if (checkAuthorizedUser(req)) {
+    res.render("pages/account-info");
+    // } else {
+    //   redir = req.originalUrl;
+    //   res.redirect("/login");
+    // }
 });
 
 /*********************** SPOTIFY DISTANCE GENERATOR **************************/
@@ -413,14 +399,14 @@ app.post("/distance-playlist", (req, res) => {
 /******************** [END] SPOTIFY DISTANCE GENERATOR ***********************/
 
 app.get("/playlists", function (req, res) {
-  res.render("pages/saved-playlists");
+    res.render("pages/saved-playlists");
 });
 
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-  console.log("Press Ctrl+C to quit.");
+    console.log(`App listening on port ${PORT}`);
+    console.log("Press Ctrl+C to quit.");
 });
 
 // for testing
