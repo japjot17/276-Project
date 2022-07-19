@@ -11,51 +11,54 @@ const songArtist = document.getElementsByClassName('songArtists')
 const songImages = document.getElementsByClassName('songImages')
 const songAudio = document.getElementsByClassName('songAudio')
 const imageDisk = document.getElementsByClassName('imageDisk')
-
+var elements = document.querySelectorAll("iframe, src");
 const song = []
 const artists = []
 const audios = []
 const images = []
 let currentSelectedSongIndex = 0 
 prev.addEventListener('click', prevClick)
-playbutton.addEventListener('click', change)
+// playbutton.addEventListener('click', change)
 next.addEventListener('click', nextClick)
 
 
 for (const audioHTML of songAudio) {
-  audios.push(`https://api.${audioHTML.innerHTML}`)
+  audios.push(`https://open.spotify.com/embed/track/${audioHTML.innerHTML}?utm_source=generator`)
+  audioHTML.innerHTML = ""
+}
+if (audios.length){
+ elements[0].src = audios[0]
 }
 var audio = new Audio()
 
 
-audio.volume = 0.3;
-audio.loop = false;
-audio.src = audios[1];
-audio.play();
+// audio.volume = 0.3;
+// audio.loop = false;
+// audio.src = audios[1];
 
-console.log("audio", audios)
-
-function change () {
-    const isPlayButton = play_icons.classList.contains('fa-play')
-    if (isPlayButton) {
+// console.log("audio", audios)
+// console.log("e",  elements[0])
+// function change () {
+//     const isPlayButton = play_icons.classList.contains('fa-play')
+//     if (isPlayButton) {
       
-      audio.play();
-        play_icons.classList.remove('fa-play')
-        play_icons.classList.add('fa-pause')
+//       audio.play();
+//         play_icons.classList.remove('fa-play')
+//         play_icons.classList.add('fa-pause')
         
         
-    } else {
-      audio.pause();
-        play_icons.classList.remove('fa-pause')
-        play_icons.classList.add('fa-play')
+//     } else {
+//       audio.pause();
+//         play_icons.classList.remove('fa-pause')
+//         play_icons.classList.add('fa-play')
        
-    }
-  }
+//     }
+//   }
 
 
-playbutton.onclick = function() {
-    disk[0].classList.toggle('disk-move')
-}
+// playbutton.onclick = function() {
+//     disk[0].classList.toggle('disk-move')
+// }
 
 for(const songHTML of songName){
 
@@ -67,7 +70,7 @@ for(const artistHTML of songArtist){
 
   for(const imagetHTML of songImages){
     images.push(imagetHTML.innerHTML)
-    disk[0].style.backgroundImage = 'url('+images[currentSelectedSongIndex]+')'
+    // disk[0].style.backgroundImage = 'url('+images[currentSelectedSongIndex]+')'
     imagetHTML.innerHTML = ""
   }
 
@@ -87,8 +90,9 @@ function prevClick() {
   if(prevIndex >= 0){
     title.innerHTML = song[prevIndex]
     artist.innerHTML = artists[prevIndex]
-    disk[0].style.backgroundImage = 'url('+images[prevIndex]+')'
-   
+    
+    // disk[0].style.backgroundImage = 'url('+images[prevIndex]+')'
+    elements[0].src = audios[prevIndex]
     --currentSelectedSongIndex;
   }
 }
@@ -97,8 +101,8 @@ function nextClick() {
   if(nextIndex < song.length){
     title.innerHTML = song[nextIndex]
     artist.innerHTML = artists[nextIndex]
-    disk[0].style.backgroundImage = 'url('+images[nextIndex]+')'
-    
+    // disk[0].style.backgroundImage = 'url('+images[nextIndex]+')'
+    elements[0].src = audios[nextIndex]
     ++currentSelectedSongIndex;
   }
 }

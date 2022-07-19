@@ -11,10 +11,10 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    require: true,
-    rejectUnauthorized: false,
-  },
+  // ssl: {
+  //   require: true,
+  //   rejectUnauthorized: false,
+  // },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -287,7 +287,7 @@ app.get('/play_some_song', (req,res)=> {
 })
 
 app.post("/songs", function(req,res){
-
+  
     var limit = req.body.limit;
     var genre = req.body.genre;
     var dance = req.body.danceability;
@@ -314,14 +314,14 @@ app.post("/songs", function(req,res){
         
         console.log("working");
 
-    
+  
       let recommendations = data.body.tracks;
       
       for(let i = 0; i<recommendations.length; i++){
 
         songs.push(recommendations[i].name);
         artists.push(recommendations[i].artists[0].name);
-        audios.push(recommendations[i].uri)
+        audios.push(recommendations[i].id)
         images.push(recommendations[i].album.images[0].url)
         console.log(recommendations)
       }
