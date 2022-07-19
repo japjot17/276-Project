@@ -67,6 +67,8 @@ var cookieSecret = generateRandomString(20);
 app.use(cookieParser(cookieSecret));
 
 /*****************************************************************************/
+// TODO: refactor routes into separate files (modularize)
+// maybe look for express router mounting, module.export, etc
 
 // basic routing
 app.use(express.static(path.join(__dirname, "public")));
