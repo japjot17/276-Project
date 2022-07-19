@@ -98,7 +98,9 @@ app.get("/home", (req, res) => {
 });
 
 /********************** POSTGRES ACCOUNT SETUP *******************************/
-
+// TODO: change route names to hyphenated alternatives for consistency
+// will require adjusting all navbar links
+// e.g. new-user, add-user
 app.get("/newUser", (req, res) => {
     res.render("pages/user-add");
 });
