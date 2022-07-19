@@ -36,13 +36,12 @@ const getSpotifyPlaylists = async (limit) => {
 };
 
 function addSpotifyPlaylistsToEndpoint(limit, data) {
-  console.log(data);
   //Reset the page
-  deleteChildren();
-  document.getElementById("saved-button").setAttribute("class", "btn btn-dark");
-  document
-    .getElementById("spotify-button")
-    .setAttribute("class", "btn btn-success");
+  //   deleteChildren();
+  //   document.getElementById("saved-button").setAttribute("class", "btn btn-dark");
+  //   document
+  //     .getElementById("spotify-button")
+  //     .setAttribute("class", "btn btn-success");
 
   if (data.total == 0) {
     return;
@@ -78,16 +77,16 @@ function addSpotifyPlaylistsToEndpoint(limit, data) {
   }
 }
 
-function addSavedPlaylistsToEndpoint(limit) {
-  deleteChildren();
+// function addSavedPlaylistsToEndpoint(limit) {
+//   deleteChildren();
 
-  document
-    .getElementById("saved-button")
-    .setAttribute("class", "btn btn-success");
-  document
-    .getElementById("spotify-button")
-    .setAttribute("class", "btn btn-dark");
-}
+//   document
+//     .getElementById("saved-button")
+//     .setAttribute("class", "btn btn-success");
+//   document
+//     .getElementById("spotify-button")
+//     .setAttribute("class", "btn btn-dark");
+// }
 
 function deleteChildren() {
   const parent = document.getElementById("playlist-wrapper");
