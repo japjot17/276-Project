@@ -347,7 +347,7 @@ app.get("/songs", function (req, res) {
 
 app.get("/account", function (req, res) {
   // if (checkAuthorizedUser(req)) {
-  res.render("pages/account-info");
+  res.render("pages/account-info", { name: globalUname });
   // } else {
   //   redir = req.originalUrl;
   //   res.redirect("/login");
@@ -355,7 +355,7 @@ app.get("/account", function (req, res) {
 });
 
 app.get("/playlists", function (req, res) {
-  res.render("pages/saved-playlists");
+  res.render("pages/saved-playlists", { name: globalUname });
 });
 
 // Start the server
@@ -367,3 +367,4 @@ app.listen(PORT, () => {
 
 // for testing
 module.exports = app;
+
