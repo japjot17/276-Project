@@ -9,7 +9,7 @@ var refreshToken = async () => {
   try {
     const data = await response.json();
     apiToken = data.access_token;
-    getFeaturedPlaylists(9, apiToken);
+    getFeaturedPlaylists(15, apiToken);
   } catch (e) {
     console.log(e);
     window.location.replace("/login");
@@ -52,7 +52,7 @@ function addPlaylistToEndpoint(data, limit) {
     overlay.innerHTML = data.tracks.items[i].track.name;
     overlayButton.innerHTML = "Preview";
     overlayButton.onclick = function () {
-      location.href = data.tracks.items[i].track.external_urls.spotify;
+      window.open(data.tracks.items[i].track.external_urls.spotify);
     };
     overlay.appendChild(buttonHolder);
     playlistDisplay.appendChild(overlay);

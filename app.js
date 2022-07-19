@@ -10,11 +10,7 @@ if (process.env.NODE_ENV !== "production") {
 // connect to postgreSQL
 const { Pool } = require("pg");
 const pool = new Pool({
-  // localhost server
-  connectionString: "postgres://postgres:root@localhost",
-
-  // heroku server
-  // connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
   // ssl: {
   //   require: true,
   //   rejectUnauthorized: false,
@@ -45,8 +41,11 @@ var encryptSHA256 = function (plain) {
 };
 
 var checkAuthorizedUser = function (req) {
-  console.log("req.signedCookies['persongify_auth']: ", req.signedCookies['persongify_auth']);
-  if (req.signedCookies['persongify_auth']) return true;
+  console.log(
+    "req.signedCookies['persongify_auth']: ",
+    req.signedCookies["persongify_auth"]
+  );
+  if (req.signedCookies["persongify_auth"]) return true;
   return false;
 };
 
@@ -61,14 +60,11 @@ function notEmptyQueryCheck(rows) {
 
 // understand JSON
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // work with cookies
 var cookieSecret = generateRandomString(20);
 app.use(cookieParser(cookieSecret));
-
-// redirection after login
-var redir;
 
 /*****************************************************************************/
 
@@ -77,32 +73,21 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
-  //   res
-  //     .status(200)
-  //     .send('Hello server is running')
-  //     .end();
-  // res.render("pages/start-page");
   app.locals.signedIn = false;
-  app.locals.redir = '/home';
+  app.locals.redir = "/home";
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
-
   res.redirect("/home");
 });
 
 app.get("/home", (req, res) => {
-  // res.sendFile(path.join(__dirname, "/public/home.html"));
-  // if (checkAuthorizedUser(req)) {
-  //   app.locals.signedIn = true;
-  // }
-  // else {
-  //   app.locals.signedIn = false;
-  // }
-  res.render('pages/home');
+  res.render("pages/home");
 });
 
 /********************** POSTGRES ACCOUNT SETUP *******************************/
-
+// TODO: change route names to hyphenated alternatives for consistency
+// will require adjusting all navbar links
+// e.g. new-user, add-user
 app.get("/newUser", (req, res) => {
   res.render("pages/user-add");
 });
@@ -122,13 +107,13 @@ app.post("/addUser", async (req, res) => {
   var rows = await pool.query(query, values);
   if (notEmptyQueryCheck(rows)) {
     res.cookie("persongify_auth", userName, { signed: true });
-    // res.send("successfully added user: " + userName);
+    console.log("successfully added user: " + userName);
     app.locals.signedIn = true;
     let url = app.locals.redir;
-    app.locals.redir = '/home';
-    res.redirect(url);
+    app.locals.redir = "/home";
+    res.redirect(302, url);
   } else {
-    res.redirect("/newUser");
+    res.redirect(303, "/newUser");
   }
 });
 
@@ -149,37 +134,34 @@ app.post("/verify-login", async (req, res) => {
     res.cookie("persongify_auth", chk_uname, { signed: true });
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
-    let url = app.locals.redir;
-    app.locals.redir = '/home';
-    res.redirect(url);
+    app.locals.username = chk_uname;
+    let url = "/spotify-login";
+    app.locals.redir = "/home";
+    res.redirect(302, url);
   } else {
-    res.redirect("/login");
+    res.redirect(303, "/login");
   }
 });
 
 app.get("/logout", (req, res) => {
   app.locals.signedIn = false;
-  app.locals.redir = '/home';
+  app.locals.username = undefined;
+  app.locals.redir = "/home";
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
-
-  res.redirect('/home');
-})
+  res.redirect(302, "/home");
+});
 
 /************************* SPOTIFY OAUTH ROUTING *****************************/
-var client_id = process.env.CLIENT_ID || "0f6749aefe004361b5c218e24c953814";
-var client_secret =
-  process.env.CLIENT_SECRET || "4940d82140ff4e47add12d60060cbcbc";
-var redirect_uri =
-  process.env.REDIRECT_URI || "http://localhost:5000/spotify-callback";
-
+var client_id = process.env.CLIENT_ID;
+var client_secret = process.env.CLIENT_SECRET;
+var redirect_uri = process.env.REDIRECT_URI;
 
 app.get("/spotify-login", (req, res) => {
   if (!checkAuthorizedUser(req)) {
     app.locals.redir = req.originalUrl;
-    res.redirect("/login");
-  }
-  else {
+    res.redirect(303, "/login");
+  } else {
     var state = generateRandomString(16);
     var scope =
       "user-read-private user-read-email user-library-modify user-library-read playlist-modify-private playlist-modify-public playlist-read-private user-top-read user-read-recently-played user-follow-read user-follow-modify";
@@ -195,7 +177,6 @@ app.get("/spotify-login", (req, res) => {
         })
     );
   }
-  
 });
 
 var newToken;
@@ -204,7 +185,8 @@ app.get("/spotify-callback", (req, res) => {
   // given from login redirect
   var code = req.query.code || null;
   var state = req.query.state || null;
-
+  console.log("code: " + code);
+  console.log("state: " + state);
   if (state === null) {
     res.send("STATE MISMATCH");
   } else {
@@ -228,7 +210,7 @@ app.get("/spotify-callback", (req, res) => {
         if (response.status === 200) {
           res.cookie("spotify_auth", state, { signed: true });
           newToken = response.data;
-          res.redirect("/trending");
+          res.redirect("/home");
         } else {
           res.send(response);
         }
@@ -240,94 +222,207 @@ app.get("/spotify-callback", (req, res) => {
   }
 });
 
-app.get("/token-api", (req, res) => {
-  
-  res.json(newToken);
+/********************* [END] SPOTIFY OAUTH ROUTING ***************************/
 
+app.get("/token-api", (req, res) => {
+  res.json(newToken);
 });
 
+/*************************** SPOTIFY TRENDING ********************************/
 app.get("/trending", (req, res) => {
   if (checkAuthorizedUser(req)) {
-    res.sendFile(path.join(__dirname, "/public/trending.html"));
+    res.render("pages/trending");
   } else {
-    redir = req.originalUrl;
-    res.redirect("/login");
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "/login");
   }
 });
+/************************ [END] SPOTIFY TRENDING *****************************/
 
+/******************** SPOTIFY PLAYLIST GENERATOR *****************************/
 //generating recommendations
 var songs = [];
 var artists = [];
-var SpotifyWebApi = require('spotify-web-api-node');
+var audios = [];
+var images = [];
+var SpotifyWebApi = require("spotify-web-api-node");
 
 var spotifyApi = new SpotifyWebApi({
   clientId: client_id,
-  clientSecret: client_secret
+  clientSecret: client_secret,
 });
 
 // Retrieve an access token.
 spotifyApi.clientCredentialsGrant().then(
-  function(data) {
-    console.log('The access token expires in ' + data.body['expires_in']);
-    
+  function (data) {
+    console.log("The access token expires in " + data.body["expires_in"]);
 
     // Save the access token so that it's used in future calls
-    spotifyApi.setAccessToken(data.body['access_token']);
+    spotifyApi.setAccessToken(data.body["access_token"]);
   },
-  function(err) {
-    console.log('Something went wrong when retrieving an access token', err);
+  function (err) {
+    console.log("Something went wrong when retrieving an access token", err);
   }
 );
 
-app.post("/songs", function(req,res){
+app.get("/play_some_song", (req, res) => {
+  spotifyApi.play().then(
+    function () {
+      console.log("Playback started");
+    },
+    function (err) {
+      // if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+      console.log("Something went wrong!", err);
+    }
+  );
+});
 
-    var limit = req.body.limit;
-    var genre = req.body.genre;
-    var dance = req.body.danceability;
-    var energy = req.body.energy;
+app.post("/songs", function (req, res) {
+  var id = [];
 
+  var limit = req.body.limit;
+  var genre = req.body.genre;
+  var dance = req.body.danceability;
+  var energy = req.body.energy;
+  var acoustic = req.body.acousticness;
+  var seed_artist = req.body.seed_artist;
+  var seed_song = req.body.seed_song;
+  var artist_id;
+  // res.json({
+  //   limit,
+  //   genre,
+  //   dance,
+  //   energy
+  // })
 
-    spotifyApi.getRecommendations({
+  // return
+  spotifyApi
+    .searchArtists(seed_artist)
+    .then(function (data) {
+      let artists = data.body.artists.items;
+      console.log(artists[0].id);
+      return artists[0].id;
+    })
+    .then(function (id) {
+      artist_id = id;
+      console.log(artist_id);
+      return spotifyApi.searchTracks(seed_song);
+    })
+
+    .then(function (data) {
+      var songs = data.body.tracks.items;
+      return songs[0].id;
+    })
+
+    .then(function (song_id) {
+      console.log(song_id);
+      return spotifyApi.getRecommendations({
         limit: limit,
         seed_genres: genre,
+        seed_artists: artist_id,
+        seed_tracks: song_id,
         target_danceability: dance,
-        target_energy: energy
-      })
-    .then(function(data) {
-        console.log("working");
+        target_energy: energy,
+        target_acousticness: acoustic,
+      });
+    })
+    .then(function (data) {
+      console.log("working");
 
-        
       let recommendations = data.body.tracks;
-      for(let i = 0; i<recommendations.length; i++){
 
+      for (let i = 0; i < recommendations.length; i++) {
         songs.push(recommendations[i].name);
         artists.push(recommendations[i].artists[0].name);
-
-        
+        audios.push(recommendations[i].id);
+        images.push(recommendations[i].album.images[0].url);
+        console.log(recommendations);
       }
+
+      //res.json({ songs, artists, audios, images})
       res.redirect("/songs");
-    
-    }, function(err) {
-      console.log("Something went wrong!", err);
+    })
+    .catch(function (error) {
+      console.error(error);
     });
+});
 
-
-})
-
-app.get("/songs", function(req,res){
-
-  for(let i = 0; i<songs.length;i++){
-      console.log(artists[i]);
+app.get("/songs", function (req, res) {
+  for (let i = 0; i < songs.length; i++) {
+    console.log(artists[i]);
   }
 
   if (checkAuthorizedUser(req)) {
-    res.render("pages/songs", {songs:songs, artists:artists});
+    res.render("pages/songs", { songs, artists, audios, images });
   } else {
-    redir = req.originalUrl;
-    res.redirect("/login");
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "/login");
   }
+});
+/******************** [END] SPOTIFY PLAYLIST GENERATOR ***********************/
 
-})
+app.get("/account", function (req, res) {
+  // if (checkAuthorizedUser(req)) {
+  res.render("pages/account-info");
+  // } else {
+  //   redir = req.originalUrl;
+  //   res.redirect("/login");
+  // }
+});
+
+/*********************** SPOTIFY DISTANCE GENERATOR **************************/
+app.get("/new-distance-playlist", (req, res) => {
+  if (checkAuthorizedUser(req)) {
+    res.render("pages/distance-form");
+  } else {
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "/login");
+  }
+});
+
+const DIST_MATRIX_API_KEY = process.env.DIST_MATRIX_API_KEY;
+app.post("/distance-playlist", (req, res) => {
+  if (checkAuthorizedUser(req)) {
+    // distance matrix req params
+    var lang = "en";
+    var mode = req.body.f_travel_mode;
+    var orig_loc = `${req.body.f_orig_city} ${req.body.f_orig_province}`;
+    var dest_loc = `${req.body.f_dest_city} ${req.body.f_dest_province}`;
+    // uri-encoded orig + dest addresses
+    var enc_orig_loc = encodeURI(orig_loc);
+    var enc_dest_loc = encodeURI(dest_loc);
+
+    var config = {
+      method: "get",
+      url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${enc_orig_loc}&destinations=${enc_dest_loc}&language=${lang}&mode=${mode}&key=${DIST_MATRIX_API_KEY}`,
+      headers: {},
+    };
+    axios(config)
+      .then((response) => {
+        // const results = response.data;
+        // res.send(JSON.stringify(results));
+        const results = {
+          orig_address: response.data.origin_addresses,
+          dest_address: response.data.destination_addresses,
+          dist_mat_results: response.data.rows,
+          travel_mode: mode,
+        };
+        res.render("pages/distance-gen", results);
+      })
+      .catch((error) => {
+        console.log(error.response);
+        res.send(error);
+      });
+  } else {
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "/login");
+  }
+});
+/******************** [END] SPOTIFY DISTANCE GENERATOR ***********************/
+
+app.get("/playlists", function (req, res) {
+  res.render("pages/saved-playlists");
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;
@@ -335,3 +430,6 @@ app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
   console.log("Press Ctrl+C to quit.");
 });
+
+// for testing
+module.exports = app;

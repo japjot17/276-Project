@@ -1,3 +1,4 @@
+/* general css */
 * {
     margin: 0;
     padding: 0;
@@ -22,6 +23,7 @@ header {
     background-color: rgb(15, 0, 39);
 }
 
+/* css for logo */
 header .logo {
     display: flex;
     justify-content: space-between;
@@ -37,6 +39,7 @@ header .logo img {
     object-fit: fill;
 }
 
+/* css for styling links */
 header .navbar ul {
     margin: 0;
     padding: 0;
@@ -49,17 +52,21 @@ header .navbar ul li {
 }
 
 header .navbar ul li a {
+    text-decoration: none;
     font-size: 3rem;
     padding: 20px;
     color: white;
     display: block;
 }
 
+/* css hover effects */
 header .navbar ul li a:hover {
     background: rgb(25, 0, 63);
     color: #ef0073;
 }
 
+/* css for drop down menu
+Note: these are hidden until you mouseover the parent */
 header .navbar ul li ul {
     position: absolute;
     left: 0;
@@ -73,11 +80,14 @@ header .navbar ul li ul li {
     border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
+/* css for a nested drop down menu */
 header .navbar ul li ul li ul {
     left: 200px;
     top: 0;
 }
 
+/* css that displays the drop down menu when hovered upon 
+Note: the initial sets something to its default value, in this case block */
 header .navbar ul li:hover > ul {
     display: initial;
 }
@@ -105,18 +115,18 @@ header .navbar ul li:hover > ul {
 
 /* - Will display hamburger drop down menu when a breakpoint is reached 
    - This code will only apply after the condition of max-width <= ____ px is true
-   - Changes the flex direction to column! This means when items are placed
-                on top of each other
    */
 @media (max-width: 1712px) {
     header {
         padding: 20px;
     }
 
+    /* makes toggle button visible */
     .toggle-button {
         display: flex;
     }
 
+    /* css for styling the links */
     header .navbar {
         position: absolute;
         top: 100%;
@@ -147,6 +157,7 @@ header .navbar ul li:hover > ul {
         left: 0;
     }
 
+    /* shows drop down menu */
     .navbar.active {
         display: initial;
     }

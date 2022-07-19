@@ -3,41 +3,112 @@
 <html lang = 'en' dir = 'ltr'>
 
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="stylesheets/playlistgenerates.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link
+        href="https://fonts.googleapis.com/css2?family=Abel&display=swap"
+        rel="stylesheet"
+      />
+      <link rel="stylesheet" href="./stylesheets/navbar.css" />
+      <script src="scripts/navbar.js" defer></script>
     </head>
     
     <body>
+    <!-- navbar start -->
+    <header>
+        <!-- logo start -->
+        <div class="logo">
+          <img src="./media/note.png" alt="Music Note" />
+          PERSONGIFY
+        </div>
+        <!-- logo end -->
+        <!-- hamburger menu start -->
+        <a href="#" class="toggle-button">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </a>
+        <!-- hamburger menu end -->
+        <!-- links start here -->
+        <nav class="navbar">
+          <ul>
+            <li><a href="/home">Home</a></li>
+            <li>
+              <a href="/songs">Discover +</a>
+              <ul>
+                <li><a href="/songs">Create Playlist</a></li>
+                <li><a href="/new-distance-playlist">Commute</a></li>
+                <li><a href="#">Year in Review</a></li>
+              </ul>
+            </li>
+            <li><a href="/trending">Trending</a></li>
+            <li>
+              <a href="#">Hello <%= locals.username %></a>
+              <ul>
+                <li><a href="/account">Account Info</a></li>
+                <li><a href="/playlists">Saved Playlist</a></li>
+                <li><a href="/logout">Log Out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- links ends here -->
+      </header>
+      <!-- navbar ends -->
         <div class="musicCreatpart">
         <div class="musicbody">
             <div class="musiccreater"> 
-        <form method = "post" action = "/songs">
+                <form method = "post" action = "/songs">
     
       
-            <h1>Generating Recommendations</h1><br>
-           
-            <input type = "number" name = "limit" value = "" placeholder = "number of songs">
-           
-            <label for ="genre">select genre</label>
-            <select id = "genre" name = "genre">
-                <option value = "hip-hop">hip-hop</option>
-                <option value = "rock">rock</option>
-                <option value = "sad">sad</option>
-                <option value = "romance">romance</option>
-                <option value = "jazz">jazz</option>
-                <option value = "r-n-b">r-n-b</option>
-            </select> <br><br>
-            <h2>Parameters (enter values between 0 and 1)</h2><br>
-                  
-            <input type = "number" step = "0.01" name = "danceability" value = "" placeholder = "danceability"> <br><br>
-            <input type = "number" step = "0.01" name = "energy" value = "" placeholder = "energy"><br><br>
-           
-    
-            <!--<input type = "submit" name  = "sub" value = "send to server">-->
-            <button id = "button" type = "submit" name = "button" value = "add"> Create </button>
-          
+                    <h1>Generating Recommendations</h1><br>
+                   
+                    <input type = "number" name = "limit" value = "" placeholder = "number of songs">
+                    <label for ="genre">select genre</label>
+                    <select id = "genre" name = "genre">
+                        <option value = "hip-hop">hip-hop</option>
+                        <option value = "rock">rock</option>
+                        <option value = "sad">sad</option>
+                        <option value = "romance">romance</option>
+                        <option value = "jazz">jazz</option>
+                        <option value = "r-n-b">r-n-b</option>
+                        <option value = "acoustic">acoustic</option>
+                        <option value = "bluegrass">bluegrass</option>
+                        <option value = "classical">classical</option>
+                        <option value ="country">country</option>
+                        <option value ="dancehall">dancehall</option>
+                        <option value = "dubstep">dubstep</option>
+                        <option value = "folk">folk</option>
+                        <option value = "latin">latin</option>
+                        <option value ="metal">metal</option>
+                        <option value ="soul">soul</option>
+                        <option value ="work-out">work-out</option>
+                        <option value ="study">study</option>
+        
+                    </select> <br><br>
+        
+                    <h2>Parameters (enter values between 0 and 1)</h2><br>
+                          
+                    <input type = "number" step = "0.01" name = "danceability" value = "" placeholder = "danceability"> 
+                    <input type = "number" step = "0.01" name = "energy" value = "" placeholder = "energy">
+                    <input type = "number" step = "0.01" name ="acousticness" value="" placeholder="acousticness"><br><br>
+        
+                    <h2>Enter your current favourite artist and track to improve recommendations</h2>
+                    <label for ="artist">artist name</label>
+                    <input id ="artist" type = "text" name = "seed_artist" value ="" placeholder = "(Ex. Kendrick Lamar)"><br>
+                    <label for ="seed_song">song name</label>
+                    <input id ="seed_song" type = "text" name ="seed_song" value ="" placeholder ="(Ex.First Class)"><br><br>
+        
+                   
             
-            </form>
+                    <!--<input type = "submit" name  = "sub" value = "send to server">-->
+                    <button id = "button" type = "submit" name = "button" value = "add"> Create </button>
+                  
+                    
+                    </form>
         </div>
         
     </div>
@@ -48,33 +119,37 @@
     
         <% for (var i = 0; i<songs.length;i++){ %>
             <li>
-                <a class="songName"><%= songs[i] %></a> by <a class="songArtists"><%= artists[i] %></a>
+                <a class="songName"><%= songs[i] %></a> by <a class="songArtists"><%= artists[i] %></a><a class="songAudio" src="<%= audios[i] %>"><%= audios[i] %></a>
+               
+                
+                
             </li>
             
         <%}%>
         </div>
     </div>
 </div>
+
     <div class="musicplayer">
         <div class="musicplayer2"> 
-            <audio id="music"></audio>
-            <div id="disks" class="disk">
-            </div>
+            
             
             <p id="SongName"></p>
             <p id="artists"></p><br><br>
-
+           
             <div class="player-controls">
             <button class="sidebutton" id="prev"><i class="fa fa-step-backward"></i></button>
-            <button class="playbutton" id="play-button"><i id="play-icon" class="fa fa-play"></i></button>
+            <iframe id="myiFrame" style="border-radius:12px" 
+            width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
             <button class="sidebutton" id="next"><i class="fa fa-step-forward"></i></button>
             
         </div>
         </div>
     </div>
-    <script src="musicplayer.js">
+    <script src="scripts/musicplayer.js">
     </script>
     
 </body>
 
 </html>
+

@@ -8,38 +8,50 @@ const prev = document.getElementById('prev')
 const next = document.getElementById('next')
 const songName = document.getElementsByClassName('songName')
 const songArtist = document.getElementsByClassName('songArtists')
+const songImages = document.getElementsByClassName('songImages')
+const songAudio = document.getElementsByClassName('songAudio')
+const imageDisk = document.getElementsByClassName('imageDisk')
+var elements = document.querySelectorAll("iframe, src");
 const song = []
 const artists = []
-prev.addEventListener('click', prevClick)
-playbutton.addEventListener('click', change)
-next.addEventListener('click', nextClick)
-function change () {
-    const isPlayButton = play_icons.classList.contains('fa-play')
-    if (isPlayButton) {
-        play_icons.classList.remove('fa-play')
-        play_icons.classList.add('fa-pause')
-        
-    } else {
-        play_icons.classList.remove('fa-pause')
-        play_icons.classList.add('fa-play')
-    }
-  }
-
-
-playbutton.onclick = function() {
-    disk[0].classList.toggle('disk-move')
-}
+const audios = []
+const images = []
 let currentSelectedSongIndex = 0 
+prev.addEventListener('click', prevClick)
+next.addEventListener('click', nextClick)
+
+
+for (const audioHTML of songAudio) {
+  audios.push(`https://open.spotify.com/embed/track/${audioHTML.innerHTML}?utm_source=generator`)
+  audioHTML.innerHTML = ""
+}
+if (audios.length){
+ elements[0].src = audios[0]
+}
+var audio = new Audio()
+
+
+
+
 for(const songHTML of songName){
+
   song.push(songHTML.innerHTML)
 }
 for(const artistHTML of songArtist){
     artists.push(artistHTML.innerHTML)
   }
+
+  for(const imagetHTML of songImages){
+    images.push(imagetHTML.innerHTML)
+   
+    imagetHTML.innerHTML = ""
+  }
+
 if (!song.length) {
     title.innerHTML = "Song Name"
 }else {
     title.innerHTML = song[0]
+  
 }
 if (!artists.length){
     artist.innerHTML = "Artist"
@@ -51,6 +63,8 @@ function prevClick() {
   if(prevIndex >= 0){
     title.innerHTML = song[prevIndex]
     artist.innerHTML = artists[prevIndex]
+    
+    elements[0].src = audios[prevIndex]
     --currentSelectedSongIndex;
   }
 }
@@ -59,18 +73,10 @@ function nextClick() {
   if(nextIndex < song.length){
     title.innerHTML = song[nextIndex]
     artist.innerHTML = artists[nextIndex]
+ 
+    elements[0].src = audios[nextIndex]
     ++currentSelectedSongIndex;
   }
 }
-/*
-next.addEventListener('click', singer);
-title.innerHTML = songName[0]
-function singer() {
-    
-    console.log(songName)
-    songNum++
-    songNum %= songName.length
-    title.innerHTML = songName[songNum]
-}
-*/
+
 
