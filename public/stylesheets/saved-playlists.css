@@ -48,10 +48,12 @@ body {
 
 .btn {
   position: relative;
-  display: block;
-  height: 50px;
+  display: flex;
+  height: 30px;
   width: 150px;
-  margin: 20px;
+  margin: 10px;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-home {
