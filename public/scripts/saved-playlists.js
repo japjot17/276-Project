@@ -60,7 +60,7 @@ function addSpotifyPlaylistsToEndpoint(limit, data) {
     overlayButton.setAttribute("class", "btn btn-success");
     const buttonHolder = document.createElement("div");
     buttonHolder.setAttribute("class", "btn-container");
-    if (data.items[i].images != undefined) {
+    if (data.items[i].images[0] != undefined) {
       playlistDisplay.style.backgroundImage = `url(${data.items[i].images[0].url})`;
     } else {
       playlistDisplay.style.backgroundImage = `url(/media/generic_pfp.png)`;

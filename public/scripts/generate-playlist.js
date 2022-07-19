@@ -3,15 +3,11 @@ var user_id;
 var track_ids = [];
 
 window.onload = function test() {
-  // for(let i = 0; i < audiotest.length; i++) {
-  //     console.log(audiotest[i].attributes.src.value);
-  // }
-
   refreshToken();
 };
 
 var refreshToken = async () => {
-  const response = await fetch("http://localhost:5000/token-api");
+  const response = await fetch("/token-api");
   const data = await response.json();
   apiToken = data.access_token;
   getUserData();
