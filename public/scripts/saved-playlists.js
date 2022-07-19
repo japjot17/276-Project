@@ -2,7 +2,6 @@ var apiToken;
 
 window.onload = function test() {
   refreshToken();
-  //   updateSpotify();
 };
 
 var refreshToken = async () => {

@@ -10,53 +10,58 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <script src="/scripts/saved-playlists.js"></script>
+    <script src="/scripts/saved-playlists.js" defer></script>
     <link rel="stylesheet" href="/stylesheets/saved-playlists.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abel&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./stylesheets/navbar.css" />
     <script src="scripts/navbar.js" defer></script>
     <title>Account Information</title>
   </head>
   <body>
-            <!-- navbar start -->
-            <header>
-              <!-- logo start -->
-              <div class="logo">
-                <img src="./media/note.png" alt="Music Note">
-                PERSONGIFY
-              </div>
-              <!-- logo end -->
-              <!-- hamburger menu start -->
-              <a href="#" class="toggle-button">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-              </a>
-              <!-- hamburger menu end -->
-              <!-- links start here -->
-              <nav class="navbar">
-                <ul>
-                  <li><a href="/home">Home</a></li>
-                  <li><a href="/songs">Discover +</a>
-                    <ul>
-                      <li><a href="/songs">Create Playlist</a></li>
-                      <li><a href="#">Commute</a></li>
-                      <li><a href="#">Year in Review</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="/trending">Trending</a></li>
-                  <li><a href="#">Hello <%= name %></a>
-                    <ul>
-                      <li><a href="/account">Account Info</a></li>
-                      <li><a href="/playlists">Saved Playlist</a></li>
-                      <li><a href="/logout">Log Out</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </nav>
-              <!-- links ends here -->
-            </header>
-            <!-- navbar ends -->
+    <!-- navbar start -->
+    <header>
+      <!-- logo start -->
+      <div class="logo">
+        <img src="./media/note.png" alt="Music Note" />
+        PERSONGIFY
+      </div>
+      <!-- logo end -->
+      <!-- hamburger menu start -->
+      <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </a>
+      <!-- hamburger menu end -->
+      <!-- links start here -->
+      <nav class="navbar">
+        <ul>
+          <li><a href="/home">Home</a></li>
+          <li>
+            <a href="/songs">Discover +</a>
+            <ul>
+              <li><a href="/songs">Create Playlist</a></li>
+              <li><a href="#">Commute</a></li>
+              <li><a href="#">Year in Review</a></li>
+            </ul>
+          </li>
+          <li><a href="/trending">Trending</a></li>
+          <li>
+            <a href="#">Hello <%= locals.username %></a>
+            <ul>
+              <li><a href="/account">Account Info</a></li>
+              <li><a href="/playlists">Saved Playlist</a></li>
+              <li><a href="/logout">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- links ends here -->
+    </header>
+    <!-- navbar ends -->
     <a class="btn btn-home" href="/home">Return Home</a>
     <div class="wrapper playlists" id="playlist-wrapper"></div>
     <div class="wrapper selection" id="button-wrapper">

@@ -80,7 +80,6 @@ app.get("/", (req, res) => {
   res.redirect("/home");
 });
 
-var globalUname = "";
 app.get("/home", (req, res) => {
   res.render("pages/home");
 });
