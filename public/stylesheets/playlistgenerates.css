@@ -146,3 +146,10 @@ label {
         transform: rotate(360deg);
     }
 }
+
+.inactive {
+    pointer-events: none;
+    cursor: default;
+    color: #d5eebb;
+    text-decoration: none;
+}
