@@ -36,10 +36,20 @@ var generateRandomString = function (length) {
   return text;
 };
 
+/**
+ * encrypts a string using SHA-256 authentication
+ * @param {string} plain 
+ * @returns {string} SHA-256 encrypted string
+ */
 var encryptSHA256 = function (plain) {
   return new shajs.sha256().update(plain).digest("hex");
 };
 
+/**
+ * checks if the persongify_auth signed cookie exists and user is logged in
+ * @param {object} req 
+ * @returns true if cookie exists, false otherwise
+ */
 var checkAuthorizedUser = function (req) {
   console.log(
     "req.signedCookies['persongify_auth']: ",
@@ -49,7 +59,11 @@ var checkAuthorizedUser = function (req) {
   return false;
 };
 
-// helper function to check if the query doesn't have any results
+/**
+ * helper function to check if the query doesn't have any results
+ * @param {json} rows 
+ * @returns true if the rows contain results, false otherwise
+ */
 function notEmptyQueryCheck(rows) {
   if (rows != undefined && rows.rowCount != 0) {
     return true;
@@ -138,7 +152,7 @@ app.post("/verify-login", async (req, res) => {
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
     app.locals.username = chk_uname;
-    let url = "/spotify-login";
+    let url = "/spotify-login";     // when user logs in, must also go thru spotify
     app.locals.redir = "/home";
     res.redirect(302, url);
   } else {
@@ -209,19 +223,21 @@ app.get("/spotify-callback", (req, res) => {
       },
       json: true,
     })
-      .then((response) => {
-        if (response.status === 200) {
-          res.cookie("spotify_auth", state, { signed: true });
-          newToken = response.data;
-          res.redirect("/home");
-        } else {
-          res.send(response);
-        }
-      })
-      .catch((error) => {
-        console.log(error.response);
-        res.send(error);
-      });
+    .then((response) => {
+      if (response.status === 200) {
+        res.cookie("spotify_auth", state, { signed: true });
+        newToken = response.data;
+        let url = app.locals.redir;
+        app.locals.redir = "/home";
+        res.redirect(302, url);
+      } else {
+        res.send(response);
+      }
+    })
+    .catch((error) => {
+      console.log(error.response);
+      res.send(error);
+    });
   }
 });
 

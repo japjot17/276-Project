@@ -60,19 +60,21 @@
         -->
         <!-- DISTANCE RESPONSE -->
         <!-- TODO: change text color/add text backdrop -->
-        <ul>
-            
-            <li>going from <%= orig_address[0] %></li>
-            <li>going to <%= dest_address[0] %></li>
-            <li>mode of transportation: <%= travel_mode %></li>
-            <!-- 
-                <% dist_mat_results.forEach(r => { %> 
-            -->
-                <li>duration: <%= dist_mat_results[0].elements[0].duration.text %></li>
-            <!-- 
-                <% }) %> 
-            -->
-            
-        </ul>
+        <div class="text-light bg-dark">
+            <ul>
+                
+                <li>going from <%= orig_address[0] %></li>
+                <li>going to <%= dest_address[0] %></li>
+                <li>mode of transportation: <%= travel_mode %></li>
+                <!-- 
+                    <% dist_mat_results.forEach(r => { %> 
+                -->
+                    <li>duration: <%= dist_mat_results[0].elements[0].duration.text %></li>
+                <!-- 
+                    <% }) %> 
+                -->
+                
+            </ul>
+        </div>
     </body>
 </html>
