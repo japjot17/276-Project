@@ -423,6 +423,7 @@ app.post("/distance-playlist", (req, res) => {
       .then((response) => {
         // const results = response.data;
         // res.send(JSON.stringify(results));
+        console.log("successful distance calculation");
         const results = {
           orig_address: response.data.origin_addresses,
           dest_address: response.data.destination_addresses,
