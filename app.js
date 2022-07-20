@@ -138,7 +138,7 @@ app.post("/verify-login", async (req, res) => {
     console.log("successfully logged on user: " + chk_uname);
     app.locals.signedIn = true;
     app.locals.username = chk_uname;
-    let url = "/spotify-login";
+    let url = "/spotify-login";     // when user logs in, must also go thru spotify
     app.locals.redir = "/home";
     res.redirect(302, url);
   } else {
@@ -213,7 +213,9 @@ app.get("/spotify-callback", (req, res) => {
         if (response.status === 200) {
           res.cookie("spotify_auth", state, { signed: true });
           newToken = response.data;
-          res.redirect("/home");
+          let url = app.locals.redir;
+          app.locals.redir = "/home";
+          res.redirect(302, url);
         } else {
           res.send(response);
         }
