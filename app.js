@@ -11,10 +11,10 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    require: true,
-    rejectUnauthorized: false,
-  },
+  //ssl: {
+  //  require: true,
+  //  rejectUnauthorized: false,
+ // },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -301,6 +301,8 @@ app.get("/play_some_song", (req, res) => {
 
 app.post("/songs", function (req, res) {
   var id = [];
+
+  console.log(req.body);
 
   var limit = req.body.limit;
   genre = req.body.genre;
