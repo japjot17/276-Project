@@ -120,6 +120,7 @@ app.post("/addUser", async (req, res) => {
 });
 
 app.get("/login", (req, res) => {
+  res.status(303);
   res.render("pages/user-login");
 });
 
@@ -364,12 +365,12 @@ app.get("/songs", function (req, res) {
 /******************** [END] SPOTIFY PLAYLIST GENERATOR ***********************/
 
 app.get("/account", function (req, res) {
-  // if (checkAuthorizedUser(req)) {
-  res.render("pages/account-info");
-  // } else {
-  //   redir = req.originalUrl;
-  //   res.redirect("/login");
-  // }
+  if (checkAuthorizedUser(req)) {
+    res.render("pages/account-info");
+  } else {
+    redir = req.originalUrl;
+    res.redirect(303, "/login");
+  }
 });
 
 /*********************** SPOTIFY DISTANCE GENERATOR **************************/
@@ -423,7 +424,12 @@ app.post("/distance-playlist", (req, res) => {
 /******************** [END] SPOTIFY DISTANCE GENERATOR ***********************/
 
 app.get("/playlists", function (req, res) {
-  res.render("pages/saved-playlists");
+  if (checkAuthorizedUser(req)) {
+    res.render("pages/saved-playlists");
+  } else {
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "/login");
+  }
 });
 
 // Start the server
