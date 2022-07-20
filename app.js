@@ -90,6 +90,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   app.locals.signedIn = false;
+  app.locals.username = undefined;
   app.locals.redir = "/home";
   res.clearCookie("persongify_auth", { signed: true });
   res.clearCookie("spotify_auth", { signed: true });
@@ -125,6 +126,7 @@ app.post("/addUser", async (req, res) => {
     res.cookie("persongify_auth", userName, { signed: true });
     console.log("successfully added user: " + userName);
     app.locals.signedIn = true;
+    app.locals.username = userName;
     let url = app.locals.redir;
     app.locals.redir = "/home";
     res.redirect(302, url);
