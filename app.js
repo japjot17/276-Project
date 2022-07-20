@@ -370,9 +370,9 @@ app.post("/songs", function (req, res) {
 });
 
 app.get("/songs", function (req, res) {
-  for (let i = 0; i < songs.length; i++) {
-    console.log(artists[i]);
-  }
+  // for (let i = 0; i < songs.length; i++) {
+  //   console.log(artists[i]);
+  // }
 
   if (checkAuthorizedUser(req)) {
     res.render("pages/songs", { songs, artists, audios, images, genre });
