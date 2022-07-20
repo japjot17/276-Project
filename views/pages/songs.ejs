@@ -126,13 +126,13 @@
     
         <% for (var i = 0; i<songs.length;i++){ %>
             <li>
-                <a class="songName inactive"><%= songs[i] %></a> by <a class="songArtists inactive"><%= artists[i] %></a><a class="songAudio" src="<%= audios[i] %>"><%= audios[i] %></a>
-            
-                
-                
+                <a class="songName inactive"><%= songs[i] %></a> by <a class="songArtists inactive"><%= artists[i] %></a><a class="songAudio" src="<%= audios[i] %>"></a>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/<%= audios[i] %>?utm_source=generator" width="100%" height="100" frameBorder="0"
+                 allow="clipboard-write; encrypted-media; picture-in-picture"></iframe>
+
                 
               </li>
-              
+
               <%}%>
               <br>
               <h2 id="recommendation-header">
@@ -145,22 +145,15 @@
     <div class="musicplayer">
         <div class="musicplayer2"> 
             
-            
-            <p id="SongName"></p>
-            <p id="artists"></p><br><br>
-           
             <div class="player-controls">
-            <button class="sidebutton" id="prev"><i class="fa fa-step-backward"></i></button>
+        
             <iframe id="myiFrame" style="border-radius:12px" 
             width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-            <button class="sidebutton" id="next"><i class="fa fa-step-forward"></i></button>
+           
             
         </div>
         </div>
     </div>
-    <script src="scripts/musicplayer.js">
-    </script>
-    
 </body>
 
 </html>

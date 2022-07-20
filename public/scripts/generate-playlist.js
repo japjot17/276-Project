@@ -29,6 +29,7 @@ function addTracks() {
   const audiotest = document.getElementsByClassName("songAudio");
   for (let i = 0; i < audiotest.length; i++) {
     track_ids.push(audiotest[i].attributes.src.value);
+    
   }
 
   createPlaylist();
@@ -97,7 +98,14 @@ const addTracksToPlaylist = async (playlist_id) => {
       }),
     }
   );
-
+  var elements = document.getElementById('myiFrame')
+  const audios = [];
+    audios.push(`https://open.spotify.com/embed/playlist/${playlist_id}?utm_source=generator`)
+  
+  if (audios.length){
+    elements.src= audios[0]
+   }
+   
   var successP = document.createElement("p");
   if (result != null) {
     successP.innerHTML = "Playlist added!";
@@ -107,3 +115,4 @@ const addTracksToPlaylist = async (playlist_id) => {
   document.getElementById("save-playlist-button").remove();
   document.getElementById("recommendation-header").appendChild(successP);
 };
+
