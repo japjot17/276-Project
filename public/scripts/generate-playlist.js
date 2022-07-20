@@ -1,6 +1,7 @@
 var apiToken;
 var user_id;
 var track_ids = [];
+var genre = document.getElementById("genre-placeholder").innerHTML;
 
 window.onload = function test() {
   refreshToken();
@@ -51,13 +52,9 @@ const createPlaylist = async () => {
     today.getHours() +
     ":" +
     today.getMinutes();
-  var playlistName =
-    "Generated " +
-    document.getElementById("genre").value +
-    " playlist " +
-    "(" +
-    date +
-    ")";
+  var playlistName = "Generated " + genre + " playlist " + "(" + date + ")";
+
+  console.log(playlistName);
 
   const result = await fetch(
     `https://api.spotify.com/v1/users/${user_id}/playlists`,

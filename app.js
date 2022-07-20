@@ -248,6 +248,7 @@ var songs = [];
 var artists = [];
 var audios = [];
 var images = [];
+var genre;
 var SpotifyWebApi = require("spotify-web-api-node");
 
 var spotifyApi = new SpotifyWebApi({
@@ -284,7 +285,7 @@ app.post("/songs", function (req, res) {
   var id = [];
 
   var limit = req.body.limit;
-  var genre = req.body.genre;
+  genre = req.body.genre;
   var dance = req.body.danceability;
   var energy = req.body.energy;
   var acoustic = req.body.acousticness;
@@ -356,7 +357,7 @@ app.get("/songs", function (req, res) {
   }
 
   if (checkAuthorizedUser(req)) {
-    res.render("pages/songs", { songs, artists, audios, images });
+    res.render("pages/songs", { songs, artists, audios, images, genre });
   } else {
     app.locals.redir = req.originalUrl;
     res.redirect(303, "/login");
