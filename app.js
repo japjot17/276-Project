@@ -11,10 +11,10 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-//   ssl: {
-//    require: true,
-//    rejectUnauthorized: false,
-//  },
+  ssl: {
+   require: true,
+   rejectUnauthorized: false,
+ },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -444,6 +444,17 @@ app.post("/distance-playlist", (req, res) => {
   }
 });
 /******************** [END] SPOTIFY DISTANCE GENERATOR ***********************/
+
+/*********************** SPOTIFY YEAR IN REVIEW **************************/
+app.get("/review", function (req, res){
+  if (checkAuthorizedUser(req)) {
+    res.render("pages/review");
+  } else {
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "login");
+  }
+});
+/******************** [END] SPOTIFY YEAR IN REVIEW ***********************/
 
 app.get("/playlists", function (req, res) {
   if (checkAuthorizedUser(req)) {
