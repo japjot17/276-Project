@@ -416,6 +416,9 @@ app.post("/distance-playlist", (req, res) => {
     var enc_orig_loc = encodeURI(orig_loc);
     var enc_dest_loc = encodeURI(dest_loc);
 
+    /**
+     * first, call GOOGLE MAPS
+     */
     var config = {
       method: "get",
       url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${enc_orig_loc}&destinations=${enc_dest_loc}&language=${lang}&mode=${mode}&key=${DIST_MATRIX_API_KEY}`,
@@ -432,6 +435,12 @@ app.post("/distance-playlist", (req, res) => {
           dist_mat_results: response.data.rows,
           travel_mode: mode,
         };
+
+        /**
+         * second, call SPOTIFY
+         */
+        spotifyApi
+
         res.render("pages/distance-gen", results);
       })
       .catch((error) => {
