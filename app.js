@@ -155,7 +155,7 @@ app.post("/verify-login", async (req, res) => {
     app.locals.signedIn = true;
     app.locals.username = chk_uname;
     let url = "/spotify-login";     // when user logs in, must also go thru spotify
-    app.locals.redir = "/home";
+    // app.locals.redir = "/home";
     res.redirect(302, url);
   } else {
     res.redirect(303, "/login");
@@ -416,6 +416,12 @@ app.post("/distance-playlist", (req, res) => {
     var enc_orig_loc = encodeURI(orig_loc);
     var enc_dest_loc = encodeURI(dest_loc);
 
+    // preferred genre
+    var genre = req.body.f_genre;
+
+    // preferred artist
+    var pref_artist = req.body.f_artist;
+    var pref_song = req.body.f_song;
     /**
      * first, call GOOGLE MAPS
      */
@@ -439,10 +445,56 @@ app.post("/distance-playlist", (req, res) => {
         /**
          * second, call SPOTIFY
          */
+        var artist_id;
+        var song_id;
         spotifyApi
+          .searchArtists(pref_artist)
+          .then((artist_res) => {
+            artist_id = artist_res.body.artists.items[0].id;
+            return spotifyApi.searchTracks(pref_song);
+          })
+          .then((song_res) => {
+            song_id = song_res.body.tracks.items[0].id;
+            return {seed_artist: artist_id, seed_song: song_id};
+          })
+          .then((seed_params) => {
+            return spotifyApi.getRecommendations({
+              seed_genres: genre,
+              seed_artists: seed_params.seed_artist,
+              seed_tracks: seed_params.seed_song,
+            })
+          })
+          .then((data) => {
+            var recomm = data.body.tracks;
+            var songs = [];
+            var artists = [];
+            var songs_artists = [];
+            var audios = [];
+            var images = [];
 
-        res.render("pages/distance-gen", results);
+            for (let i = 0; i < recomm.length; i++) {
+              songs.push(recomm[i].name);
+              artists.push(recomm[i].artists[0].name);
+              songs_artists.push(recomm[i].artists[0].name + " - " + recomm[i].name);
+              audios.push(recomm[i].id);
+              images.push(recomm[i].album.images[0].url);
+              // console.log(recomm);
+            }
+            res.send(songs_artists);
+          })
+          /**
+           * SPOTIFY error
+           */
+          .catch((error) => {
+            console.log(error.response);
+            res.send(error);
+          })
+
+        // res.render("pages/distance-gen", results);
       })
+      /**
+       * GOOGLE MAPS error
+       */
       .catch((error) => {
         console.log(error.response);
         res.send(error);
