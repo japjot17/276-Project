@@ -268,6 +268,7 @@ var audios = [];
 var images = [];
 var genre;
 var SpotifyWebApi = require("spotify-web-api-node");
+const { response } = require("express");
 
 var spotifyApi = new SpotifyWebApi({
   clientId: client_id,
@@ -453,6 +454,28 @@ app.get("/review", function (req, res){
     app.locals.redir = req.originalUrl;
     res.redirect(303, "login");
   }
+
+  // if (checkAuthorizedUser(req)) {
+  //   // get top artist
+  //   var config = {
+  //     method: "get",
+  //     url: 'https://api.spotify.com/v1/me/top/artist',
+  //     headers: {},
+  //   };
+  //   axios(config) {
+  //     .then((response) => {
+  //       // insert code here
+  //       res.render("pages/review");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response);
+  //       res.send(error);
+  //     });
+  //   }
+  // } else {
+  //   app.locals.redir = req.originalUrl;
+  //   res.redirect(303, "login");
+  // }  
 });
 /******************** [END] SPOTIFY YEAR IN REVIEW ***********************/
 
