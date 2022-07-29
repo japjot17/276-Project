@@ -435,10 +435,10 @@ app.post("/distance-playlist", (req, res) => {
         // const results = response.data;
         // res.send(JSON.stringify(results));
         console.log("successful distance calculation");
-        const results = {
+        const dist_mat_results = {
           orig_address: response.data.origin_addresses,
           dest_address: response.data.destination_addresses,
-          dist_mat_results: response.data.rows,
+          travel_results: response.data.rows,
           travel_mode: mode,
         };
 
@@ -469,18 +469,25 @@ app.post("/distance-playlist", (req, res) => {
             var songs = [];
             var artists = [];
             var songs_artists = [];
-            var audios = [];
+            var track_ids = [];
             var images = [];
 
             for (let i = 0; i < recomm.length; i++) {
               songs.push(recomm[i].name);
               artists.push(recomm[i].artists[0].name);
               songs_artists.push(recomm[i].artists[0].name + " - " + recomm[i].name);
-              audios.push(recomm[i].id);
+              track_ids.push(recomm[i].id);
               images.push(recomm[i].album.images[0].url);
               // console.log(recomm);
             }
-            res.send(songs_artists);
+            // res.send(songs_artists);
+            const spotify_results = {
+              songs_res: songs,
+              artists_res: artists,
+              track_ids_res: track_ids,
+              images_res: images,
+            }
+            res.render("pages/distance-gen.ejs", {dist_mat_results, spotify_results});
           })
           /**
            * SPOTIFY error
