@@ -462,6 +462,8 @@ app.post("/distance-playlist", (req, res) => {
               seed_genres: genre,
               seed_artists: seed_params.seed_artist,
               seed_tracks: seed_params.seed_song,
+              // IDEA: add as many tracks as possible, then pick and choose
+              limit: 100,
             })
           })
           .then((data) => {
@@ -471,13 +473,30 @@ app.post("/distance-playlist", (req, res) => {
             var songs_artists = [];
             var track_ids = [];
             var images = [];
+            var target_len = dist_mat_results.travel_results[0].elements[0].duration.value; // in seconds
+            var total_len = 0;
+
+            // TODO: get song lengths, store total time
 
             for (let i = 0; i < recomm.length; i++) {
-              songs.push(recomm[i].name);
-              artists.push(recomm[i].artists[0].name);
-              songs_artists.push(recomm[i].artists[0].name + " - " + recomm[i].name);
-              track_ids.push(recomm[i].id);
-              images.push(recomm[i].album.images[0].url);
+              // TODO: get audio features, length of track, add to total time if under target
+              if (total_len < target_len) {
+                songs.push(recomm[i].name);
+                artists.push(recomm[i].artists[0].name);
+                // songs_artists.push(recomm[i].artists[0].name + " - " + recomm[i].name);
+                track_ids.push(recomm[i].id);
+                images.push(recomm[i].album.images[0].url);
+
+                // TODO: get track length, add to total
+                spotifyApi
+                  .getAudioFeaturesForTrack(recomm[i].id)
+                  .then((data) => {
+                    total_len += data.body.duration_ms / 1000;    // convert ms to sec
+                  })
+              } else {
+                break;    // target time reached, exit early
+              }
+              
               // console.log(recomm);
             }
             // res.send(songs_artists);
@@ -487,6 +506,7 @@ app.post("/distance-playlist", (req, res) => {
               track_ids_res: track_ids,
               images_res: images,
             }
+            // TODO: auto add songs to playlist, or let user decide on adding playlist
             res.render("pages/distance-gen.ejs", {dist_mat_results, spotify_results});
           })
           /**
