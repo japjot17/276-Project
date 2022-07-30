@@ -95,6 +95,8 @@ const addTracksToPlaylist = async (playlist_id) => {
       }),
     }
   );
+
+  
   var elements = document.getElementById('myiFrame')
   const audios = [];
     audios.push(`https://open.spotify.com/embed/playlist/${playlist_id}?utm_source=generator`)
@@ -112,4 +114,3 @@ const addTracksToPlaylist = async (playlist_id) => {
   document.getElementById("save-playlist-button").remove();
   document.getElementById("recommendation-header").appendChild(successP);
 };
-

@@ -112,7 +112,7 @@
             
                     <!--<input type = "submit" name  = "sub" value = "send to server">-->
                     <button id = "button" type = "submit" name = "button" value = "add"> Create </button>
-                  
+                    
                     
                     </form>
         </div>
@@ -138,6 +138,9 @@
               <h2 id="recommendation-header">
                   <button class="btn btn-dark" id="save-playlist-button" onclick="addTracks()">Save Playlist</button>
               </h2>
+              <form action="/delete" method="POST">
+                <button name="clearing" type="submit" class="btn btn-dark">Clear</button>
+              </form>
         </div>
     </div>
 </div>

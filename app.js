@@ -11,10 +11,10 @@ if (process.env.NODE_ENV !== "production") {
 const { Pool } = require("pg");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-   require: true,
-   rejectUnauthorized: false,
- },
+//   ssl: {
+//    require: true,
+//    rejectUnauthorized: false,
+//  },
 });
 
 /************************* HELPER FUNCTIONS **********************************/
@@ -371,6 +371,7 @@ app.post("/songs", function (req, res) {
     });
 });
 
+
 app.get("/songs", function (req, res) {
   // for (let i = 0; i < songs.length; i++) {
   //   console.log(artists[i]);
@@ -383,6 +384,18 @@ app.get("/songs", function (req, res) {
     res.redirect(303, "/login");
   }
 });
+
+app.post("/delete", (req,res) => {
+  songs = []
+  artists = []
+  audios = [] 
+  res.redirect("/songs");
+})
+
+app.get("/delete", (req,res) => {
+  res.redirect("/songs");
+})
+
 /******************** [END] SPOTIFY PLAYLIST GENERATOR ***********************/
 
 app.get("/account", function (req, res) {
