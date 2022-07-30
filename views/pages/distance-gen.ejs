@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="./stylesheets/navbar.css" />
         <script src="scripts/navbar.js" defer></script>
         <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./stylesheets/travel-playlist.css" />
+        <script src="scripts/generate-playlist-travel.js" defer></script>
     </head>
     <body>
 
@@ -53,11 +55,10 @@
         <!-- NAVBAR end -->
 
         <!-- 
-            [TEMP CONTENT FOR TESTING]
+            DISTANCE RESPONSE
             - assumes there is only 1 origin, 1 destination
             - means only 1 result should be returned in dist_mat_results
         -->
-        <!-- DISTANCE RESPONSE -->
         <!-- TODO: change text color/add text backdrop -->
         <div class="container text-light bg-dark rounded" style="margin-top: 170px">
             <ul>
@@ -67,8 +68,49 @@
                 <li>duration: <%= dist_mat_results.travel_results[0].elements[0].duration.text %></li>               
             </ul>
         </div>
-        <% for (var i = 0; i < spotify_results.track_ids_res.length; i++) { %>
-        <div class="container w-75">
+
+        <!-- Selected Playlist Parameters (for scripting) -->
+        <p id="genre-placeholder" style="display: none;"><%= spotify_results.genre %></p>
+        <p id="orig-address" style="display: none;"><%= dist_mat_results.orig_address[0] %></p>
+        <p id="dest-address" style="display: none;"><%= dist_mat_results.dest_address[0] %></p>
+        <p id="travel-mode" style="display: none;"><%= dist_mat_results.travel_mode %></p>
+        <p id="travel-time" style="display: none;"><%= dist_mat_results.travel_results[0].elements[0].duration.text %></p>
+        
+
+        <!-- Sample Audio Players -->
+        <div class="sampleList">
+            <% for (var i = 0; i < spotify_results.track_ids_res.length; i++) { %>
+            <!-- Audio ID (for scripting) -->
+            <a class="songAudio" style="display: none;" src="<%= spotify_results.track_ids_res[i] %>"></a>
+            <iframe 
+                style="border-radius:12px" 
+                src="https://open.spotify.com/embed/track/<%= spotify_results.track_ids_res[i] %>?utm_source=generator" 
+                width="100%" height="80" frameBorder="0" allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+            </iframe>
+            <% } %>
+            <!-- Save Playlist -->
+            <h2 id="recommendation-header" class="w-100 mx-auto text-center">
+                <button 
+                    class="btn btn-dark" id="save-playlist-button" 
+                    onclick="addTracks()">
+                    Save Playlist
+                </button>
+            </h2>
+        </div>
+        <div class="playlistPlayer">
+            <!-- Completed Playlist Music Player -->
+            <div class="container w-75">
+                <iframe 
+                    id="myiFrame" style="border-radius:12px" width="100%" height="380" 
+                    frameBorder="0" allowfullscreen="" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+                </iframe>
+            </div>
+        </div>
+        <!-- <% for (var i = 0; i < spotify_results.track_ids_res.length; i++) { %>
+        <div class="container w-75 overflow-auto">
+            <a class="songAudio" style="display: none;" src="<%= spotify_results.track_ids_res[i] %>"></a>
             <iframe 
                 style="border-radius:12px" 
                 src="https://open.spotify.com/embed/track/<%= spotify_results.track_ids_res[i] %>?utm_source=generator" 
@@ -76,6 +118,25 @@
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
             </iframe>
         </div>
-        <% } %>
+        <% } %> -->
+
+        <!-- Save Playlist -->
+        <!-- <h2 id="recommendation-header" class="mx-auto">
+            <button 
+                class="btn btn-dark" id="save-playlist-button" 
+                onclick="addTracks()">
+                Save Playlist
+            </button>
+        </h2> -->
+
+        <!-- Completed Playlist Music Player -->
+        <!-- <div class="container w-75">
+            <iframe 
+                id="myiFrame" style="border-radius:12px" width="100%" height="380" 
+                frameBorder="0" allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+            </iframe>
+        </div> -->
+           
     </body>
 </html>

@@ -1,0 +1,21 @@
+:root {
+    --brand-magenta: #ef007e
+}
+
+.sampleList {
+    width: 40%;
+    height: 80%;
+    overflow: auto;
+    justify-content: center;
+    text-align: center;
+    float: left;
+    margin-left: 10%;
+}
+.playlistPlayer {
+    width: 40%;
+    height: 80%;
+    overflow: auto;
+    justify-content: center;
+    text-align: center;
+    margin-left: 20px;
+}
