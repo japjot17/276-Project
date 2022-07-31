@@ -20,6 +20,7 @@
 
 .playlist-status {
     display: inherit;
+    text-align: center;
     justify-content: center;
     width: 100%;
     color: rgb(194, 67, 67);

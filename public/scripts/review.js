@@ -149,10 +149,6 @@ window.fbAsyncInit = function() {
         xfbml      : true,
         version    : 'v14.0'
     });
-        
-    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
-        statusChangeCallback(response);        // Returns the login status.
-    }); 
 };
 
 function testAPI() {   
@@ -160,8 +156,8 @@ function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
         console.log('Successful login for: ' + response.name);
-        document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+        console.log("data: " + JSON.stringify(response));
+        document.getElementById('playlist-status-msg').innerHTML = 'Thanks for logging in, ' + response.name + '!';
     });
 }
 
@@ -169,7 +165,7 @@ function checkLoginState() {               // Called when a person is finished w
     FB.getLoginStatus(function(response) {   // See the onlogin handler
       statusChangeCallback(response);
     });
-  }
+}
 
 function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
     console.log('statusChangeCallback');
@@ -179,4 +175,6 @@ function statusChangeCallback(response) {  // Called with the results from FB.ge
     } else {                                 // Not logged into your webpage or we are unable to tell.
       console.log("couldn't login to facbeook ;("); 
     }
-  }
+}
+
+
