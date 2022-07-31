@@ -65,7 +65,7 @@ const createPlaylist = async () => {
       body: JSON.stringify({
         name: playlistName,
         description: "Playlist generated via Persongify",
-        public: false,
+        public: true,
       }),
     }
   );

@@ -1,0 +1,26 @@
+.gen-playlist {
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: rgba(85, 0, 98, 0.8); */
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    width: 250px;
+    margin-left: 300px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.playlist-text {
+    margin-top: -20px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.playlist-status {
+    display: inherit;
+    justify-content: center;
+    width: 100%;
+    color: rgb(194, 67, 67);
+}
