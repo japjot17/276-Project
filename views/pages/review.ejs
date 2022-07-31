@@ -10,8 +10,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="stylesheets/navbar.css" />
         <link rel="stylesheet" href="stylesheets/review.css" />
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
         <script src="scripts/navbar.js" defer></script>
         <script src="scripts/review.js" defer></script>
+        
         <title>PERSONGIFY - Year In Review</title>
     </head>
     <body>
@@ -92,7 +94,10 @@
             <input type="text" id="playlist-name" class="playlist-text">
             <div id="playlist-status-msg" class="playlist-status"></div>
             <br>
-            <button onclick="createPlaylist()" class="btn btn-success">Save Playlist</button>
+            <fb:login-button scope="public_profile,email" onlogin="checkLoginState()"></fb:login-button>
+
+            <!-- <button onclick="createPlaylist()" class="btn btn-success">Save Playlist</button> -->
+            <!-- <button onclick="checkLoginState()" class="btn btn-success">Save Playlist</button> -->
         </div>
     
     </body>
