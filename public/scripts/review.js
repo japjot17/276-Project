@@ -4,6 +4,7 @@ window.onload = function test() {
 
 var user_id;
 var spotify_uris = [];
+var share_playlist_id;
 
 var refreshToken = async () => {
     const response = await fetch("/token-api");
@@ -114,7 +115,8 @@ const createPlaylist = async () => {
     );
 
   const data = await result.json();
-  addTracksToPlaylist(data.id);
+  share_playlist_id = data.id;
+  addTracksToPlaylist(share_playlist_id);
 }
 
 const addTracksToPlaylist = async (playlist_id) => {
@@ -135,6 +137,11 @@ const addTracksToPlaylist = async (playlist_id) => {
 
     if (result != null) {
       document.getElementById("playlist-status-msg").innerHTML = "Playlist added!";
+
+      /** Change save playlist button into share playlist button */
+      document.getElementById("p-button").innerHTML = "Share Playlist";
+      document.getElementById("p-button").setAttribute("class", "btn btn-primary");
+      document.getElementById("p-button").setAttribute("onclick", "checkLoginState()");
     } else {
       document.getElementById("playlist-status-msg").innerHTML = "Unsuccessful. Please try again.";
     }
@@ -157,7 +164,7 @@ function testAPI() {
 
     FB.ui({
       method: 'share',
-      href: 'https://developers.facebook.com/docs/',
+      href: `https://open.spotify.com/playlist/${share_playlist_id}`,
     }, function(response){});
 
     // FB.api('/me', function(response) {
@@ -174,11 +181,11 @@ function checkLoginState() {               // Called when a person is finished w
 }
 
 function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
-    console.log('statusChangeCallback');
     console.log(response);                   // The current login status of the person.
     if (response.status === 'connected') {   // Logged into your webpage and Facebook.
       testAPI();  
     } else {                                 // Not logged into your webpage or we are unable to tell.
+      FB.login();
       console.log("couldn't login to facbeook ;("); 
     }
 }
