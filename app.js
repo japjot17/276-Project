@@ -467,6 +467,24 @@ app.get("/playlists", function (req, res) {
   }
 });
 
+/******************* Facebook API Requirements ********************************/
+app.get("/privacy-policy", function (req, res) {
+  if (checkAuthorizedUser(req)) {
+    res.render("pages/saved-playlists");
+  } else {
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "/login");
+  }
+});
+app.get("/data-deletion-info", function (req, res) {
+  if (checkAuthorizedUser(req)) {
+    res.render("pages/saved-playlists");
+  } else {
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "/login");
+  }
+});
+
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
