@@ -154,11 +154,17 @@ window.fbAsyncInit = function() {
 function testAPI() {   
     // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-        console.log('Successful login for: ' + response.name);
-        console.log("data: " + JSON.stringify(response));
-        document.getElementById('playlist-status-msg').innerHTML = 'Thanks for logging in, ' + response.name + '!';
-    });
+
+    FB.ui({
+      method: 'share',
+      href: 'https://developers.facebook.com/docs/',
+    }, function(response){});
+
+    // FB.api('/me', function(response) {
+    //     console.log('Successful login for: ' + response.name);
+    //     console.log("data: " + JSON.stringify(response));
+    //     document.getElementById('playlist-status-msg').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+    // });
 }
 
 function checkLoginState() {               // Called when a person is finished with the Login Button.
@@ -176,5 +182,3 @@ function statusChangeCallback(response) {  // Called with the results from FB.ge
       console.log("couldn't login to facbeook ;("); 
     }
 }
-
-
