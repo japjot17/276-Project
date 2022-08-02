@@ -189,3 +189,41 @@ function statusChangeCallback(response) {  // Called with the results from FB.ge
       console.log("couldn't login to facbeook ;("); 
     }
 }
+
+// front end stuff
+const carousel = document.querySelector(".carousel");
+const slides = document.querySelectorAll(".slide");
+const numberOfSlides = slides.length;
+var slideNumber = 0;
+
+// automatically shuffle through the slides
+var currentInterval;
+
+var loopThrough = () => {
+  currentInterval = setInterval(function() {
+    // remove active class from all slides and icons
+    slides.forEach((slide) => {
+      slide.classList.remove("active");
+    });
+    // increase the slideNumber by 1
+    slideNumber++;
+    // ensure slides loop around
+    if (slideNumber > (numberOfSlides -1)) {
+        slideNumber = 0;
+    }
+    // add active class to a slide/icon to display/highlight them
+    slides[slideNumber].classList.add("active");
+  }, 5000);   // switch slides every 5 seconds
+}
+
+loopThrough();
+
+// stop the image carousel autoplay when mousing over the slides
+carousel.addEventListener("mouseover", () => {
+  clearInterval(currentInterval);
+});
+
+// restart the image carousel autoplay after mouseout
+carousel.addEventListener("mouseout", () => {
+  loopThrough();
+});
