@@ -62,6 +62,9 @@ describe("Generating Distance Calcs", () => {
                     f_orig_province: "BC",
                     f_dest_city: "Seattle",
                     f_dest_province: "WA",
+                    f_artist: "VIC MENSA",
+                    f_song: "Liquor Locker",
+                    f_genre: 'hip-hop',
                 }
 
                 return agent
@@ -77,4 +80,40 @@ describe("Generating Distance Calcs", () => {
 })
 
 // TODO: check for travel time calculation
+describe("travel time", () => {
+    it("should be less than the song time POST /distance-playlist", async() => {
+        var userInfo = {
+            f_uname: "appTester123",
+            f_pwd: "testpwd123",
+        }
+
+        var agent = chai.request.agent(server);
+        agent
+            .post("/verify-login")
+            .send(userInfo)
+            .then((res) => {
+                res.should.have.cookie("persongify_auth");
+                res.should.have.status(200);
+
+                var locInfo = {
+                    f_travel_mode: "driving",
+                    f_orig_city: "Vancouver",
+                    f_orig_province: "BC",
+                    f_dest_city: "Seattle",
+                    f_dest_province: "WA",
+                    f_artist: "VIC MENSA",
+                    f_song: "Liquor Locker",
+                    f_genre: 'hip-hop',
+                }
+
+                return agent
+                    .post("/distance-playlist")
+                    .send(locInfo)
+                    .then((res) => {
+                        res.body.map(target_len).should.all.be.below(total_len);
+                    })
+            });
+        agent.close();
+    })
+})
 // TODO: check if user is given option to save playlist
