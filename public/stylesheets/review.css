@@ -35,7 +35,6 @@
 .carousel .slide .info {
     position: absolute;
     color: #222;
-    background: rgba(255, 255, 255, 0.3);
     width: 75%;
     margin-top: 50px;
     margin-left: 50px;
@@ -46,13 +45,21 @@
 
 
 .carousel .slide .info h2 {
-    font-size: 2em;
-    font-weight: 800;
+    color:  rgb(239, 0, 126);
+    font-size: 3em;
+    font-weight: bolder;
+    /* font-weight: 800; */
 }
 
 .carousel .slide .info p {
-    font-size: 1em;
-    font-weight: 400;
+    font-size: 2em;
+    /* font-weight: 400; */
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.carousel .slide .info .text {
+    font-size: 2em;
+    background: rgba(255, 255, 255, 0.3);
 }
 
 /* other css */
@@ -64,7 +71,7 @@
     justify-content: center;
     height: 200px;
     width: 250px;
-    margin-left: 300px;
+    /* margin-left: 300px; */
     border: 2px solid black;
     border-radius: 10px;
 }

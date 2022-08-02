@@ -46,18 +46,12 @@ const getTopArtists = async (apiToken) => {
         window.location.replace("/login");
     }
 
-    // replace html elements with artist name
-    //document.getElementById("test").innerHTML = data;
-    document.getElementById("top-artist-1").innerHTML = "1. " + data.items[0].name;
-    document.getElementById("top-artist-2").innerHTML = "2. " + data.items[1].name;
-    document.getElementById("top-artist-3").innerHTML = "3. " + data.items[2].name;
-    document.getElementById("top-artist-4").innerHTML = "4. " + data.items[3].name;
-    document.getElementById("top-artist-5").innerHTML = "5. " + data.items[4].name;
-
     if (data.error != undefined) {
         console.log("Something went wrong getting data from Spotify API :(");
         window.localtion.replace("/login");
     }
+
+    displayTopArtistData(data);
 }
 
 const getTopTracks = async (apiToken) => {
@@ -74,13 +68,6 @@ const getTopTracks = async (apiToken) => {
         window.location.replace("/login");
     }
 
-    // replace html elements with track names
-    document.getElementById("top-tracks-1").innerHTML = "1. " + data.items[0].name;
-    document.getElementById("top-tracks-2").innerHTML = "2. " + data.items[1].name;
-    document.getElementById("top-tracks-3").innerHTML = "3. " + data.items[2].name;
-    document.getElementById("top-tracks-4").innerHTML = "4. " + data.items[3].name;
-    document.getElementById("top-tracks-5").innerHTML = "5. " + data.items[4].name;
-
     if (data.error != undefined) {
         console.log("Something went wrong getting data from Spotify API :(");
         window.location.replace("/login");
@@ -89,6 +76,8 @@ const getTopTracks = async (apiToken) => {
     for (let i = 0; i < data.items.length; i++) {
       spotify_uris.push("spotify:track:" + data.items[i].id);
     }
+
+    displayTopTrackData(data);
 }
 
 const createPlaylist = async () => {
@@ -117,6 +106,34 @@ const createPlaylist = async () => {
   const data = await result.json();
   share_playlist_id = data.id;
   addTracksToPlaylist(share_playlist_id);
+}
+
+function displayTopArtistData(data) {
+  // replace html elements with artist name
+  document.getElementsByClassName("top-artist-1")[0].innerHTML = data.items[0].name;
+  document.getElementsByClassName("top-artist-1")[1].innerHTML = "1. " + data.items[0].name;
+  document.getElementsByClassName("top-artist-2")[0].innerHTML = "2. " + data.items[1].name;
+  document.getElementsByClassName("top-artist-3")[0].innerHTML = "3. " + data.items[2].name;
+  document.getElementsByClassName("top-artist-4")[0].innerHTML = "4. " + data.items[3].name;
+  document.getElementsByClassName("top-artist-5")[0].innerHTML = "5. " + data.items[4].name;
+
+  // var stringURL = "url(" + data.items[0].images[1].url + ")";
+  // console.log(stringURL);
+  // document.getElementsByClassName("artist-img").style.backgroundImage = stringURL;
+
+  console.log(data.items[0].images[1].url);
+  //document.getElementsByClassName("artist-img")[0].style.backgroundImage = `url(${data.items[0].images[1].url})`;
+}
+
+function displayTopTrackData(data) {
+    // replace html elements with parsed data from the json object
+    document.getElementsByClassName("top-tracks-1")[0].innerHTML = data.items[0].name;
+    document.getElementsByClassName("top-track-artist")[0].innerHTML = data.items[0].artists[0].name;
+    document.getElementsByClassName("top-tracks-1")[1].innerHTML = "1. " + data.items[0].name;
+    document.getElementsByClassName("top-tracks-2")[0].innerHTML = "2. " + data.items[1].name;
+    document.getElementsByClassName("top-tracks-3")[0].innerHTML = "3. " + data.items[2].name;
+    document.getElementsByClassName("top-tracks-4")[0].innerHTML = "4. " + data.items[3].name;
+    document.getElementsByClassName("top-tracks-5")[0].innerHTML = "5. " + data.items[4].name;
 }
 
 const addTracksToPlaylist = async (playlist_id) => {
