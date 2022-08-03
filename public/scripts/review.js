@@ -54,6 +54,7 @@ const getTopArtists = async (apiToken) => {
     }
 
     displayTopArtistData(data);
+    getTopArtistTrack(apiToken);
 }
 
 const getTopArtistTrack = async (apiToken) => {
@@ -80,7 +81,8 @@ const getTopArtistTrack = async (apiToken) => {
       for(let k = 0; k < track_data.items[j].artists.length; k++) {
         if(artist_data.items[i].name == track_data.items[j].artists[k].name) {
           //You can use this data @TIM
-          console.log(track_data.items[j]);
+          //console.log(track_data.items[j].name);
+          document.getElementsByClassName("most-played")[0].innerHTML = track_data.items[j].name;
           return;
         }
       }
