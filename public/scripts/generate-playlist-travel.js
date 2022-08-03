@@ -48,7 +48,7 @@ const createPlaylist = async () => {
   var date =
     today.getDate() +
     "/" +
-    today.getMonth() +
+    (today.getMonth()+1) +
     "/" +
     today.getFullYear() +
     " " +
@@ -114,5 +114,6 @@ const addTracksToPlaylist = async (playlist_id) => {
   }
   document.getElementById("save-playlist-button").remove();
   document.getElementById("recommendation-header").appendChild(successP);
+  document.getElementById("recommendation-header").style.color = "#ef007e";
 };
 
