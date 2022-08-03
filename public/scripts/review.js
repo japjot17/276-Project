@@ -54,7 +54,6 @@ const getTopArtists = async (apiToken) => {
     }
 
     displayTopArtistData(data);
-    getTopArtistTrack(apiToken);
 }
 
 const getTopArtistTrack = async (apiToken) => {
@@ -163,7 +162,7 @@ function displayTopArtistData(data) {
 function displayTopTrackData(data) {
     // replace html elements with parsed data from the json object
     document.getElementsByClassName("top-tracks-1")[0].innerHTML = data.items[0].name;
-    document.getElementsByClassName("top-track-artist")[0].innerHTML = data.items[0].artists[0].name;
+    document.getElementsByClassName("top-track-artist")[0].innerHTML = "By: " + data.items[0].artists[0].name;
     //document.getElementsByClassName("top-track-artist")[0].innerHTML = getArtists(data.items[0].artists);
     document.getElementsByClassName("top-tracks-1")[1].innerHTML = "1. " + data.items[0].name;
     document.getElementsByClassName("top-tracks-2")[0].innerHTML = "2. " + data.items[1].name;
