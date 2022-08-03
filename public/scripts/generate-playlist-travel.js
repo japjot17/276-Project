@@ -38,8 +38,8 @@ function addTracks() {
   createPlaylist();
 }
 
-//Creates a new playlist
-//Playlist id is stored in data.id when api call is made
+// Creates a new playlist
+// Playlist id is stored in data.id when api call is made
 const createPlaylist = async () => {
   if (track_ids.length == 0) {
     return;
@@ -97,13 +97,7 @@ const addTracksToPlaylist = async (playlist_id) => {
       }),
     }
   );
-  var elements = document.getElementById('myiFrame')
-  // const audios = [];
-  //   audios.push(`https://open.spotify.com/embed/playlist/${playlist_id}?utm_source=generator`)
-  
-  // if (audios.length){
-  //   elements.src= audios[0]
-  // }
+  var elements = document.getElementById('myiFrame');
   elements.src = `https://open.spotify.com/embed/playlist/${playlist_id}?utm_source=generator`;
   
   var successP = document.createElement("p");

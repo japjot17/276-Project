@@ -477,10 +477,10 @@ app.post("/distance-playlist", (req, res) => {
             console.log(`target_len: ${target_len}`);
             var total_len = 0;
 
-            // TODO: get song lengths, store total time
+            // get song lengths, store total time
 
             for (let i = 0; i < recomm.length; i++) {
-              // TODO: get audio features, length of track, add to total time if under target
+              // get audio features, length of track, add to total time if under target
               if (total_len < target_len) {
                 songs.push(recomm[i].name);
                 artists.push(recomm[i].artists[0].name);
@@ -488,7 +488,7 @@ app.post("/distance-playlist", (req, res) => {
                 track_ids.push(recomm[i].id);
                 images.push(recomm[i].album.images[0].url);
 
-                // TODO: get track length, add to total
+                // get track length, add to total
                 await spotifyApi
                   .getAudioFeaturesForTrack(recomm[i].id)
                   .then((data) => {
@@ -499,8 +499,6 @@ app.post("/distance-playlist", (req, res) => {
               } else {
                 break;    // target time reached, exit early
               }
-              
-              // console.log(recomm);
             }
 
             var adjust_hr = Math.floor(total_len / 3600);
@@ -526,7 +524,7 @@ app.post("/distance-playlist", (req, res) => {
               genre: genre,
               total_time: adjust_total_time,
             }
-            // TODO: auto add songs to playlist, or let user decide on adding playlist
+            
             res.render("pages/distance-gen.ejs", {dist_mat_results, spotify_results});
           })
           /**
@@ -536,8 +534,6 @@ app.post("/distance-playlist", (req, res) => {
             console.log(error.response);
             res.send(error);
           })
-
-        // res.render("pages/distance-gen", results);
       })
       /**
        * GOOGLE MAPS error
