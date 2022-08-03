@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: rgb(15, 0, 39);
+    background-image: url(../media/bg-hollow.png);
     box-shadow: 0 5px 25px rgba(239, 0, 126, 1);
     display: flex;
     justify-content: center;
@@ -19,6 +19,7 @@ body {
     width: 550px;
     height: 1000px;
     overflow: hidden;
+    border: 2px solid rgb(239, 0, 126);
 }
 
 .carousel .slide {
