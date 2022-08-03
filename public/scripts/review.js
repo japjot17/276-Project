@@ -41,6 +41,7 @@ const getTopArtists = async (apiToken) => {
         }
     );
     //const data = await result.text();
+    // console.log(data);
     const data = await result.json();
     if (data.error != undefined) {
         window.location.replace("/login");
