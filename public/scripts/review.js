@@ -1,4 +1,10 @@
 window.onload = function test() {
+    FB.init({
+        appId      : '1169143580322957',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v14.0'
+    });
     refreshToken();
 };
 
@@ -223,21 +229,21 @@ const addTracksToPlaylist = async (playlist_id) => {
     }
 };
 
+// /** Asynchronously loads Facebook SDK */
+// window.fbAsyncInit = function() {
+//     FB.init({
+//         appId      : '1169143580322957',
+//         cookie     : true,
+//         xfbml      : true,
+//         version    : 'v14.0'
+//     });
+// };
 
-function testAPI() {   
-    // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
-    console.log('Welcome!  Fetching your information.... ');
-
+function shareAPI() {   
     FB.ui({
       method: 'share',
       href: `https://open.spotify.com/playlist/${share_playlist_id}`,
     }, function(response){});
-
-    // FB.api('/me', function(response) {
-    //     console.log('Successful login for: ' + response.name);
-    //     console.log("data: " + JSON.stringify(response));
-    //     document.getElementById('playlist-status-msg').innerHTML = 'Thanks for logging in, ' + response.name + '!';
-    // });
 }
 
 function checkLoginState() {               // Called when a person is finished with the Login Button.
@@ -249,7 +255,7 @@ function checkLoginState() {               // Called when a person is finished w
 function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
     console.log(response);                   // The current login status of the person.
     if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-      testAPI();  
+      shareAPI();  
     } else {                                 // Not logged into your webpage or we are unable to tell.
       FB.login();
       console.log("couldn't login to facbeook ;("); 
