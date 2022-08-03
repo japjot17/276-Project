@@ -82,3 +82,14 @@ describe("Create playlist page for users who are NOT logged in", () => {
       });
   });
 });
+
+describe("Year Review page for users who are NOT logged in", () => {
+  it("should redirect with status 303", async () => {
+    chai
+      .request(server)
+      .get("/review")
+      .end((err, res) => {
+        res.should.have.status(303);
+      });
+  });
+});
