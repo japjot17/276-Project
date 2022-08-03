@@ -51,11 +51,29 @@
     /* font-weight: 800; */
 }
 
-.carousel .slide .info p {
-    font-size: 2em;
-    /* font-weight: 400; */
-    background: rgba(255, 255, 255, 0.3);
+.carousel .slide .info h1 {
+    color:  white;
+    font-size: 5em;
+    font-weight: bolder;
+    /* font-weight: 800; */
 }
+
+/* .carousel .slide .info p {
+    font-size: 2em;
+    background: rgba(255, 255, 255, 0.3);
+} */
+
+#Start {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+}
+
+/* #Summary {
+    display: grid;
+    grid-template-areas: "a a"
+                         "b b"
+} */
 
 .carousel .slide .info .text {
     font-size: 2em;
@@ -71,6 +89,12 @@
     height: 300px;
     width: 300px;
 }
+
+/* #Start {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+} */
 
 /* other css */
 .gen-playlist {

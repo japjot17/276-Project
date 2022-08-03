@@ -117,16 +117,11 @@ function displayTopArtistData(data) {
   document.getElementsByClassName("top-artist-4")[0].innerHTML = "4. " + data.items[3].name;
   document.getElementsByClassName("top-artist-5")[0].innerHTML = "5. " + data.items[4].name;
 
-  // var stringURL = "url(" + data.items[0].images[1].url + ")";
-  // console.log(stringURL);
-  // document.getElementsByClassName("artist-img").style.backgroundImage = stringURL;
-
   console.log(data.items[0].images[1].url);
   document.getElementsByClassName("artist-img")[0].style.backgroundImage = `url(${data.items[0].images[1].url})`;
   document.getElementsByClassName("artist-img")[1].style.backgroundImage = `url(${data.items[0].images[1].url})`;
 }
 
-// data.items[0].artists[0].name
 function displayTopTrackData(data) {
     // replace html elements with parsed data from the json object
     document.getElementsByClassName("top-tracks-1")[0].innerHTML = data.items[0].name;
