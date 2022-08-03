@@ -241,13 +241,13 @@ const addTracksToPlaylist = async (playlist_id) => {
 
 function shareAPI() {   
     FB.ui({
+      display: 'popup',
       method: 'share',
       href: `https://open.spotify.com/playlist/${share_playlist_id}`,
     }, function(response){});
 }
 
 function checkLoginState() {               // Called when a person is finished with the Login Button.
-    FB.login();
     FB.getLoginStatus(function(response) {   // See the onlogin handler
       statusChangeCallback(response);
     });
