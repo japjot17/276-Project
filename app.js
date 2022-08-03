@@ -268,6 +268,7 @@ var audios = [];
 var images = [];
 var genre;
 var SpotifyWebApi = require("spotify-web-api-node");
+const { response } = require("express");
 
 var spotifyApi = new SpotifyWebApi({
   clientId: client_id,
@@ -371,6 +372,7 @@ app.post("/songs", function (req, res) {
     });
 });
 
+
 app.get("/songs", function (req, res) {
   // for (let i = 0; i < songs.length; i++) {
   //   console.log(artists[i]);
@@ -383,6 +385,18 @@ app.get("/songs", function (req, res) {
     res.redirect(303, "/login");
   }
 });
+
+app.post("/delete", (req,res) => {
+  songs = []
+  artists = []
+  audios = [] 
+  res.redirect("/songs");
+})
+
+app.get("/delete", (req,res) => {
+  res.redirect("/songs");
+})
+
 /******************** [END] SPOTIFY PLAYLIST GENERATOR ***********************/
 
 app.get("/account", function (req, res) {
@@ -549,7 +563,58 @@ app.post("/distance-playlist", (req, res) => {
 });
 /******************** [END] SPOTIFY DISTANCE GENERATOR ***********************/
 
+/*********************** SPOTIFY YEAR IN REVIEW **************************/
+app.get("/review", function (req, res){
+  if (checkAuthorizedUser(req)) {
+    res.render("pages/review");
+  } else {
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "login");
+  }
+
+  // if (checkAuthorizedUser(req)) {
+  //   // get top artist
+  //   var config = {
+  //     method: "get",
+  //     url: 'https://api.spotify.com/v1/me/top/artist',
+  //     headers: {},
+  //   };
+  //   axios(config) {
+  //     .then((response) => {
+  //       // insert code here
+  //       res.render("pages/review");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response);
+  //       res.send(error);
+  //     });
+  //   }
+  // } else {
+  //   app.locals.redir = req.originalUrl;
+  //   res.redirect(303, "login");
+  // }  
+});
+/******************** [END] SPOTIFY YEAR IN REVIEW ***********************/
+
 app.get("/playlists", function (req, res) {
+  if (checkAuthorizedUser(req)) {
+    res.render("pages/saved-playlists");
+  } else {
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "/login");
+  }
+});
+
+/******************* Facebook API Requirements ********************************/
+app.get("/privacy-policy", function (req, res) {
+  if (checkAuthorizedUser(req)) {
+    res.render("pages/saved-playlists");
+  } else {
+    app.locals.redir = req.originalUrl;
+    res.redirect(303, "/login");
+  }
+});
+app.get("/data-deletion-info", function (req, res) {
   if (checkAuthorizedUser(req)) {
     res.render("pages/saved-playlists");
   } else {

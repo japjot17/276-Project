@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous"
+      />
+        <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="stylesheets/navbar.css" />
+        <link rel="stylesheet" href="stylesheets/review.css" />
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+        <script src="scripts/navbar.js" defer></script>
+        <script src="scripts/review.js" defer></script>
+        
+        <title>PERSONGIFY - Year In Review</title>
+    </head>
+    <body>
+        <!-- NAVBAR start -->
+        <header>
+            <!-- LOGO start -->
+            <div class="logo">
+                <img src="./media/note.png" alt="Music Note">
+                PERSONGIFY
+            </div>
+            <!-- LOGO end -->
+            <!-- HAMBURGER MENU start -->
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <!-- HAMBURGER MENU end -->
+            <!-- LINKS start -->
+            <nav class="navbar">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/songs">Discover +</a>
+                        <ul>
+                            <li><a href="/songs">Create Playlist</a></li>
+                            <li><a href="/new-distance-playlist">Commute</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/trending">Trending</a></li>
+                <% if (!locals.signedIn) { %>
+                    <li><a href="/newUser">Sign Up</a></li>
+                    <li><a href="/login">Log In</a></li>
+                    <li><a href="/review">Year In Review</a></li>
+                <% } else { %>
+                    <li><a href="/account">Hello, <%= locals.username %></a>
+                        <ul>
+                            <li><a href="/account">Account Info</a></li>
+                            <li><a href="/playlists">Saved Playlist</a></li>
+                            <li><a href="/logout">Log Out</a></li>
+                        </ul>
+                    </li>
+                <% } %>
+                </ul>
+            </nav>
+            <!-- LINKS end -->
+        </header>
+        <!-- NAVBAR end --> 
+        <br>  
+        <br>  
+        <br>  
+        <br>  
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    
+        <!-- CAROUSEL start -->
+        <div class="carousel">
+            <!-- SLIDES start -->
+            <div class="slide active" id="Start">
+                <img src="./media/bg4.png" alt="Background">
+                <div class="info">
+                    <h2>Persongify Presents</h2>
+                    <h1>YEAR IN REVIEW</h1>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="./media/bg1.png" alt="Background" id="My-Top-Artist">
+                <div class="info">
+                    <h2>My Top Artist</h2>
+                    <div class="artist-img"></div>
+                    <div class="text">
+                        <div class="top-artist-1">Artist #1</div>
+                    </div>
+                    <br>
+                    <div class="text">
+                        Most Played Song
+                        <div class="most-played">Insert Song Here</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="./media/bg1.png" alt="Background" id="My-Top-Songs">
+                <div class="info">
+                    <h2>My Top Song</h2>
+                    <div class="album-img"></div>
+                    <div class="text">
+                        <div class="top-tracks-1">Top Track Name</div>
+                    </div>
+                    <div class="text">
+                        <div class="top-track-artist">Top Track Artist Name</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="./media/bg1.png" alt="Background" id="Summary">
+                <div class="info">
+                    <div class="artist-img"></div>
+                    <h2>Top Artists</h2>
+                    <div class="text">
+                        <div class="top-artist-1">Artist #1</div>
+                        <div class="top-artist-2">Artist #2</div>
+                        <div class="top-artist-3">Artist #3</div>
+                        <div class="top-artist-4">Artist #4</div>
+                        <div class="top-artist-5">Artist #5</div>
+                    </div>
+                    <h2>Top Tracks</h2>
+                    <div class="text">
+                        <div class="top-tracks-1">Track #1</div>
+                        <div class="top-tracks-2">Track #2</div>
+                        <div class="top-tracks-3">Track #3</div>
+                        <div class="top-tracks-4">Track #4</div>
+                        <div class="top-tracks-5">Track #5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="./media/bg4.png" alt="Background" id="Create-Playlist">
+                <div class="info">
+                    <h2>Create Playlist</h2>
+                    <div class="gen-playlist">
+                        <label for="playlist-name">Playlist Name</label>
+                        <input type="text" id="playlist-name" class="playlist-text">
+                        <div id="playlist-status-msg" class="playlist-status"></div>
+                        <br>
+                        <button onclick="createPlaylist()" class="btn btn-success" id="p-button">Save Playlist</button>
+                    </div>
+                </div>
+            </div>
+            <!-- SLIDES end -->
+        </div>
+        <!-- CAROUSEL end -->
+        <div class="testing">
+            Testing Area!
+            <!-- <div class="artist-img"></div>
+            <div class="album-img"></div> -->
+        </div>
+    </body>
+</html>

@@ -5,8 +5,6 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-
-
 describe('Generate songs', () =>{
 
     it('should enter sufficient parameters on POST request for /songs' , async()=>{
@@ -33,3 +31,17 @@ describe('Generate songs', () =>{
 })
 
 
+describe('Clear Songs', () => {
+    it('should empty the songs in the array on POST requrest for /delete', async() => {
+        var songs = ["Liquor Locker"];
+        var artists = ["VIC MENSA"];
+        var audios = ["5YbrqNUUleF39Ai3b3ruQy"];
+        var agent = chai.request.agent(server);
+        agent.post("/delete").send(songs, artists, audios).then((res) => {
+            res.body.should.be.equall([]);
+            res.should.have.status(200);
+            
+        })
+        agent.close();
+    });
+})
