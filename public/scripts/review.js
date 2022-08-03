@@ -247,6 +247,7 @@ function shareAPI() {
 }
 
 function checkLoginState() {               // Called when a person is finished with the Login Button.
+    FB.login();
     FB.getLoginStatus(function(response) {   // See the onlogin handler
       statusChangeCallback(response);
     });
