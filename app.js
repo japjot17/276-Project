@@ -502,13 +502,29 @@ app.post("/distance-playlist", (req, res) => {
               
               // console.log(recomm);
             }
-            // res.send(songs_artists);
+
+            var adjust_hr = Math.floor(total_len / 3600);
+            var adjust_min = Math.floor((total_len % 3600) / 60);
+            var adjust_sec = (total_len % 3600) % 60;
+
+            var adjust_total_time = '';
+            if (adjust_hr != 0) {
+              adjust_total_time += `${adjust_hr.toFixed(0)} hours `;
+            }
+            if (adjust_min != 0) {
+              adjust_total_time += `${adjust_min.toFixed(0)} mins `;
+            }
+            if (adjust_sec != 0) {
+              adjust_total_time += `${adjust_sec.toFixed(0)} secs `;
+            }
+
             const spotify_results = {
               songs_res: songs,
               artists_res: artists,
               track_ids_res: track_ids,
               images_res: images,
               genre: genre,
+              total_time: adjust_total_time,
             }
             // TODO: auto add songs to playlist, or let user decide on adding playlist
             res.render("pages/distance-gen.ejs", {dist_mat_results, spotify_results});

@@ -60,13 +60,22 @@
             - means only 1 result should be returned in dist_mat_results
         -->
         <!-- TODO: change text color/add text backdrop -->
-        <div class="container text-light bg-dark rounded" style="margin-top: 170px">
+        <!-- <div class="container text-light bg-dark rounded" style="margin-top: 170px">
             <ul>
                 <li>going from <%= dist_mat_results.orig_address[0] %></li>
                 <li>going to <%= dist_mat_results.dest_address[0] %></li>
                 <li>mode of transportation: <%= dist_mat_results.travel_mode %></li>
                 <li>duration: <%= dist_mat_results.travel_results[0].elements[0].duration.text %></li>               
             </ul>
+        </div> -->
+        <!-- HEADINGS -->
+        <div class="container text-center mb-3 clearfix" id="first-item">
+            <h1 class="display-1 text-white"><span class="span-magenta">PERSONGIFY</span> Travel</h1>
+            <h1 class="display-4 text-white">Enjoy your generated playlist!</h1>
+            <h1 class="display-6 text-white">
+                Travel time: <%= dist_mat_results.travel_results[0].elements[0].duration.text %>    |    
+                Playlist length: <%= spotify_results.total_time %>
+            </h1>
         </div>
 
         <!-- Selected Playlist Parameters (for scripting) -->
@@ -89,6 +98,8 @@
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
             </iframe>
             <% } %>
+        </div>
+        <div class="playlistPlayer">
             <!-- Save Playlist -->
             <h2 id="recommendation-header" class="w-100 mx-auto text-center text-light">
                 <button 
@@ -97,8 +108,6 @@
                     Save Playlist
                 </button>
             </h2>
-        </div>
-        <div class="playlistPlayer">
             <!-- Completed Playlist Music Player -->
             <div class="container w-75">
                 <iframe 

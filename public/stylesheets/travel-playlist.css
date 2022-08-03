@@ -2,9 +2,13 @@
     --brand-magenta: #ef007e
 }
 
+body {
+    overflow-y: hidden;
+}
+
 .sampleList {
     width: 40%;
-    height: 60vh;
+    height: 50vh;
     overflow: auto;
     justify-content: center;
     text-align: center;
@@ -13,7 +17,7 @@
 }
 .playlistPlayer {
     width: 40%;
-    height: 80%;
+    height: 50vh;
     overflow: auto;
     justify-content: center;
     text-align: center;
