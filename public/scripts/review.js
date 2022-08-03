@@ -80,6 +80,7 @@ const getTopArtistTrack = async (apiToken) => {
         if(artist_data.items[i].name == track_data.items[j].artists[k].name) {
           //You can use this data @TIM
           console.log(track_data.items[j]);
+          return;
         }
       }
     }
