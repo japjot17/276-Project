@@ -14,6 +14,7 @@ var refreshToken = async () => {
         getUserData(apiToken);
         getTopArtists(apiToken);
         getTopTracks(apiToken);
+        getTopArtistTrack(apiToken);
     } catch (e) {
         console.log(e);
         window.location.replace("/login");
@@ -53,6 +54,39 @@ const getTopArtists = async (apiToken) => {
     }
 
     displayTopArtistData(data);
+}
+
+const getTopArtistTrack = async (apiToken) => {
+  const artist_result = await fetch(
+    'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=5',
+    {
+        method: "GET",
+        headers: {Authorization: "Bearer " + apiToken},
+    }
+  );
+  artist_data = await artist_result.json();
+
+  const track_result = await fetch(
+    'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term',
+    {
+        method: "GET",
+        headers: {Authorization: "Bearer " + apiToken},
+    }
+  );
+  track_data = await track_result.json();
+
+  for(let i = 0; i < artist_data.items.length; i++) {
+    for(let j = 0; j < track_data.items.length; j++) {
+      for(let k = 0; k < track_data.items[j].artists.length; k++) {
+        if(artist_data.items[i].name == track_data.items[j].artists[k].name) {
+          //You can use this data @TIM
+          console.log(track_data.items[j]);
+          return;
+        }
+      }
+    }
+  }
+  return undefined;
 }
 
 const getTopTracks = async (apiToken) => {
@@ -119,6 +153,7 @@ function displayTopArtistData(data) {
   document.getElementsByClassName("top-artist-5")[0].innerHTML = "5. " + data.items[4].name;
 
   console.log(data.items[0].images[1].url);
+
   document.getElementsByClassName("artist-img")[0].style.backgroundImage = `url(${data.items[0].images[1].url})`;
   document.getElementsByClassName("artist-img")[1].style.backgroundImage = `url(${data.items[0].images[1].url})`;
 }
@@ -159,6 +194,7 @@ function getArtists(artists) {
 
   return listOfArtists;
 }
+
 const addTracksToPlaylist = async (playlist_id) => {
     if (spotify_uris.length == 0) {
       return;
@@ -186,7 +222,6 @@ const addTracksToPlaylist = async (playlist_id) => {
       document.getElementById("playlist-status-msg").innerHTML = "Unsuccessful. Please try again.";
     }
 };
-
 
 /** Asynchronously loads Facebook SDK */
 window.fbAsyncInit = function() {
