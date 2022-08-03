@@ -223,15 +223,6 @@ const addTracksToPlaylist = async (playlist_id) => {
     }
 };
 
-/** Asynchronously loads Facebook SDK */
-window.fbAsyncInit = function() {
-    FB.init({
-        appId      : '1169143580322957',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v14.0'
-    });
-};
 
 function testAPI() {   
     // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
