@@ -83,9 +83,6 @@ const getTopArtistTrack = async (apiToken) => {
       }
     }
   }
-
-  console.log(artist_data);
-  console.log(track_data);
 }
 
 const getTopTracks = async (apiToken) => {
