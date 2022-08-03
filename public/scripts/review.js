@@ -229,16 +229,6 @@ const addTracksToPlaylist = async (playlist_id) => {
     }
 };
 
-// /** Asynchronously loads Facebook SDK */
-// window.fbAsyncInit = function() {
-//     FB.init({
-//         appId      : '1169143580322957',
-//         cookie     : true,
-//         xfbml      : true,
-//         version    : 'v14.0'
-//     });
-// };
-
 function shareAPI() {   
     FB.ui({
       display: 'popup',
@@ -247,17 +237,16 @@ function shareAPI() {
     }, function(response){});
 }
 
-function checkLoginState() {               // Called when a person is finished with the Login Button.
-    FB.getLoginStatus(function(response) {   // See the onlogin handler
-      statusChangeCallback(response);
+function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      shareStatus(response);
     });
 }
 
-function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
-    console.log(response);                   // The current login status of the person.
-    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+function shareStatus(response) {
+    if (response.status === 'connected') {
       shareAPI();  
-    } else {                                 // Not logged into your webpage or we are unable to tell.
+    } else {
       FB.login();
       console.log("couldn't login to facbeook ;("); 
     }
