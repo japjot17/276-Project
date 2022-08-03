@@ -50,7 +50,7 @@ const getTopArtists = async (apiToken) => {
 
     if (data.error != undefined) {
         console.log("Something went wrong getting data from Spotify API :(");
-        window.localtion.replace("/login");
+        window.location.replace("/login");
     }
 
     displayTopArtistData(data);
