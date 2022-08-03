@@ -46,7 +46,7 @@ const createPlaylist = async () => {
   var date =
     today.getDate() +
     "/" +
-    today.getMonth() +
+    (today.getMonth()+1) +
     "/" +
     today.getFullYear() +
     " " +
