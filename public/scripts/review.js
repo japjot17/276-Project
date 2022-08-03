@@ -163,14 +163,16 @@ function displayTopTrackData(data) {
     // replace html elements with parsed data from the json object
     document.getElementsByClassName("top-tracks-1")[0].innerHTML = data.items[0].name;
     document.getElementsByClassName("top-track-artist")[0].innerHTML = "By: " + data.items[0].artists[0].name;
-    //document.getElementsByClassName("top-track-artist")[0].innerHTML = getArtists(data.items[0].artists);
+
+    document.getElementsByClassName("album-img")[0].style.backgroundImage = `url(${data.items[0].album.images[1].url})`;
+    
     document.getElementsByClassName("top-tracks-1")[1].innerHTML = "1. " + data.items[0].name;
     document.getElementsByClassName("top-tracks-2")[0].innerHTML = "2. " + data.items[1].name;
     document.getElementsByClassName("top-tracks-3")[0].innerHTML = "3. " + data.items[2].name;
     document.getElementsByClassName("top-tracks-4")[0].innerHTML = "4. " + data.items[3].name;
     document.getElementsByClassName("top-tracks-5")[0].innerHTML = "5. " + data.items[4].name;
 
-    document.getElementsByClassName("album-img")[0].style.backgroundImage = `url(${data.items[0].album.images[1].url})`;
+    
     
     //testing
     // document.getElementsByClassName("top-track-artist-1")[0].innerHTML = getArtists(data.items[0].artists);

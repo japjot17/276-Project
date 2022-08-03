@@ -7,6 +7,8 @@
 
 body {
     background-image: url(../media/bg-hollow.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     box-shadow: 0 5px 25px rgba(239, 0, 126, 1);
     display: flex;
     justify-content: center;
