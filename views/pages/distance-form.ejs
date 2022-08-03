@@ -52,14 +52,12 @@
         <!-- NAVBAR end -->
         <!-- HEADINGS -->
         <div class="container text-center mb-3 clearfix" id="first-item">
-            <!-- TODO Ask Danh how to properly add margin top in bootstrap -->
-            <!-- using lorem to move items down for now. Yes I know its scuffed -->
-            <!-- TODO: change color of PERSONGIFY in the h1 -->
-            <h1 class="display-1 text-white">PERSONGIFY Travel</h1>
+            <h1 class="display-1 text-white"><span class="span-magenta">PERSONGIFY</span> Travel</h1>
             <h1 class="display-6 text-white">Please specify start and end points.</h1>
         </div>
 
         <!-- DISTANCE CALC FORM -->
+        <!-- TODO: added options for addresses/pick location on map/other location options -->
         <div class="container w-50 p-3">
             <form action="/distance-playlist" method="post">
                 <!-- Origin Address -->
@@ -103,6 +101,44 @@
                     </select>
                     <label for="travel_mode">Select Mode of Travel:</label>
                 </div>
+                <!-- Genre -->
+                <div class="form-floating">
+                    <select class="form-select mb-3" id="genre" name="f_genre"
+                    aria-label="Preferred Genre" required>
+                        <option value="lofi" selected>Lo-Fi</option>
+                        <option value="hip-hop">Hip-hop</option>
+                        <option value="house">House</option>
+                        <option value="rock">Rock</option>
+                        <option value="jazz">Jazz</option>
+                        <option value="r-n-b">R&B</option>
+                        <option value="classical">Classical</option>
+                        <option value="country">Country</option>
+                        <option value="dancehall">Dancehall</option>
+                        <option value="dubstep">Dubstep</option>
+                        <option value="folk">Folk</option>
+                        <option value="latin">Latin</option>
+                        <option value="metal">Metal</option>
+                        <option value="work-out">Work-out</option>
+
+                    </select>
+                    <label for="genre">Select Genre:</label>
+                </div>
+                <!-- Preferred Artist + Song -->
+                <div class="input-group mb-3">
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" id="artist" name="f_artist" 
+                        class="form-control radius-start" placeholder="Preferred Artist"
+                        required>
+                        <label for="artist">Preferred Artist</label>
+                    </div>
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" id="song" name="f_song" 
+                        class="form-control radius-end" placeholder="Preferred Song"
+                        required>
+                        <label for="song">Preferred Song</label>
+                    </div>
+                </div>
+
 
                 <!-- form buttons -->
                 <div class="d-grid gap-3">

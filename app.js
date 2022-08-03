@@ -155,7 +155,7 @@ app.post("/verify-login", async (req, res) => {
     app.locals.signedIn = true;
     app.locals.username = chk_uname;
     let url = "/spotify-login";     // when user logs in, must also go thru spotify
-    app.locals.redir = "/home";
+    // app.locals.redir = "/home";
     res.redirect(302, url);
   } else {
     res.redirect(303, "/login");
@@ -430,24 +430,128 @@ app.post("/distance-playlist", (req, res) => {
     var enc_orig_loc = encodeURI(orig_loc);
     var enc_dest_loc = encodeURI(dest_loc);
 
+    // preferred genre
+    var genre = req.body.f_genre;
+
+    // preferred artist
+    var pref_artist = req.body.f_artist;
+    var pref_song = req.body.f_song;
+    /**
+     * first, call GOOGLE MAPS
+     */
     var config = {
       method: "get",
       url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${enc_orig_loc}&destinations=${enc_dest_loc}&language=${lang}&mode=${mode}&key=${DIST_MATRIX_API_KEY}`,
       headers: {},
     };
     axios(config)
-      .then((response) => {
+      .then(async (response) => {
         // const results = response.data;
         // res.send(JSON.stringify(results));
         console.log("successful distance calculation");
-        const results = {
+        const dist_mat_results = {
           orig_address: response.data.origin_addresses,
           dest_address: response.data.destination_addresses,
-          dist_mat_results: response.data.rows,
+          travel_results: response.data.rows,
           travel_mode: mode,
         };
-        res.render("pages/distance-gen", results);
+
+        /**
+         * second, call SPOTIFY
+         */
+        var artist_id;
+        var song_id;
+        await spotifyApi
+          .searchArtists(pref_artist)
+          .then((artist_res) => {
+            artist_id = artist_res.body.artists.items[0].id;
+            return spotifyApi.searchTracks(pref_song);
+          })
+          .then((song_res) => {
+            song_id = song_res.body.tracks.items[0].id;
+            return {seed_artist: artist_id, seed_song: song_id};
+          })
+          .then((seed_params) => {
+            return spotifyApi.getRecommendations({
+              seed_genres: genre,
+              seed_artists: seed_params.seed_artist,
+              seed_tracks: seed_params.seed_song,
+              // IDEA: add as many tracks as possible, then pick and choose
+              limit: 100,
+            })
+          })
+          .then(async (data) => {
+            var recomm = data.body.tracks;
+            var songs = [];
+            var artists = [];
+            var songs_artists = [];
+            var track_ids = [];
+            var images = [];
+            var target_len = dist_mat_results.travel_results[0].elements[0].duration.value; // in seconds
+            console.log(`target_len: ${target_len}`);
+            var total_len = 0;
+
+            // get song lengths, store total time
+
+            for (let i = 0; i < recomm.length; i++) {
+              // get audio features, length of track, add to total time if under target
+              if (total_len < target_len) {
+                songs.push(recomm[i].name);
+                artists.push(recomm[i].artists[0].name);
+                // songs_artists.push(recomm[i].artists[0].name + " - " + recomm[i].name);
+                track_ids.push(recomm[i].id);
+                images.push(recomm[i].album.images[0].url);
+
+                // get track length, add to total
+                await spotifyApi
+                  .getAudioFeaturesForTrack(recomm[i].id)
+                  .then((data) => {
+                    console.log(`length of ${recomm[i].name}: ${data.body.duration_ms / 1000}`);
+                    total_len += data.body.duration_ms / 1000;    // convert ms to sec
+                  })
+                console.log(`total_len after iteration ${i}: ${total_len}`);
+              } else {
+                break;    // target time reached, exit early
+              }
+            }
+
+            var adjust_hr = Math.floor(total_len / 3600);
+            var adjust_min = Math.floor((total_len % 3600) / 60);
+            var adjust_sec = (total_len % 3600) % 60;
+
+            var adjust_total_time = '';
+            if (adjust_hr != 0) {
+              adjust_total_time += `${adjust_hr.toFixed(0)} hours `;
+            }
+            if (adjust_min != 0) {
+              adjust_total_time += `${adjust_min.toFixed(0)} mins `;
+            }
+            if (adjust_sec != 0) {
+              adjust_total_time += `${adjust_sec.toFixed(0)} secs `;
+            }
+
+            const spotify_results = {
+              songs_res: songs,
+              artists_res: artists,
+              track_ids_res: track_ids,
+              images_res: images,
+              genre: genre,
+              total_time: adjust_total_time,
+            }
+            
+            res.render("pages/distance-gen.ejs", {dist_mat_results, spotify_results});
+          })
+          /**
+           * SPOTIFY error
+           */
+          .catch((error) => {
+            console.log(error.response);
+            res.send(error);
+          })
       })
+      /**
+       * GOOGLE MAPS error
+       */
       .catch((error) => {
         console.log(error.response);
         res.send(error);

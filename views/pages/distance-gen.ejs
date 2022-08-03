@@ -6,30 +6,32 @@
         <%- include ("../partials/bs5-override.ejs") %>
         <%- include ("../partials/google-fonts.ejs") %>
         <%- include ("../partials/google-icons.ejs") %>
-        <!-- TODO: change css/js links to .ejs templates -->
+        <!-- TODO: change css/js links to .ejs templates? -->
         <link rel="stylesheet" href="./stylesheets/navbar.css" />
         <script src="scripts/navbar.js" defer></script>
         <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./stylesheets/travel-playlist.css" />
+        <script src="scripts/generate-playlist-travel.js" defer></script>
     </head>
     <body>
 
         <!-- NAVBAR start -->
-        <!-- <header> -->
+        <header>
             <!-- LOGO start -->
-            <!-- <div class="logo">
+            <div class="logo">
                 <img src="./media/note.png" alt="Music Note">
                 PERSONGIFY
-            </div> -->
+            </div>
             <!-- LOGO end -->
             <!-- HAMBURGER MENU start -->
-            <!-- <a href="#" class="toggle-button">
+            <a href="#" class="toggle-button">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
-            </a> -->
+            </a>
             <!-- HAMBURGER MENU end -->
             <!-- LINKS start -->
-            <!-- <nav class="navbar">
+            <nav class="navbar">
                 <ul>
                     <li><a href="/home">Home</a></li>
                     <li><a href="/songs">Discover +</a>
@@ -47,33 +49,74 @@
                         </ul>
                     </li>
                 </ul>
-            </nav> -->
+            </nav>
             <!-- LINKS end -->
-        <!-- </header> -->
+        </header>
         <!-- NAVBAR end -->
 
         <!-- 
-            [TEMP CONTENT FOR TESTING]
+            DISTANCE RESPONSE
             - assumes there is only 1 origin, 1 destination
             - means only 1 result should be returned in dist_mat_results
         -->
-        <!-- DISTANCE RESPONSE -->
         <!-- TODO: change text color/add text backdrop -->
-        <div class="text-light bg-dark">
+        <!-- <div class="container text-light bg-dark rounded" style="margin-top: 170px">
             <ul>
-                
-                <li>going from <%= orig_address[0] %></li>
-                <li>going to <%= dest_address[0] %></li>
-                <li>mode of transportation: <%= travel_mode %></li>
-                <!-- 
-                    <% dist_mat_results.forEach(r => { %> 
-                -->
-                    <li>duration: <%= dist_mat_results[0].elements[0].duration.text %></li>
-                <!-- 
-                    <% }) %> 
-                -->
-                
+                <li>going from <%= dist_mat_results.orig_address[0] %></li>
+                <li>going to <%= dist_mat_results.dest_address[0] %></li>
+                <li>mode of transportation: <%= dist_mat_results.travel_mode %></li>
+                <li>duration: <%= dist_mat_results.travel_results[0].elements[0].duration.text %></li>               
             </ul>
+        </div> -->
+        <!-- HEADINGS -->
+        <div class="container text-center mb-3 clearfix" id="first-item">
+            <h1 class="display-1 text-white"><span class="span-magenta">PERSONGIFY</span> Travel</h1>
+            <h1 class="display-4 text-white">Enjoy your generated playlist!</h1>
+            <h1 class="display-6 text-white">
+                Travel time: <%= dist_mat_results.travel_results[0].elements[0].duration.text %>    |    
+                Playlist length: <%= spotify_results.total_time %>
+            </h1>
         </div>
+
+        <!-- Selected Playlist Parameters (for scripting) -->
+        <p id="genre-placeholder" style="display: none;"><%= spotify_results.genre %></p>
+        <p id="orig-address" style="display: none;"><%= dist_mat_results.orig_address[0] %></p>
+        <p id="dest-address" style="display: none;"><%= dist_mat_results.dest_address[0] %></p>
+        <p id="travel-mode" style="display: none;"><%= dist_mat_results.travel_mode %></p>
+        <p id="travel-time" style="display: none;"><%= dist_mat_results.travel_results[0].elements[0].duration.text %></p>
+        
+
+        <!-- Sample Audio Players -->
+        <div class="sampleList">
+            <% for (var i = 0; i < spotify_results.track_ids_res.length; i++) { %>
+            <!-- Audio ID (for scripting) -->
+            <a class="songAudio" style="display: none;" src="<%= spotify_results.track_ids_res[i] %>"></a>
+            <iframe 
+                style="border-radius:12px" 
+                src="https://open.spotify.com/embed/track/<%= spotify_results.track_ids_res[i] %>?utm_source=generator" 
+                width="100%" height="80" frameBorder="0" allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+            </iframe>
+            <% } %>
+        </div>
+        <div class="playlistPlayer">
+            <!-- Save Playlist -->
+            <h2 id="recommendation-header" class="w-100 mx-auto text-center text-light">
+                <button 
+                    class="btn btn-dark" id="save-playlist-button" 
+                    onclick="addTracks()">
+                    Save Playlist
+                </button>
+            </h2>
+            <!-- Completed Playlist Music Player -->
+            <div class="container w-75">
+                <iframe 
+                    id="myiFrame" style="border-radius:12px" width="100%" height="380" 
+                    frameBorder="0" allowfullscreen="" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+                </iframe>
+            </div>
+        </div>
+        
     </body>
 </html>
