@@ -85,14 +85,13 @@ const getTopArtistTrack = async (apiToken) => {
     for(let j = 0; j < track_data.items.length; j++) {
       for(let k = 0; k < track_data.items[j].artists.length; k++) {
         if(artist_data.items[i].name == track_data.items[j].artists[k].name) {
-          //You can use this data @TIM
-          //console.log(track_data.items[j].name);
           document.getElementsByClassName("most-played")[0].innerHTML = track_data.items[j].name;
           return;
         }
       }
     }
   }
+  console.log("Error: Couldn't find song");
   return undefined;
 }
 
@@ -177,31 +176,6 @@ function displayTopTrackData(data) {
     document.getElementsByClassName("top-tracks-3")[0].innerHTML = "3. " + data.items[2].name;
     document.getElementsByClassName("top-tracks-4")[0].innerHTML = "4. " + data.items[3].name;
     document.getElementsByClassName("top-tracks-5")[0].innerHTML = "5. " + data.items[4].name;
-
-    
-    
-    //testing
-    // document.getElementsByClassName("top-track-artist-1")[0].innerHTML = getArtists(data.items[0].artists);
-    // document.getElementsByClassName("top-track-artist-2")[0].innerHTML = getArtists(data.items[1].artists);
-    // document.getElementsByClassName("top-track-artist-3")[0].innerHTML = getArtists(data.items[2].artists);
-    // document.getElementsByClassName("top-track-artist-4")[0].innerHTML = getArtists(data.items[3].artists);
-    // document.getElementsByClassName("top-track-artist-5")[0].innerHTML = getArtists(data.items[4].artists);
-}
-
-function getArtists(artists) {
-  const listOfArtists = JSON.stringify(artists[0].name);
-  let numOfArtists = artists.length;
-  if (numOfArtists == 1) {
-    return listOfArtists;
-  }
-
-  console.log("listofArtists: " + listOfArtists);
-  for (let i=1; i<=numOfArtists; i++) {
-    console.log("toAdd: " + artists[i].name);
-    listOfArtists += (", " + JSON.stringify(artists[i].name));
-  }
-
-  return listOfArtists;
 }
 
 const addTracksToPlaylist = async (playlist_id) => {
