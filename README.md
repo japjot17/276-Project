@@ -1,8 +1,6 @@
 # PERSONGIFY
 
-### Links
 
-Access PERSONGIFY here: persongify.herokuapp.com
 
 ## Abstract
 
